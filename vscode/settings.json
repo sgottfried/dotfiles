@@ -1,0 +1,116 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+    "editor.formatOnSave": true,
+    "explorer.openEditors.visible": 0,
+    "files.autoSave": "afterDelay",
+    "terminal.integrated.fontSize": 16,
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.leader": ",",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "leader",
+                "g"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.view.scm",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": [
+                "leader",
+                "n"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.view.explorer"
+                }
+            ]
+        },
+        {
+            "before": [
+                "]",
+                "q"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "search.action.focusNextSearchResult"
+                }
+            ]
+        },
+        {
+            "before": [
+                "[",
+                "q"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "search.action.focusPreviousSearchResult"
+                }
+            ]
+        },
+        {
+            "before": [
+                "<C-h>"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.navigateLeft",
+                }
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "s"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.splitEditorOrthogonal",
+                }
+            ]
+        }
+    ],
+    "vim.useSystemClipboard": false,
+    "vim.visualstar": true,
+    "window.zoomLevel": 0,
+    "workbench.editor.showTabs": false,
+    "auto-close-tag.activationOnLanguage": [
+        "xml",
+        "javascript",
+        "javascriptreact",
+        "markdown",
+        "erb",
+        "html.erb"
+    ],
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.minimap.enabled": false,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "vim.enableNeovim": true,
+    "editor.rulers": [
+        100
+    ],
+    "workbench.activityBar.visible": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.fontAliasing": "auto",
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": false
+    },
+    "open-in-vim.openMethod": "macos.macvim",
+    "editor.lineNumbers": "on",
+    "ruby.intellisense": "rubyLocate"
+}
