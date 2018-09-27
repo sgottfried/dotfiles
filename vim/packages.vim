@@ -10,11 +10,11 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type':'opt'})
 
 call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('edkolev/tmuxline.vim')
 call minpac#add('honza/vim-snippets')
 call minpac#add('kien/ctrlp.vim')
 call minpac#add('SirVer/ultisnips')
 call minpac#add('ternjs/tern_for_vim')
-
 call minpac#add('tpope/vim-bundler')
 call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-rails')
