@@ -2,70 +2,69 @@ source ~/.vim/packages.vim
 
 filetype plugin indent on
 syntax enable
+
+" Settings
 set autoindent
-set colorcolumn=110
 set cursorline
 set dir=~/.vim/tmp
 set encoding=utf8
-set expandtab "use spaces instead of tabs
+set expandtab
+set grepprg=rg\ --vimgrep\ --no-heading
+set grepformat=%f:%l:%c:%m,%f:%l:%m
+set hidden
 set incsearch
-set list listchars=tab:▸\ ,eol:¬
+set laststatus=2
 set mouse=a
 set number
-set previewheight=10
 set smartcase
-set splitbelow
+set statusline=%f%=%{FugitiveHead()}\ \ \ %y\ [%P][%l:%c]
 set swapfile
 set tabstop=2 softtabstop=2 shiftwidth=2
-set laststatus=2
-set statusline=%f%=%{FugitiveHead()}\ \ \ %y\ [%P][%l:%c]
-set shell=/bin/bash\ --login
-set hidden
 
-let mapleader = ","
+let g:ale_linters = {'javascript': ['eslint'], 'ruby': ['rubocop']}
+let g:gitgutter_override_sign_column_highlight = 0
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-let g:github_enterprise_urls = ['https://git.xogrp.com']
-let test#strategy = "dispatch"
-
-set bg=light
+let g:netrw_banner = 0
+let mapleader = ","
 colorscheme solarized
-
-if has('nvim')
-  highlight! link TermCursor Cursor
-  highlight! TermCursorNC guibg=#cc241d guifg=white ctermbg=1 ctermfg=15
-endif
-
+set background=light
 
 "Mappings
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-map <Leader>c :copen<CR>
-map <Leader>g :Gstatus<CR>
-map <Leader>n :vs .<CR>
-map <Leader>p :<C-u>Files<CR>
-map <Leader>w :w<CR>
-nnoremap <Leader>s :Grepper -tool ag<CR>
-map <Leader>gb :BCommits<CR>
-nmap <silent> <Leader>t :TestNearest<CR>
-nmap <silent> <Leader>f :TestFile<CR>
-nmap <silent> <Leader>a :TestSuite<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <Leader>c :copen<CR>
+nnoremap <Leader>d :Gvdiff<CR>
+nnoremap <Leader>n :Vex<CR>
+nnoremap <Leader>p :FZF<CR>
+nnoremap <Leader>s :grep -g '!**/test*' 
+nnoremap <Leader>w :w<CR>
+nnoremap [Q :cfirst<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]Q :clast<CR>
+nnoremap ]q :cnext<CR>
 
-inoremap hh <C-x><C-o>
+highlight clear SignColumn
 
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-v><Esc> <Esc>
+"Change cursor shape in insert mode
+let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[6 q\<Esc>\\"
+let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+autocmd VimLeave * silent !echo -ne "\033Ptmux;\033\033[0 q\033\\"
 
-autocmd FileType ruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby let g:rubycomplete_rails = 1
-autocmd FileType ruby nmap <Leader>d :Dispatch bundle exec rspec %<CR>
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
+" Graveyard
 
-if has('nvim') && executable('nvr')
-  let $VISUAL="nvr -cc vsplit --remote-wait +'set bufhidden=wipe'"
-endif
+" nnoremap <Leader>b :botright split \| b zsh<CR>
+" nnoremap <Leader>f :TestFile<CR>
+" nnoremap <Leader>l :TestLast<CR>
+" nnoremap <Leader>r :Rg<CR>
+" nnoremap <Leader>t :TestNearest<CR>
+" nnoremap gh :call CocAction('doHover')<CR>
+" tnoremap <Esc> <C-\><C-n>
+"
+" let test#ruby#rspec#executable = 'docker-compose exec app rspec'
+" let test#strategy = "dispatch"
+" let g:lightline = {
+"   \ 'colorscheme': 'solarized',
+" \ }
 
-autocmd TermOpen * setlocal nonumber norelativenumber
