@@ -1,3 +1,27 @@
+-- Settings
+
+vim.opt.autoindent = true
+vim.opt.cursorline = true
+vim.opt.encoding = 'utf8'
+vim.opt.expandtab = true
+vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+vim.opt.grepprg = 'rg --vimgrep --smart-case'
+vim.opt.hidden = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.laststatus = 2
+vim.opt.list.listchars = 'tab:▸ ,eol:'
+vim.opt.mouse = 'a'
+vim.opt.number = true
+vim.opt.shiftwidth = 2
+vim.opt.smartcase = true
+vim.opt.softtabstop = 2
+vim.opt.swapfile = true
+vim.opt.tabstop = 2
+vim.opt.termguicolors = true
+
+-- End Settings --
+
 -- LSP SETUP --
 local nvim_lsp = require('lspconfig')
 
@@ -29,29 +53,6 @@ local function eslint_config_exists()
   return false
 end
 
--- efm sets up a language server for eslint with the root directory where the eslint is
--- and applies it to all JS/TS files.
-nvim_lsp.efm.setup {
-  init_options = {documentFormatting = false },
-  root_dir = function()
-    if not eslint_config_exists() then
-      return nil
-    end
-    return vim.fn.getcwd()
-  end,
-  filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescript.tsx", "typescriptreact" },
-  settings = {
-    languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint}
-    }
-  },
-}
-
 -- This is for organizing imports in JS/TS files
 local function organize_imports()
   local params = {
@@ -82,6 +83,36 @@ local on_attach = function(client, bufnr)
   print("'" .. client.name .. "' language server started" );
 end
 
+-- efm sets up a language server for eslint with the root directory where the eslint is
+-- and applies it to all JS/TS files.
+nvim_lsp.efm.setup {
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.goto_definition = false
+
+    print("'" .. client.name .. "' language server started" );
+  end,
+  init_options = { documentFormatting = true },
+  root_dir = function()
+    if not eslint_config_exists() then
+      return nil
+    end
+    return vim.fn.getcwd()
+  end,
+  filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescript.tsx", "typescriptreact" },
+  settings = {
+    languages = {
+      javascript = {eslint},
+      javascriptreact = {eslint},
+      ["javascript.jsx"] = {eslint},
+      typescript = {eslint},
+      ["typescript.tsx"] = {eslint},
+      typescriptreact = {eslint}
+    }
+  },
+}
+
+
 -- Sets up all language servers (aside from tsserver)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
 local servers = { "bashls", "cssls", "dockerls", "jsonls", "vimls" }
@@ -96,6 +127,9 @@ end
 -- a root directory that contains `.git`, and the ability to organize imports.
 nvim_lsp.tsserver.setup{
   on_attach = function(client, bufnr)
+    if client.config.flags then
+      client.config.flags.allow_incremental_sync = true
+    end
     client.resolved_capabilities.document_formatting = false,
     on_attach(client, bufnr)
   end,
