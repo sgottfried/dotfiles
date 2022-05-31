@@ -6,10 +6,11 @@ packadd minpac
 if exists('g:loaded_minpac')
   call minpac#init()
   call minpac#add('k-takata/minpac', {'type': 'opt'})
-
-  " call minpac#add('SirVer/ultisnips')
+  call minpac#add('SirVer/ultisnips')
   call minpac#add('airblade/vim-gitgutter')
   call minpac#add('honza/vim-snippets')
+  call minpac#add('hrsh7th/cmp-nvim-lsp')
+  call minpac#add('hrsh7th/nvim-cmp')
   call minpac#add('hrsh7th/nvim-compe')
   call minpac#add('ianks/vim-tsx')
   call minpac#add('itchyny/lightline.vim')
@@ -62,7 +63,7 @@ let g:lightline = {
 hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#93a1a1 cterm=NONE gui=NONE
 
 " autocmd BufWritePre *.js*,*.ts* OrganizeImports
-autocmd BufWritePre *.js*,*.ts* lua vim.lsp.buf.formatting_sync(nil, 1000)
+" autocmd BufWritePre *.js*,*.ts* lua vim.lsp.buf.formatting_sync(nil, 1000)
 autocmd TermOpen * setlocal nonumber norelativenumber nolist
 
 inoremap <silent><expr> <C-y> compe#confirm('<CR>')
@@ -75,10 +76,13 @@ nnoremap <leader>c :copen<CR>
 nnoremap <leader>d :Gvdiff<CR>
 nnoremap <leader>p :FZF<CR>
 nnoremap <leader>s :GrepperRg -g '!**/**test*' -i 
-" nnoremap <leader>t :silent exe "!tmux send-keys -t 0.1 'docker-compose run --rm test yarn test " . fnamemodify(expand("%"), ":~:.") . "' Enter"<CR>
-nnoremap <leader>t :botright split \| 10winc - \| term docker-compose run --rm test yarn test %<CR>
 nnoremap <leader>w :w<CR>
 tnoremap <Esc> <C-\><C-n> 
 
-luafile ~/.config/nvim/lspconfig.lua
+" nnoremap <leader>t :botright split \| 10winc - \| term docker-compose run --rm test yarn test %<CR>
+nnoremap <leader>t :call jobsend(3, "make run test=" . expand("%") . "\<lt>cr>")<CR>
+nnoremap <leader>w :w<CR>
+tnoremap <Esc> <C-\><C-n> 
+
 luafile ~/.config/nvim/compeconfig.lua
+luafile ~/.config/nvim/luaconfig.lua
