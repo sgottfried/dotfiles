@@ -1,0 +1,16 @@
+vim.g.jsx_ext_required = false
+vim.o.autoindent = true
+vim.o.cursorline = true
+vim.o.encoding = 'utf8'
+vim.o.completeopt = 'menuone,noselect'
+vim.o.expandtab = true
+vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+vim.o.grepprg = 'rg --vimgrep --smart-case'
+vim.o.laststatus = 3
+vim.o.mouse = 'a'
+vim.o.number = true
+vim.o.shiftwidth = 2
+vim.o.smartcase = true
+vim.o.softtabstop = 2
+vim.o.swapfile = true
+vim.o.tabstop = 2
