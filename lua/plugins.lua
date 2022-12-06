@@ -1,32 +1,44 @@
 local packer = require('packer')
-local is_not_vscode = function ()
-  return vim.g.vscode == nil
-end
 
 packer.startup(function(use)
-  use 'tpope/vim-commentary'
   use 'tpope/vim-unimpaired'
-  use 'tpope/vim-vinegar'
   use 'wbthomason/packer.nvim'
   use 'tpope/vim-surround'
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'neovim/nvim-lspconfig'
+  use 'tpope/vim-commentary'
+  use 'SirVer/ultisnips'
+  use 'airblade/vim-gitgutter'
   use 'ellisonleao/gruvbox.nvim'
+  use 'honza/vim-snippets'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'ianks/vim-tsx'
+  use 'junegunn/fzf'
+  use 'leafgarland/typescript-vim'
+  use 'mxw/vim-jsx'
+  use 'neovim/nvim-lspconfig'
+  use 'nvim-lua/plenary.nvim'
+  use { 'nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' }}
+  use 'pangloss/vim-javascript'
+  use { 'quangnguyen30192/cmp-nvim-ultisnips', requires = {{ 'hrsh7th/nvim-cmp'}}}
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-projectionist'
+  use 'tpope/vim-rhubarb'
+  use 'tpope/vim-vinegar'
+  use { 'nvim-telescope/telescope.nvim', requires = {{ "nvim-telescope/telescope-live-grep-args.nvim" }},
+    config = function()
+      require('telescope').load_extension('live_grep_args')
+    end
+  }
+  use { 'nvim-lualine/lualine.nvim', requires = {{ 'kyazdani42/nvim-web-devicons', opt = true }}}
+  use { 'KadoBOT/nvim-spotify', run = 'make',
+  config = function()
+    local spotify = require'nvim-spotify'
 
-  use { 'SirVer/ultisnips', cond = is_not_vscode }
-  use { 'airblade/vim-gitgutter', cond = is_not_vscode }
-  use { 'honza/vim-snippets', cond = is_not_vscode }
-  use { 'ianks/vim-tsx', cond = is_not_vscode }
-  use { 'itchyny/lightline.vim', cond = is_not_vscode }
-  use { 'junegunn/fzf', cond = is_not_vscode }
-  use { 'leafgarland/typescript-vim', cond = is_not_vscode }
-  use { 'mxw/vim-jsx', cond = is_not_vscode }
-  use { 'nvim-lua/plenary.nvim', cond = is_not_vscode }
-  use { 'nvim-telescope/telescope.nvim', cond = is_not_vscode }
-  use { 'pangloss/vim-javascript', cond = is_not_vscode }
-  use { 'quangnguyen30192/cmp-nvim-ultisnips', cond = is_not_vscode }
-  use { 'tpope/vim-fugitive', cond = is_not_vscode }
-  use { 'tpope/vim-projectionist', cond = is_not_vscode }
-  use { 'tpope/vim-rhubarb', cond = is_not_vscode }
+    spotify.setup {
+      -- default opts
+      status = {
+        update_interval = 10000, -- the interval (ms) to check for what's currently playing
+        format = '%s %t by %a' -- spotify-tui --format argument
+      }
+    }
+  end }
 end)
