@@ -16,39 +16,30 @@ end
 dap.adapters.node = {
   type = 'executable',
   command = 'node',
-  args = {os.getenv('HOME') .. '/workspace/vscode-node-debug2/out/src/nodeDebug.js'},
+  args = {os.getenv('HOME') .. '/workspace/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+
 }
 
-dap.adapters.chrome = {
-    type = 'executable',
-    command = 'node',
-    args = {os.getenv('HOME') .. '/workspace/vscode-chrome-debug/out/src/chromeDebug.js'}
-}
-
-local attach_to_process = {
-  name = 'Attach to process',
-  type = 'node',
-  request = 'attach',
-  processId = require'dap.utils'.pick_process,
-  host = '0.0.0.0',
-  sourceMaps = true,
-  port = 9229,
-}
-
--- local attach_to_chrome = {
---   type = 'chrome',
---   request = 'attach',
---   cwd = '${workspceFolder}/apps/marketplace-web',
---   sourceMaps = true,
---   protocol = 'inspector',
---   port = 9222,
---   webRoot = '${workspaceFolder}/apps/marketplace-web'
+-- dap.adapters.chrome = {
+--     type = 'executable',
+--     command = 'node',
+--     args = {os.getenv('HOME') .. '/workspace/vscode-chrome-debug/out/src/chromeDebug.js'}
 -- }
 
-local js_filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx'}
-for _, value in ipairs(js_filetypes) do
-  dap.configurations[value] = { attach_to_process, attach_to_chrome }
-end
+-- local attach_to_process = {
+--   name = 'Attach to process',
+--   type = 'node',
+--   request = 'attach',
+--   processId = require'dap.utils'.pick_process,
+--   host = '0.0.0.0',
+--   sourceMaps = true,
+--   port = 9229,
+-- }
 
--- require('dap.ext.vscode').load_launchjs(nil, { chrome = js_filetypes })
+local js_filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'cucumber'}
+-- for _, value in ipairs(js_filetypes) do
+--   dap.configurations[value] = { attach_to_process }
+-- end
+
+require('dap.ext.vscode').load_launchjs(nil, { node = js_filetypes })
 
