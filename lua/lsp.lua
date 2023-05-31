@@ -13,6 +13,7 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
   buf_set_keymap('n', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('v', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -23,9 +24,9 @@ local on_attach = function(client, bufnr)
   print("'" .. client.name .. "' language server started" );
 end
 
--- Sets up all language servers (aside from tsserver and sumneko_lua)
+-- Sets up all language servers (aside from tsserver and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "cssmodules_ls", "dockerls", "eslint", "jsonls" }
+local servers = { "bashls", "cssls", "cssmodules_ls", "cucumber_language_server", "dockerls", "eslint", "jsonls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -49,8 +50,8 @@ nvim_lsp.tsserver.setup{
   root_dir = nvim_lsp.util.root_pattern(".git"),
 }
 
--- Sets up sumneko_lua language server for Neovim work
-nvim_lsp.sumneko_lua.setup {
+-- Sets up lua_ls language server for Neovim work
+nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
