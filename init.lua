@@ -1,5 +1,3 @@
-print('Loading Neovim config')
-
 require('plugins')
 require('common')
 require('settings')
@@ -8,6 +6,5 @@ require('keybindings')
 require('autocommands')
 require('lsp')
 require('completion')
--- require('debugging')
+require('debugging')
 require('telescope-setup')
-require('spotify-setup')
