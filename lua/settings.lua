@@ -1,3 +1,6 @@
+vim.g.blamer_enabled = 1
+vim.g.blamer_show_in_visual_modes = 0
+vim.g.blamer_date_format = '%m/%d/%y'
 vim.g.jsx_ext_required = false
 vim.o.autoindent = true
 vim.o.completeopt = 'menuone,noselect'
@@ -10,7 +13,7 @@ vim.o.hidden = true
 vim.o.laststatus = 3
 vim.o.mouse = 'a'
 vim.o.number = true
-vim.o.shiftwidth = 2
-vim.o.softtabstop = 2
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
 vim.o.swapfile = true
-vim.o.tabstop = 2
+vim.o.tabstop = 4
