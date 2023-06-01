@@ -1,6 +1,7 @@
 require('plugins')
 require('common')
 require('settings')
+require('treesitter-setup')
 require('theme')
 require('keybindings')
 require('autocommands')
