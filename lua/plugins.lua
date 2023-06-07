@@ -3,6 +3,7 @@ local packer = require('packer')
 packer.startup(function(use)
   use 'APZelos/blamer.nvim'
   use 'airblade/vim-gitgutter'
+  use {'alec-gibson/nvim-tetris', opt = true, cmd = {'Tetris'}}
   use 'ellisonleao/gruvbox.nvim'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
