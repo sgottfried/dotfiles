@@ -24,7 +24,7 @@ end
 
 -- Sets up all language servers (aside from tsserver and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "cssmodules_ls", "cucumber_language_server", "dockerls", "eslint", "jsonls" }
+local servers = { "bashls", "cssls", "cssmodules_ls", "cucumber_language_server", "dockerls", "jsonls", "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -48,6 +48,7 @@ nvim_lsp.tsserver.setup{
   root_dir = nvim_lsp.util.root_pattern(".git"),
 }
 
+
 -- Sets up lua_ls language server for Neovim work
 nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
@@ -65,6 +66,7 @@ nvim_lsp.lua_ls.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -73,3 +75,24 @@ nvim_lsp.lua_ls.setup {
     },
   },
 }
+
+local null_ls = require("null-ls")
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.prettier
+    },
+    on_attach = function(client, bufnr)
+        if client.supports_method 'textDocument/formatting' then
+            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                group = augroup,
+                buffer = bufnr,
+                callback = function()
+                  vim.lsp.buf.format({ bufnr = bufnr })
+                end,
+            })
+        end
+    end,
+})
