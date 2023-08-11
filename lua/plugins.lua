@@ -3,11 +3,11 @@ local packer = require('packer')
 packer.startup(function(use)
   use 'APZelos/blamer.nvim'
   use 'airblade/vim-gitgutter'
-  use {'alec-gibson/nvim-tetris', opt = true, cmd = {'Tetris'}}
   use 'ellisonleao/gruvbox.nvim'
-  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/nvim-cmp'
   use 'ianks/vim-tsx'
+  use 'jose-elias-alvarez/null-ls.nvim'
   use 'leafgarland/typescript-vim'
   use 'mxw/vim-jsx'
   use 'neovim/nvim-lspconfig'
@@ -59,8 +59,8 @@ packer.startup(function(use)
                     config = {
                         workspaces = {
                             notes = "~/notes",
-                            default_workspace = 'notes'
                         },
+                        default_workspace = 'notes'
                     },
                 },
             },
