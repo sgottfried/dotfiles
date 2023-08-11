@@ -17,3 +17,8 @@ vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.swapfile = true
 vim.o.tabstop = 4
+vim.opt.path:remove "/usr/include"
+vim.opt.path:append "**"
+vim.opt.wildignorecase = true
+vim.opt.wildignore:append "**/node_modules/*"
+vim.opt.wildignore:append "**/.git/*"
