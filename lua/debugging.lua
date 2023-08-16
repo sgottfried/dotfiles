@@ -13,33 +13,36 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
-dap.adapters.node = {
-  type = 'executable',
-  command = 'node',
-  args = {os.getenv('HOME') .. '/workspace/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
-
-}
-
--- dap.adapters.chrome = {
---     type = 'executable',
---     command = 'node',
---     args = {os.getenv('HOME') .. '/workspace/vscode-chrome-debug/out/src/chromeDebug.js'}
--- }
-
--- local attach_to_process = {
---   name = 'Attach to process',
---   type = 'node',
---   request = 'attach',
---   processId = require'dap.utils'.pick_process,
---   host = '0.0.0.0',
---   sourceMaps = true,
---   port = 9229,
--- }
+require("dap-vscode-js").setup({
+  adapters = { 'pwa-node'}
+})
 
 local js_filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'cucumber'}
--- for _, value in ipairs(js_filetypes) do
---   dap.configurations[value] = { attach_to_process }
--- end
-
-require('dap.ext.vscode').load_launchjs(nil, { node = js_filetypes })
-
+for _, language in ipairs(js_filetypes) do
+  require("dap").configurations[language] = {
+      {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach",
+          processId = require'dap.utils'.pick_process,
+          cwd = "${workspaceFolder}",
+      },
+      {
+          type = "pwa-node",
+          request = "launch",
+          name = "Debug Jest Tests",
+          runtimeExecutable = "node",
+          runtimeArgs = {
+              "./node_modules/jest/bin/jest.js",
+              "--config",
+              "jest.ui.config.js",
+              "--setupFiles",
+              "dotenv/config"
+          },
+          rootPath = "${workspaceFolder}",
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+      }
+  }
+end
