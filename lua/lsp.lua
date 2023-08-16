@@ -8,91 +8,92 @@ local nvim_lsp = require('lspconfig')
 
 -- This is run every time a language server is connected
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('v', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    -- Mappings.
+    local opts = { noremap = true, silent = true }
+    buf_set_keymap('n', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('v', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 end
 
 -- Sets up all language servers (aside from tsserver and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "cssmodules_ls", "cucumber_language_server", "dockerls", "jsonls", "eslint" }
+local servers = { "bashls", "cssls", "cssmodules_ls", "cucumber_language_server", "dockerls", "jsonls" }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
+    nvim_lsp[lsp].setup {
+        on_attach = on_attach,
+        capabilities = capabilities
+    }
 end
 
 -- Sets up tsserver with the on_attach from above, the capabilities from nvim-cmp (completion),
 -- a root directory that contains `.git`, and the ability to organize imports.
-nvim_lsp.tsserver.setup{
-  on_attach = function(client, bufnr)
-    if client.config.flags then
-      client.config.flags.allow_incremental_sync = true
-    end
-    client.server_capabilities.document_formatting = false
-    client.server_capabilities.document_range_formatting = false
+nvim_lsp.tsserver.setup {
+    on_attach = function(client, bufnr)
+        if client.config.flags then
+            client.config.flags.allow_incremental_sync = true
+        end
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
 
-    on_attach(client, bufnr)
-  end,
-  capabilities = capabilities,
-  root_dir = nvim_lsp.util.root_pattern(".git"),
+        on_attach(client, bufnr)
+    end,
+    capabilities = capabilities,
+    root_dir = nvim_lsp.util.root_pattern(".git"),
 }
 
+local efmls = require 'efmls-configs'
+efmls.init {
+    -- Your custom attach function
+    on_attach = on_attach,
+
+    -- Enable formatting provided by efm langserver
+    init_options = {
+        documentFormatting = true,
+    },
+}
+
+local eslintd = require 'efmls-configs.linters.eslint_d'
+local prettierd = require 'efmls-configs.formatters.prettier_d'
+Efm_options = {}
+local js_filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'cucumber' }
+for _, language in ipairs(js_filetypes) do
+    Efm_options[language] = {
+        linter = eslintd,
+        formatter = prettierd
+    }
+end
+efmls.setup(Efm_options)
 
 -- Sets up lua_ls language server for Neovim work
 nvim_lsp.lua_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
     },
-  },
 }
-
-local null_ls = require("null-ls")
-local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
-null_ls.setup({
-    sources = {
-        null_ls.builtins.formatting.prettier
-    },
-    on_attach = function(client, bufnr)
-        if client.supports_method 'textDocument/formatting' then
-            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-            vim.api.nvim_create_autocmd('BufWritePre', {
-                group = augroup,
-                buffer = bufnr,
-                callback = function()
-                  vim.lsp.buf.format({ bufnr = bufnr })
-                end,
-            })
-        end
-    end,
-})
