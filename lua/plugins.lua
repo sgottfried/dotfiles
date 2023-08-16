@@ -21,6 +21,17 @@ packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use { 'nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' }}
+  use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+  use {
+      'creativenull/efmls-configs-nvim',
+      tag = 'v0.2.*', -- tag is optional
+      requires = { 'neovim/nvim-lspconfig' },
+  }
+  use {
+      "microsoft/vscode-js-debug",
+      opt = true,
+      run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out" 
+  }
   use { 'nvim-telescope/telescope.nvim', requires = {{ "nvim-telescope/telescope-live-grep-args.nvim" }},
     config = function()
       require('telescope').load_extension('live_grep_args')
