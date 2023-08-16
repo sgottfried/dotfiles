@@ -24,7 +24,15 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
 
-Run `:PackerInstall` in Neovim.
+Run `:PackerSync` in Neovim.
+
+For Eslint and Prettier, you have to install EFM langserver, eslint_d (daemon for quickly running eslint), and prettierd (the same for prettier).
+
+```
+brew install efm-langserver
+npm install -g eslint_d
+npm install -g @fsouza/prettierd
+```
                   
 ### Optional
 - Install [VSCode-neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim).
