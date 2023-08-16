@@ -11,10 +11,10 @@ local function run_test_js()
     -- vim.cmd([[!kitty @ send-text -m id:2 make run test=]] .. filename .. [[\\x0d]])
 end
 
-local function debug_test_js()
-    local filename = vim.fn.expand('%')
-    vim.cmd([[!kitty @ send-text -m id:2 yarn test:debug ]] .. filename .. [[\\x0d]])
-end
+-- local function debug_test_js()
+--     local filename = vim.fn.expand('%')
+--     vim.cmd([[!kitty @ send-text -m id:2 yarn test:debug ]] .. filename .. [[\\x0d]])
+-- end
 
 vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
     pattern = { '*/node_modules/*' },
@@ -38,13 +38,13 @@ vim.api.nvim_create_autocmd('Filetype', {
     callback = function() vim.opt.bufhidden = 'delete' end
 })
 
-vim.api.nvim_create_autocmd('Filetype', {
-    pattern = { '*.tsx', '*.ts', '*.jsx', '*.js' },
-    callback = function()
-        -- vim.keymap.set('n', '<leader>t', run_test_js, { remap = false })
-        -- vim.keymap.set('n', '<leader>T', debug_test_js, { remap = false })
-    end
-})
+-- vim.api.nvim_create_autocmd('Filetype', {
+--     pattern = { '*.tsx', '*.ts', '*.jsx', '*.js' },
+--     callback = function()
+    -- vim.keymap.set('n', '<leader>t', run_test_js, { remap = false })
+    -- vim.keymap.set('n', '<leader>T', debug_test_js, { remap = false })
+--     end
+-- })
 
 vim.api.nvim_create_autocmd('TermOpen', {
     pattern = { '*' },
