@@ -48,28 +48,29 @@ nvim_lsp.tsserver.setup {
     root_dir = nvim_lsp.util.root_pattern(".git"),
 }
 
-local efmls = require 'efmls-configs'
-efmls.init {
-    -- Your custom attach function
-    on_attach = on_attach,
+local eslint = require('efmls-configs.linters.eslint_d')
+local prettier = require('efmls-configs.formatters.prettier_d')
+local languages = {
+    typescript = { eslint, prettier },
+    javascript = { eslint, prettier },
+    ['javascript.jsx'] = { eslint, prettier },
+    ['typescript.tsx'] = { eslint, prettier },
+}
 
-    -- Enable formatting provided by efm langserver
+
+local efmls_config = {
+    filetypes = vim.tbl_keys(languages),
+    settings = {
+        rootMarkers = { '.git/' },
+        languages = languages,
+    },
     init_options = {
         documentFormatting = true,
+        documentRangeFormatting = true,
     },
 }
 
-local eslintd = require 'efmls-configs.linters.eslint_d'
-local prettierd = require 'efmls-configs.formatters.prettier_d'
-Efm_options = {}
-local js_filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'cucumber' }
-for _, language in ipairs(js_filetypes) do
-    Efm_options[language] = {
-        linter = eslintd,
-        formatter = prettierd
-    }
-end
-efmls.setup(Efm_options)
+require('lspconfig').efm.setup(efmls_config)
 
 -- Sets up lua_ls language server for Neovim work
 nvim_lsp.lua_ls.setup {
