@@ -18,14 +18,6 @@ ln -s <dotfiles_location>/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ln -s <dotfiles_location>/kitty/theme.conf ~/.config/kitty/theme.conf
 ```
 
-Install [Packer](https://github.com/wbthomason/packer.nvim) for Neovim dependencies.
-```
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-```
-
-Run `:PackerSync` in Neovim.
-
 For Eslint and Prettier, you have to install EFM langserver, eslint_d (daemon for quickly running eslint), and prettierd (the same for prettier).
 
 ```
