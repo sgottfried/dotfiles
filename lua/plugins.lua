@@ -32,7 +32,7 @@ require("lazy").setup({
     'tpope/vim-unimpaired',
     'tpope/vim-vinegar',
     { "rcarriga/nvim-dap-ui",            dependencies = { "mfussenegger/nvim-dap" } },
-    { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     { "mxsdev/nvim-dap-vscode-js",       dependencies = { "mfussenegger/nvim-dap" } },
     {
         'creativenull/efmls-configs-nvim',
@@ -46,11 +46,21 @@ require("lazy").setup({
     },
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { "nvim-telescope/telescope-live-grep-args.nvim" },
+        tag = '0.1.3',
+        dependencies = {
+            {
+                'nvim-lua/plenary.nvim',
+                "nvim-telescope/telescope-live-grep-args.nvim",
+                -- This will not install any breaking changes.
+                -- For major updates, this must be adjusted manually.
+                version = "^1.0.0",
+            },
+        },
         config = function()
-            require('telescope').load_extension('live_grep_args')
+            require("telescope").load_extension("live_grep_args")
         end
     },
+
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { { 'kyazdani42/nvim-web-devicons', opt = true } },
@@ -59,30 +69,20 @@ require("lazy").setup({
         end
     },
     {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {} -- this is equalent to setup({}) function
+    },
+    {
         "nvim-neorg/neorg",
-        run = ":Neorg sync-parsers",
+        build = ":Neorg sync-parsers",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             require('neorg').setup {
                 load = {
                     ["core.defaults"] = {}, -- Loads default behaviour
-                    ["core.integrations.treesitter"] = {},
-                    ["core.concealer"] = {
-                        config = {
-                            icon_preset = "diamond",
-                            icons = {
-                                todo = {
-                                    done = {
-                                        icon = '✓'
-                                    },
-                                    pending = {
-                                        icon = '□'
-                                    }
-                                }
-                            }
-                        }
-                    },                  -- Adds pretty icons to your documents
-                    ["core.dirman"] = { -- Manages Neorg workspaces
+                    -- ["core.concealer"] = {}, -- Adds pretty icons to your documents
+                    ["core.dirman"] = {     -- Manages Neorg workspaces
                         config = {
                             workspaces = {
                                 notes = "~/notes",
@@ -92,6 +92,6 @@ require("lazy").setup({
                     },
                 },
             }
-        end
-    }
+        end,
+    },
 })
