@@ -41,8 +41,8 @@ vim.api.nvim_create_autocmd('Filetype', {
 -- vim.api.nvim_create_autocmd('Filetype', {
 --     pattern = { '*.tsx', '*.ts', '*.jsx', '*.js' },
 --     callback = function()
-    -- vim.keymap.set('n', '<leader>t', run_test_js, { remap = false })
-    -- vim.keymap.set('n', '<leader>T', debug_test_js, { remap = false })
+-- vim.keymap.set('n', '<leader>t', run_test_js, { remap = false })
+-- vim.keymap.set('n', '<leader>T', debug_test_js, { remap = false })
 --     end
 -- })
 
