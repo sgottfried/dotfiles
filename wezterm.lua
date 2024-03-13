@@ -8,8 +8,9 @@ wezterm.on('gui-startup', function(cmd)
 
     gui_window:maximize()
 
-    pane:split { size = 0.6, direction = "Top" }
-    pane:split({ direction = "Right" })
+    pane:split({ size = 0.5, direction = "Top" })
+    pane:split({ size = 0.33, direction = "Right" })
+    pane:split({ size = 1.0, direction = "Left" })
 end)
 return {
     color_scheme = "Gruvbox dark, hard (base16)",
