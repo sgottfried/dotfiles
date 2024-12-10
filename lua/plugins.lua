@@ -38,13 +38,18 @@ require("lazy").setup({
     { "folke/which-key.nvim", event = "VeryLazy",
         keys = { { "<leader>?", function() require("which-key").show({ global = false }) end,
             desc = "Buffer Local Keymaps (which-key)", }, }, },
-    { "nvim-neorg/neorg", dependencies = { "luarocks.nvim", "nvim-neorg/neorg-telescope" },
-        cmd = "Neorg",
-        config = function() require("neorg").setup({ load = { ["core.defaults"] = {}, ["core.concealer"] = {},
-                ["core.integrations.telescope"] = {}, ["core.journal"] = { config = { workspace = "journal", } },
+    {
+        "nvim-neorg/neorg",
+        lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+        version = "*", -- Pin Neorg to the latest stable release
+        opts = {
+            load = { ["core.defaults"] = {},
+                ["core.concealer"] = {},
+                ["core.journal"] = { config = { workspace = "journal", } },
                 ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
-                ["core.qol.todo_items"] = {}, ["core.ui"] = {}, }, })
-        end, },
+                ["core.qol.todo_items"] = {}, ["core.ui"] = {}, }
+        }
+    },
     { "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",
             "nvim-treesitter/nvim-treesitter", "nvim-neotest/neotest-jest" },
@@ -53,7 +58,7 @@ require("lazy").setup({
             end, }), } })
         end },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },
-    { "vhyrro/luarocks.nvim", priority = 1000, config = true, cmd = "Neorg" },
+    { "vhyrro/luarocks.nvim", priority = 1000, config = true },
     { 'creativenull/efmls-configs-nvim', version = 'v1.x.x', },
     { 'nvim-lualine/lualine.nvim', dependencies = { { 'kyazdani42/nvim-web-devicons', opt = true } },
         config = function() require('lualine').setup({ options = { theme = 'gruvbox', },
