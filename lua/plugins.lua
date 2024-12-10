@@ -53,7 +53,7 @@ require("lazy").setup({
             end, }), } })
         end },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },
-    { "vhyrro/luarocks.nvim", priority = 1000, config = true, },
+    { "vhyrro/luarocks.nvim", priority = 1000, config = true, cmd = "Neorg" },
     { 'creativenull/efmls-configs-nvim', version = 'v1.x.x', },
     { 'nvim-lualine/lualine.nvim', dependencies = { { 'kyazdani42/nvim-web-devicons', opt = true } },
         config = function() require('lualine').setup({ options = { theme = 'gruvbox', },
