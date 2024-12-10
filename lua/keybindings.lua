@@ -11,6 +11,11 @@ wk.add({
         desc =
         "Search project (without tests)"
     },
+    {
+        "<leader>N",
+        ':Neorg journal today<CR>',
+        desc = "Open Neorg journal for today"
+    },
     { "<leader>b", group = "buffer" },
     {
         '<leader>bi',
