@@ -47,7 +47,8 @@ end
 vim.api.nvim_create_autocmd("Filetype", {
     pattern = "norg",
     callback = function()
-        vim.opt.conceallevel = 2
+        vim.opt_local.conceallevel = 2
+        vim.opt_local.nowrap = false
         vim.keymap.set("n", "<leader>t", "<Plug>(neorg.qol.todo-items.todo.task-cycle)", { buffer = true })
         vim.keymap.set("i", "<C-l>", insert_neorg_link, { buffer = true })
     end,
