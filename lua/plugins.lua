@@ -45,6 +45,7 @@ require("lazy").setup({
         opts = {
             load = { ["core.defaults"] = {},
                 ["core.concealer"] = {},
+                ["core.integrations.treesitter"] = {},
                 ["core.journal"] = { config = { workspace = "journal", } },
                 ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
                 ["core.qol.todo_items"] = {}, ["core.ui"] = {}, }
