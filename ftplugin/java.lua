@@ -1,11 +1,11 @@
 local mason = require 'mason-registry'
 local jdtls_path = mason.get_package('jdtls'):get_install_path()
 local java_debug_path =
-    mason.get_package('java-debug-adapter'):get_install_path()
+mason.get_package('java-debug-adapter'):get_install_path()
 local java_test_path = mason.get_package('java-test'):get_install_path()
 
 local equinox_launcher_path =
-    vim.fn.glob(jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+vim.fn.glob(jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar')
 
 local system = 'linux'
 if vim.fn.has 'win32' then
@@ -21,7 +21,7 @@ local jdtls = require 'jdtls'
 
 local config = {
     cmd = {
-        vim.fn.expand '~/.sdkman/candidates/java/21.0.3-tem/bin/java', -- or '/path/to/java17_or_newer/bin/java'
+        vim.fn.expand '~/.sdkman/candidates/java/21.0.5-tem/bin/java', -- or '/path/to/java17_or_newer/bin/java'
 
         '-Declipse.application=org.eclipse.jdt.ls.core.id1',
         '-Dosgi.bundles.defaultStartLevel=4',
@@ -45,8 +45,8 @@ local config = {
 
         '-data',
         vim.fn.stdpath 'cache'
-        .. '/jdtls/'
-        .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t'),
+            .. '/jdtls/'
+            .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t'),
     },
 
     root_dir = vim.fs.root(0, { 'mvnw', 'gradlew' }),
@@ -80,7 +80,7 @@ local config = {
                 runtimes = {
                     {
                         name = 'JavaSE-17',
-                        path = '~/.sdkman/candidates/java/17.0.0-tem',
+                        path = '~/.sdkman/candidates/java/17.0.13-amzn',
                     },
                 },
             },

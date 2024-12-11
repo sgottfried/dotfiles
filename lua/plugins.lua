@@ -30,6 +30,7 @@ require("lazy").setup({
     'tpope/vim-projectionist',
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
+    'williamboman/mason.nvim',
     { 'github/copilot.vim', cond = vim.env.NEOVIM_INSTALL_COPILOT == 'true' },
     { "NeogitOrg/neogit",
         cmd = "Neogit",

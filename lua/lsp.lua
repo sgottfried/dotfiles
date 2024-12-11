@@ -94,3 +94,5 @@ nvim_lsp.lua_ls.setup {
         },
     },
 }
+
+require("mason").setup()
