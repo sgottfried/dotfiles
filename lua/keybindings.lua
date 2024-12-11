@@ -33,7 +33,7 @@ wk.add({
     { "<leader>c", ':copen<CR>', desc = "Open Quickfix" },
     { "<leader>g", group = "Git" },
     { "<leader>gd", ':Neogit diff<CR>', desc = "Neogit Diff" },
-    { "<leader>gg", ':Neogit<CR>', desc = "Open Neogit" },
+    { "<leader>gg", function() require('neogit').open({ kind = "split_above_all" }) end, desc = "Open Neogit" },
     { "<leader>n", ':Telescope neorg find_linkable<CR>', desc = "Find Neorg Heading" },
     {
         "<leader>s",
