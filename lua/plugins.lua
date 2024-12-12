@@ -31,6 +31,10 @@ require("lazy").setup({
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
     'williamboman/mason.nvim',
+    { 'ahmedkhalf/project.nvim',
+        config = function()
+            require('telescope').load_extension('projects')
+        end },
     { 'github/copilot.vim', cond = vim.env.NEOVIM_INSTALL_COPILOT == 'true' },
     { "NeogitOrg/neogit",
         cmd = "Neogit",
