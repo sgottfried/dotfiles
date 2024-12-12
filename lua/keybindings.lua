@@ -50,6 +50,7 @@ wk.add({
         desc =
         "Search project"
     },
+    { "<leader>p", ':Telescope projects<CR>', desc = "Switch project" },
     { "<leader>t", group = "Neotest" },
     { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "test file" },
     {
