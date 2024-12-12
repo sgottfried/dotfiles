@@ -12,9 +12,19 @@ wk.add({
         "Search project (without tests)"
     },
     {
-        "<leader>N",
-        "<Plug>(neorg.telescope.search_headings)",
-        desc = "Open Neorg journal for today"
+        "<leader>n", group = "neorg"
+    },
+    {
+        "<leader>ns", "<Plug>(neorg.telescope.search_headings)", desc = "search headings"
+    },
+    {
+        "<leader>ni", "<Plug>(neorg.telescope.insert_link)", desc = "insert link"
+    },
+    {
+        "<leader>nf", "<Plug>(neorg.telescope.insert_file_link)", desc = "insert file link"
+    },
+    {
+        "<leader>nj", ":Neorg journal today", desc = "Neorg journal for today"
     },
     { "<leader>b", group = "buffer" },
     {
@@ -34,7 +44,6 @@ wk.add({
     { "<leader>g", group = "Git" },
     { "<leader>gd", ':Neogit diff<CR>', desc = "Neogit Diff" },
     { "<leader>gg", function() require('neogit').open({ kind = "split_above_all" }) end, desc = "Open Neogit" },
-    { "<leader>n", ':Telescope neorg find_linkable<CR>', desc = "Find Neorg Heading" },
     {
         "<leader>s",
         ':Telescope live_grep<CR>',
