@@ -24,7 +24,7 @@ wk.add({
         "<leader>nf", "<Plug>(neorg.telescope.insert_file_link)", desc = "insert file link"
     },
     {
-        "<leader>nj", ":Neorg journal today", desc = "Neorg journal for today"
+        "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
     },
     { "<leader>b", group = "buffer" },
     {
