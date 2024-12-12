@@ -47,10 +47,12 @@ require("lazy").setup({
             load = { ["core.defaults"] = {},
                 ["core.concealer"] = {},
                 ["core.integrations.treesitter"] = {},
+                ["core.integrations.telescope"] = {},
                 ["core.journal"] = { config = { workspace = "journal", } },
                 ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
                 ["core.qol.todo_items"] = {}, ["core.ui"] = {}, }
-        }
+        },
+        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
     },
     { "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",

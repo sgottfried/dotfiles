@@ -13,7 +13,7 @@ wk.add({
     },
     {
         "<leader>N",
-        ':Neorg journal today<CR>',
+        "<Plug>(neorg.telescope.search_headings)",
         desc = "Open Neorg journal for today"
     },
     { "<leader>b", group = "buffer" },
