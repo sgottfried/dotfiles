@@ -34,8 +34,10 @@ require("lazy").setup({
     { 'ahmedkhalf/project.nvim',
         config = function()
             require('telescope').load_extension('projects')
+            require('project_nvim').setup {}
         end },
     { 'github/copilot.vim', cond = vim.env.NEOVIM_INSTALL_COPILOT == 'true' },
+    { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { "NeogitOrg/neogit",
         cmd = "Neogit",
         dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim", },
