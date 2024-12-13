@@ -60,3 +60,13 @@ vim.api.nvim_create_autocmd("Filetype", {
         vim.keymap.set("i", "<C-l>", insert_markdown_link, { buffer = true })
     end,
 })
+
+vim.api.nvim_create_autocmd({ 'UIEnter' }, {
+    callback = function(event)
+        local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
+        if client ~= nil and client.name == "Firenvim" then
+            vim.opt_local.lines = 100
+            vim.opt_local.columns = 100
+        end
+    end
+})
