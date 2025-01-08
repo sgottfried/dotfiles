@@ -18,6 +18,7 @@ require("lazy").setup({
     'HiPhish/rainbow-delimiters.nvim',
     'airblade/vim-gitgutter',
     'ellisonleao/gruvbox.nvim',
+    'github/copilot.vim',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/nvim-cmp',
     'ianks/vim-tsx',
@@ -36,7 +37,6 @@ require("lazy").setup({
             require('telescope').load_extension('projects')
             require('project_nvim').setup {}
         end },
-    { 'github/copilot.vim', cond = vim.env.NEOVIM_INSTALL_COPILOT == 'true' },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { "NeogitOrg/neogit",
         cmd = "Neogit",
