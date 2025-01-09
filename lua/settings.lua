@@ -27,10 +27,12 @@ vim.opt.wildignore:append "**/.git/*"
 vim.opt.wildignore:append "**/node_modules/*"
 vim.opt.wildignorecase = true
 
+
 vim.g.firenvim_config = {
-  localSettings = {
-    ['.*'] = {
-      takeover = 'never',
+    localSettings = {
+        ['atlassian.net'] = {
+            takeover = 'never',
+            priority = 1
+        },
     },
-  },
 }
