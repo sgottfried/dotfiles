@@ -16,10 +16,12 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
     command = vim.cmd('cwindow')
 })
 
+
 vim.api.nvim_create_autocmd('Filetype', {
     pattern = { 'gitcommit', 'gitrebase', 'gitconfig' },
     callback = function() vim.opt.bufhidden = 'delete' end
 })
+
 
 vim.api.nvim_create_autocmd('TermOpen', {
     pattern = { '*' },
@@ -29,19 +31,25 @@ vim.api.nvim_create_autocmd('TermOpen', {
     end
 })
 
+
 local insert_neorg_link = function()
     local link = vim.fn.input("Link: ")
     local text = vim.fn.input("Text: ")
 
+
     vim.api.nvim_set_current_line("{" .. link .. "}[" .. text .. "]")
 end
+
 
 local insert_markdown_link = function()
     local link = vim.fn.input("Link: ")
     local text = vim.fn.input("Text: ")
 
+
     vim.api.nvim_set_current_line("[" .. text .. "](" .. link .. ")")
 end
+
+
 
 
 vim.api.nvim_create_autocmd("Filetype", {
@@ -55,6 +63,7 @@ vim.api.nvim_create_autocmd("Filetype", {
     end,
 })
 
+
 vim.api.nvim_create_autocmd("Filetype", {
     pattern = "markdown",
     callback = function()
@@ -62,12 +71,12 @@ vim.api.nvim_create_autocmd("Filetype", {
     end,
 })
 
+
 vim.api.nvim_create_autocmd({ 'UIEnter' }, {
     callback = function(event)
         local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
         if client ~= nil and client.name == "Firenvim" then
-            vim.opt_local.lines = 100
-            vim.opt_local.columns = 100
+            vim.o.laststatus = 0
         end
     end
 })
