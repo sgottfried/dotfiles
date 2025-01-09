@@ -1,6 +1,7 @@
 local telescope_builtin = require('telescope.builtin')
 local default_opts = { remap = false }
 
+
 local wk = require("which-key")
 wk.add({
     { "<leader>;", ':', desc = "Run Command" },
@@ -15,7 +16,7 @@ wk.add({
         "<leader>n", group = "neorg"
     },
     {
-        "<leader>ns", "<Plug>(neorg.telescope.search_headings)", desc = "search headings"
+        "<leader>ns", "<Plug>(neorg.telescope.find_linkable)", desc = "search headings"
     },
     {
         "<leader>ni", "<Plug>(neorg.telescope.insert_link)", desc = "insert link"
@@ -67,6 +68,7 @@ wk.add({
     },
     { "<leader>w", proxy = "<c-w>", group = "windows" },
 })
+
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 vim.keymap.set('i', 'jk', '<Esc>')
