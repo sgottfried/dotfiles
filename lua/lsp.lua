@@ -20,7 +20,7 @@ end
 
 -- Sets up all language servers (aside from ts_ls and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "jsonls" }
+local servers = { "bashls", "cssls", "jsonls", "terraformls" }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
