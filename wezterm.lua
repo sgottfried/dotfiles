@@ -11,11 +11,11 @@ wezterm.on('gui-startup', function(cmd)
     -- pane:split({ size = 0.5, direction = "Top" })
 end)
 
-function scheme_for_appearance(appearance)
+local function scheme_for_appearance(appearance)
     if appearance:find "Dark" then
-        return "Catppuccin Mocha"
+        return "Gruvbox dark, hard (base16)"
     else
-        return "Catppuccin Latte"
+        return "Gruvbox light, hard (base16)"
     end
 end
 
