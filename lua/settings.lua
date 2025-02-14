@@ -26,13 +26,3 @@ vim.opt.path:remove "/usr/include"
 vim.opt.wildignore:append "**/.git/*"
 vim.opt.wildignore:append "**/node_modules/*"
 vim.opt.wildignorecase = true
-
-
-vim.g.firenvim_config = {
-    localSettings = {
-        ['atlassian.net'] = {
-            takeover = 'never',
-            priority = 1
-        },
-    },
-}
