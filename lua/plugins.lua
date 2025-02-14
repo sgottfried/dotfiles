@@ -32,7 +32,8 @@ require("lazy").setup({
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
     'williamboman/mason.nvim',
-    { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+    { "ellisonleao/gruvbox.nvim", priority = 1000,                    config = true },
+
     {
         "f-person/auto-dark-mode.nvim",
         opts = {
@@ -64,7 +65,7 @@ require("lazy").setup({
             "kiyoon/magick.nvim",
         }
     },
-    { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
+    { 'glacambre/firenvim',       build = ":call firenvim#install(0)" },
     {
         "NeogitOrg/neogit",
         cmd = "Neogit",
@@ -81,23 +82,18 @@ require("lazy").setup({
         }, },
     },
     {
-        "nvim-neorg/neorg",
-        lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-        version = "*", -- Pin Neorg to the latest stable release
-        opts = {
-            load = {
-                ["core.defaults"] = {},
-                ["core.concealer"] = {},
-                ["core.integrations.treesitter"] = {},
-                ["core.integrations.telescope"] = {},
-                ["core.journal"] = { config = { workspace = "journal", } },
-                ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
-                ["core.qol.todo_items"] = {},
-                ["core.ui"] = {},
-            }
-        },
-        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
+        'nvim-orgmode/orgmode',
+        event = 'VeryLazy',
+        ft = { 'org' },
+        config = function()
+            -- Setup orgmode
+            require('orgmode').setup({
+                org_agenda_files = '~/notes/*work.org',
+                org_todo_keywords = { 'START', 'TODO', 'WAIT', 'DONE', 'CANCELED' }
+            })
+        end,
     },
+    { 'akinsho/org-bullets.nvim',        config = function() require('org-bullets').setup() end },
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",
@@ -120,7 +116,7 @@ require("lazy").setup({
         end
     },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },
-    { "vhyrro/luarocks.nvim", priority = 1000, config = true },
+    { "vhyrro/luarocks.nvim",            priority = 1000,                                       config = true },
     { 'creativenull/efmls-configs-nvim', version = 'v1.x.x', },
     {
         'nvim-lualine/lualine.nvim',
@@ -128,7 +124,13 @@ require("lazy").setup({
         config = function()
         end
     },
-    { 'nvim-telescope/telescope.nvim', tag = '0.1.3', cmd = "Telescope" },
-    { 'stevearc/oil.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, },
-    { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.3',
+        cmd = "Telescope",
+        dependencies = {
+            "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-media-files.nvim" }
+    },
+    { 'stevearc/oil.nvim',     dependencies = { "nvim-tree/nvim-web-devicons" }, },
+    { 'windwp/nvim-autopairs', event = "InsertEnter",                            opts = {} },
 })
