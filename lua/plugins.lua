@@ -32,7 +32,7 @@ require("lazy").setup({
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
     'williamboman/mason.nvim',
-    { "ellisonleao/gruvbox.nvim", priority = 1000,                    config = true },
+    { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
     {
         "f-person/auto-dark-mode.nvim",
@@ -65,7 +65,7 @@ require("lazy").setup({
             "kiyoon/magick.nvim",
         }
     },
-    { 'glacambre/firenvim',       build = ":call firenvim#install(0)" },
+    { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     {
         "NeogitOrg/neogit",
         cmd = "Neogit",
@@ -88,12 +88,12 @@ require("lazy").setup({
         config = function()
             -- Setup orgmode
             require('orgmode').setup({
-                org_agenda_files = '~/notes/*work.org',
-                org_todo_keywords = { 'START', 'TODO', 'WAIT', 'DONE', 'CANCELED' }
+                org_agenda_files = { '~/notes/*work.org', '~/notes/personal.norg', '~/notes/beorg/**/*.org' },
+                org_todo_keywords = { 'START', 'TODO', 'WAIT', '|', 'DONE', 'CANCELED' }
             })
         end,
     },
-    { 'akinsho/org-bullets.nvim',        config = function() require('org-bullets').setup() end },
+    { 'akinsho/org-bullets.nvim', config = function() require('org-bullets').setup() end },
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",
@@ -116,7 +116,7 @@ require("lazy").setup({
         end
     },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },
-    { "vhyrro/luarocks.nvim",            priority = 1000,                                       config = true },
+    { "vhyrro/luarocks.nvim", priority = 1000, config = true },
     { 'creativenull/efmls-configs-nvim', version = 'v1.x.x', },
     {
         'nvim-lualine/lualine.nvim',
@@ -129,8 +129,9 @@ require("lazy").setup({
         tag = '0.1.3',
         cmd = "Telescope",
         dependencies = {
-            "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-media-files.nvim" }
+            "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-media-files.nvim"
+        }
     },
-    { 'stevearc/oil.nvim',     dependencies = { "nvim-tree/nvim-web-devicons" }, },
-    { 'windwp/nvim-autopairs', event = "InsertEnter",                            opts = {} },
+    { 'stevearc/oil.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, },
+    { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
 })
