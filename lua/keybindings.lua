@@ -35,7 +35,7 @@ wk.add({
     { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
     { "<leader>ns", require("telescope").extensions.orgmode.search_headings, desc = "Search Org Headings" },
     { "<leader>nl", require("telescope").extensions.orgmode.insert_link, desc = "Insert Org Mode Link" },
-    { "<leader>oa", require("telescope").extensions.orgmode.insert_link, desc = "Insert Org Mode Link" },
+    { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
     { "<leader>p", function() require 'telescope'.extensions.projects.projects {} end, desc = "Switch Project" },
     {
         "<leader>s",
