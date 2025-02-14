@@ -1,66 +1,78 @@
-local telescope_builtin = require('telescope.builtin')
-local default_opts = { remap = false }
+vim.api.nvim_create_autocmd({ "CursorHold" }, {
+    pattern = "*",
+    callback = function()
+        vim.diagnostic.open_float()
+    end
+})
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    callback = function()
+        vim.lsp.buf.format()
+    end,
+})
 
-
-local wk = require("which-key")
-wk.add({
-    { "<leader>;",        ':',                          desc = "Run Command" },
-    { "<leader><leader>", telescope_builtin.find_files, desc = "Find Files" },
-    {
-        "<leader>S",
-        ':Telescope live_grep glob_pattern=!*{test,spec}.*<CR>',
-        desc =
-        "Search project (without tests)"
-    },
-    { "<leader>b",  group = "buffer" },
-    {
-        '<leader>bS',
-        ':noa w<CR>',
-        desc =
-        "Save (without formatting)"
-    },
-    {
-        '<leader>bi',
-        ':Telescope buffers<CR>',
-        desc =
-        "List buffers"
-    },
-    { '<leader>bs', ':w<CR>',                                                            desc = "Save" },
-    { "<leader>c",  ':copen<CR>',                                                        desc = "Open Quickfix" },
-    { "<leader>g",  group = "Git" },
-    { "<leader>gd", ':Neogit diff<CR>',                                                  desc = "Neogit Diff" },
-    { "<leader>gg", function() require('neogit').open({ kind = "split_above_all" }) end, desc = "Open Neogit" },
-    { "<leader>hh", ':Telescope help_tags<CR>',                                          desc = "Search Helptags" },
-    { "<leader>p",  function() require 'telescope'.extensions.projects.projects {} end,  desc = "Switch Project" },
-    {
-        "<leader>s",
-        ':Telescope live_grep<CR>',
-        desc =
-        "Search project"
-    },
-    { "<leader>t",  group = "Neotest" },
-    { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "test file" },
-    {
-        "<leader>tt",
-        function() require("neotest").run.run() end,
-        desc =
-        "run test under cursor"
-    },
-    {
-        "<leader>tw",
-        "<cmd>lua require('neotest').run.run({ jestCommand = 'npx jest --watch ' })<cr>",
-        desc =
-        "run test watch"
-    },
-    { "<leader>w", proxy = "<c-w>", group = "windows" },
-    { "<leader>x", ":.lua<CR>",     desc = "Execute Lua line" },
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+    pattern = { '[^l]*' },
+    nested = true,
+    command = vim.cmd('cwindow')
 })
 
 
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-vim.keymap.set('i', 'jk', '<Esc>')
-vim.keymap.set('n', 'Y', '"+y', default_opts)
-vim.keymap.set('t', '<C-[>', [[<C-\><C-n>]], default_opts)
-vim.keymap.set('t', 'jk', [[<C-\><C-n>]], default_opts)
-vim.keymap.set('v', 'Y', '"+y', default_opts)
-vim.keymap.set('v', '<leader>x', ':lua<CR>', default_opts)
+vim.api.nvim_create_autocmd('Filetype', {
+    pattern = { 'gitcommit', 'gitrebase', 'gitconfig' },
+    callback = function() vim.opt.bufhidden = 'delete' end
+})
+
+
+vim.api.nvim_create_autocmd('TermOpen', {
+    pattern = { '*' },
+    callback = function()
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+    end
+})
+
+
+local insert_neorg_link = function()
+    local link = vim.fn.input("Link: ")
+    local text = vim.fn.input("Text: ")
+
+
+    vim.api.nvim_set_current_line("{" .. link .. "}[" .. text .. "]")
+end
+
+
+local insert_markdown_link = function()
+    local link = vim.fn.input("Link: ")
+    local text = vim.fn.input("Text: ")
+
+
+    vim.api.nvim_set_current_line("[" .. text .. "](" .. link .. ")")
+end
+
+
+
+
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = "org",
+    callback = function()
+        vim.opt_local.conceallevel = 2
+    end,
+})
+
+
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = "markdown",
+    callback = function()
+        vim.keymap.set("i", "<C-l>", insert_markdown_link, { buffer = true })
+    end,
+})
+
+
+vim.api.nvim_create_autocmd({ 'UIEnter' }, {
+    callback = function(event)
+        local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
+        if client ~= nil and client.name == "Firenvim" then
+            vim.o.laststatus = 0
+        end
+    end
+})
