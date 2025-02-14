@@ -53,7 +53,7 @@ end
 
 
 vim.api.nvim_create_autocmd("Filetype", {
-    pattern = "org",
+    pattern = "org,orgagenda",
     callback = function()
         vim.opt_local.conceallevel = 2
     end,
