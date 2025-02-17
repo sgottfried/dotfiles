@@ -77,12 +77,7 @@ require("lazy").setup({
         }
     },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
-    {
-        "NeogitOrg/neogit",
-        cmd = "Neogit",
-        dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim", },
-        config = true
-    },
+    { 'tpope/vim-fugitive' },
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
