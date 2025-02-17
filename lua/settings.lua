@@ -1,4 +1,4 @@
-vim.g.copilot_filetypes = { norg = false }
+vim.g.copilot_filetypes = { org = false, norg = false }
 vim.g.blamer_date_format = '%m/%d/%y'
 vim.g.blamer_enabled = 1
 vim.g.blamer_show_in_visual_modes = 0
