@@ -106,7 +106,7 @@ require("lazy").setup({
             -- Setup orgmode
             require('orgmode').setup({
                 org_agenda_files = { '~/notes/**/*.org' },
-                org_todo_keywords = { 'START', 'TODO', 'WAIT', '|', 'DONE', 'CANCELED' }
+                org_todo_keywords = { 'TODO', 'START', 'WAIT', '|', 'DONE', 'CANCELED' }
             })
         end,
     },
