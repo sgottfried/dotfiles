@@ -33,6 +33,13 @@ require("lazy").setup({
     'tpope/vim-unimpaired',
     'williamboman/mason.nvim',
     {
+        "folke/snacks.nvim",
+        opts = {
+            image = {
+            }
+        }
+    },
+    {
         "CopilotC-Nvim/CopilotChat.nvim",
         dependencies = {
             { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
@@ -67,14 +74,6 @@ require("lazy").setup({
             require('telescope').load_extension('projects')
             require('project_nvim').setup {}
         end
-    },
-    {
-        "3rd/image.nvim",
-        build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
-        opts = {},
-        dependencies = {
-            "kiyoon/magick.nvim",
-        }
     },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { 'tpope/vim-fugitive' },
