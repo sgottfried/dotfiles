@@ -31,11 +31,21 @@ wk.add({
     { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
     { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
     { "<leader>hh", ':Telescope help_tags<CR>', desc = "Search Helptags" },
-    { "<leader>nj", function() require('org-roam').ext.dailies.goto_today() end, desc = "Go to today's journal" },
-    { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
-    { "<leader>ns", require("telescope").extensions.orgmode.search_headings, desc = "Search Org Headings" },
-    { "<leader>nl", require("telescope").extensions.orgmode.insert_link, desc = "Insert Org Mode Link" },
-    { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
+    {
+        "<leader>n", group = "neorg"
+    },
+    {
+        "<leader>ns", "<Plug>(neorg.telescope.find_linkable)", desc = "search headings"
+    },
+    {
+        "<leader>ni", "<Plug>(neorg.telescope.insert_link)", desc = "insert link"
+    },
+    {
+        "<leader>nf", "<Plug>(neorg.telescope.insert_file_link)", desc = "insert file link"
+    },
+    {
+        "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
+    },
     { "<leader>p", function() require 'telescope'.extensions.projects.projects {} end, desc = "Switch Project" },
     {
         "<leader>s",
