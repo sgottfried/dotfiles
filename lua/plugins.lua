@@ -52,23 +52,21 @@ require("lazy").setup({
         end
     },
     { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
-
-    -- {
-    --     "f-person/auto-dark-mode.nvim",
-    --     opts = {
-    --         update_interval = 1000,
-    --         set_dark_mode = function()
-    --             vim.api.nvim_set_option_value("background", "dark", {})
-    --             require('gruvbox').setup({ contrast = "hard" })
-    --             vim.cmd("colorscheme gruvbox")
-    --         end,
-    --         set_light_mode = function()
-    --             vim.api.nvim_set_option_value("background", "light", {})
-    --             require('gruvbox').setup({ contrast = "hard" })
-    --             vim.cmd("colorscheme gruvbox")
-    --         end,
-    --     },
-    -- },
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    {
+        "f-person/auto-dark-mode.nvim",
+        opts = {
+            update_interval = 1000,
+            set_dark_mode = function()
+                vim.api.nvim_set_option_value("background", "dark", {})
+                vim.cmd("colorscheme catppuccin-mocha")
+            end,
+            set_light_mode = function()
+                vim.api.nvim_set_option_value("background", "light", {})
+                vim.cmd("colorscheme catppuccin-latte")
+            end,
+        },
+    },
     {
         'ahmedkhalf/project.nvim',
         config = function()
