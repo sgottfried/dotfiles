@@ -12,11 +12,11 @@ wezterm.on('gui-startup', function(cmd)
 end)
 
 local function scheme_for_appearance(appearance)
-    -- if appearance:find "Dark" then
-    return "Gruvbox dark, hard (base16)"
-    -- else
-    -- return "Gruvbox light, hard (base16)"
-    -- end
+    if appearance:find "Dark" then
+        return "Gruvbox dark, hard (base16)"
+    else
+        return "Gruvbox light, hard (base16)"
+    end
 end
 
 return {
