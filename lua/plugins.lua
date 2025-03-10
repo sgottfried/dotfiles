@@ -18,7 +18,6 @@ require("lazy").setup({
     'APZelos/blamer.nvim',
     'HiPhish/rainbow-delimiters.nvim',
     'airblade/vim-gitgutter',
-    'dhruvasagar/vim-table-mode',
     'github/copilot.vim',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/nvim-cmp',
@@ -88,23 +87,62 @@ require("lazy").setup({
         }, },
     },
     {
-        "nvim-neorg/neorg",
-        lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-        version = "*", -- Pin Neorg to the latest stable release
-        opts = {
-            load = {
-                ["core.defaults"] = {},
-                ["core.concealer"] = {},
-                ["core.integrations.treesitter"] = {},
-                ["core.integrations.telescope"] = {},
-                ["core.journal"] = { config = { workspace = "journal", } },
-                ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
-                ["core.qol.todo_items"] = {},
-                ["core.ui"] = {},
-            }
+        "nvim-orgmode/telescope-orgmode.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "nvim-orgmode/orgmode",
+            "nvim-telescope/telescope.nvim",
         },
-        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } }
+        config = function()
+            require("telescope").load_extension("orgmode")
+        end,
     },
+    {
+        'nvim-orgmode/orgmode',
+        event = 'VeryLazy',
+        ft = { 'org' },
+        config = function()
+            -- Setup orgmode
+            require('orgmode').setup({
+                org_agenda_files = { '~/notes/**/*.org' },
+                org_todo_keywords = { 'TODO', 'START', 'WAIT', '|', 'DONE', 'CANCELED' }
+            })
+        end,
+    },
+    {
+        "chipsenkbeil/org-roam.nvim",
+        -- tag = "0.1.1",
+        branch = "main",
+        dependencies = {
+            {
+                "nvim-orgmode/orgmode",
+                -- tag = "0.3.7",
+            },
+        },
+        config = function()
+            require("org-roam").setup({
+                directory = "~/notes/org-roam",
+                -- optional
+                org_files = {
+                    "~/notes/**/*.org",
+                },
+                extensions = {
+                    dailies = {
+                        templates = {
+                            d = {
+                                description = "default",
+                                template =
+                                "* Meetings\n* Tickets\n* Tasks\n* Merged PRs\n* Reviewed PRs\n* Thoughts\n* Todos",
+                                target = "%<%Y-%m-%d>.org",
+                            },
+                        },
+                    },
+                },
+            })
+        end
+    },
+
+    { 'akinsho/org-bullets.nvim', config = function() require('org-bullets').setup() end },
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",
