@@ -4,7 +4,8 @@ local default_opts = { remap = false }
 local wk = require("which-key")
 wk.add({
     { "<leader>;", ':', desc = "Run Command" },
-    { "<leader><leader>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    { "<leader><leader>", function() Snacks.picker.smart({ layout = "ivy" }) end,
+        desc = "Smart Find Files" },
     { "<leader>b", group = "buffer" },
     {
         '<leader>bS',
@@ -14,7 +15,7 @@ wk.add({
     },
     {
         '<leader>bi',
-        function() Snacks.picker.buffers() end,
+        function() Snacks.picker.buffers({ layout = "ivy" }) end,
         desc =
         "List buffers"
     },
@@ -23,14 +24,14 @@ wk.add({
     { "<leader>g", group = "Git" },
     { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
     { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
-    { "<leader>hh", function() Snacks.picker.help() end, desc = "Search Helptags" },
+    { "<leader>hh", function() Snacks.picker.help({ layout = "ivy" }) end, desc = "Search Helptags" },
     { "<leader>nj", function() require('org-roam').ext.dailies.goto_today() end, desc = "Go to today's journal" },
     { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
     { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
-    { "<leader>pp", function() Snacks.picker.projects() end, desc = "Switch project" },
+    { "<leader>pp", function() Snacks.picker.projects({ layout = "ivy" }) end, desc = "Switch project" },
     {
         "<leader>s",
-        function() Snacks.picker.grep() end,
+        function() Snacks.picker.grep({ layout = "ivy" }) end,
         desc =
         "Search project"
     },
