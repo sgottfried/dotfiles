@@ -35,8 +35,8 @@ require("lazy").setup({
     {
         "folke/snacks.nvim",
         opts = {
-            image = {
-            }
+            image = {},
+            picker = {}
         }
     },
     {
@@ -172,14 +172,6 @@ require("lazy").setup({
         dependencies = { { 'kyazdani42/nvim-web-devicons', opt = true } },
         config = function()
         end
-    },
-    {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.3',
-        cmd = "Telescope",
-        dependencies = {
-            "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-media-files.nvim"
-        }
     },
     { 'stevearc/oil.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, },
     { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
