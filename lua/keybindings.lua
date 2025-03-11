@@ -1,4 +1,3 @@
-local telescope_builtin = require('telescope.builtin')
 local default_opts = { remap = false }
 
 
@@ -27,10 +26,7 @@ wk.add({
     { "<leader>hh", function() Snacks.picker.help() end, desc = "Search Helptags" },
     { "<leader>nj", function() require('org-roam').ext.dailies.goto_today() end, desc = "Go to today's journal" },
     { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
-    { "<leader>ns", require("telescope").extensions.orgmode.search_headings, desc = "Search Org Headings" },
-    { "<leader>nl", require("telescope").extensions.orgmode.insert_link, desc = "Insert Org Mode Link" },
     { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
-    { "<leader>p", function() require 'telescope'.extensions.projects.projects {} end, desc = "Switch Project" },
     {
         "<leader>s",
         function() Snacks.picker.grep() end,

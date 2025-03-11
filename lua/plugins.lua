@@ -68,13 +68,6 @@ require("lazy").setup({
             end,
         },
     },
-    {
-        'ahmedkhalf/project.nvim',
-        config = function()
-            require('telescope').load_extension('projects')
-            require('project_nvim').setup {}
-        end
-    },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { 'tpope/vim-fugitive' },
     {
@@ -85,17 +78,6 @@ require("lazy").setup({
             function() require("which-key").show({ global = false }) end,
             desc = "Buffer Local Keymaps (which-key)",
         }, },
-    },
-    {
-        "nvim-orgmode/telescope-orgmode.nvim",
-        event = "VeryLazy",
-        dependencies = {
-            "nvim-orgmode/orgmode",
-            "nvim-telescope/telescope.nvim",
-        },
-        config = function()
-            require("telescope").load_extension("orgmode")
-        end,
     },
     {
         'nvim-orgmode/orgmode',
