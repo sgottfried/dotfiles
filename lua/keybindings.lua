@@ -27,6 +27,7 @@ wk.add({
     { "<leader>nj", function() require('org-roam').ext.dailies.goto_today() end, desc = "Go to today's journal" },
     { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
     { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
+    { "<leader>pp", function() Snacks.picker.projects() end, desc = "Switch project" },
     {
         "<leader>s",
         function() Snacks.picker.grep() end,
