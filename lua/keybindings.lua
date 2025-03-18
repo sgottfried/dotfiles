@@ -24,10 +24,11 @@ wk.add({
     { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
     { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
     { "<leader>hh", function() Snacks.picker.help() end, desc = "Search Helptags" },
-    { "<leader>nj", function() require('org-roam').ext.dailies.goto_today() end, desc = "Go to today's journal" },
-    { "<leader>nJ", function() require('org-roam').ext.dailies.capture_today() end, desc = "Capture today's journal" },
     { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
     { "<leader>pp", function() Snacks.picker.projects() end, desc = "Switch project" },
+    {
+        "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
+    },
     {
         "<leader>s",
         function() Snacks.picker.grep() end,
