@@ -30,6 +30,9 @@ wk.add({
         "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
     },
     {
+        "<leader>nm", ":MigrateYesterdayTasks<CR>", desc = "Neorg journal migrate tasks"
+    },
+    {
         "<leader>s",
         function() Snacks.picker.grep() end,
         desc =
