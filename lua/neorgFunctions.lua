@@ -26,7 +26,7 @@ local function migrate_yesterday_tasks()
             current_heading = line
             tasks_by_heading[current_heading] = tasks_by_heading[current_heading] or {}
             table.insert(new_lines, line) -- Keep heading in yesterday's file
-        elseif line:match("%(%s*%)") then -- Detect "* ( ) Task1" format
+        elseif line:match("%(%s*%)") or line:match("%(-%)") or line:match("%(=%)") then -- Detect "* ( ) Task1" format
             -- Move to today's file
             local started_date = line:match("@started%((%d%d%d%d%-%d%d%-%d%d)%)")
             if not started_date then
