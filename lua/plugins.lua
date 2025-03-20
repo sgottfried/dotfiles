@@ -122,19 +122,26 @@ require("lazy").setup({
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
-            "mxsdev/nvim-dap-vscode-js",
+            "jay-babu/mason-nvim-dap.nvim",
+
 
         },
         config = function()
-            require("dap-vscode-js").setup({
-                debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-                adapters = { "pwa-node" },
+            require("mason-nvim-dap").setup({
+                ensure_installed = { "js-debug-adapter" },
             })
 
             local dap = require("dap")
-            local dapui = require("dapui")
-
-
+            dap.adapters["pwa-node"] = {
+                type = "server",
+                host = "localhost",
+                port = 9229,
+                executable = {
+                    command = "node",
+                    args = { vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+                        "9229" },
+                },
+            }
             dap.configurations.javascript = {
                 {
                     type = "pwa-node",
@@ -149,24 +156,26 @@ require("lazy").setup({
                     },
                     console = "integratedTerminal",
                     internalConsoleOptions = "neverOpen",
-                }
-            }
-            dap.configurations.typescript = { {
-                type = "pwa-node",
-                request = "launch",
-                name = "Debug Jest Tests",
-                runtimeExecutable = "node",
-                runtimeArgs = {
-                    "--inspect-brk",
-                    "${workspaceFolder}/node_modules/.bin/jest",
-                    "--runInBand",
-                    "--no-cache",
                 },
-                console = "integratedTerminal",
-                internalConsoleOptions = "neverOpen",
-            } }
+            }
 
-            dapui.setup()
+            dap.configurations.typescript = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Debug Jest Tests",
+                    runtimeExecutable = "node",
+                    runtimeArgs = {
+                        "--inspect-brk",
+                        "${workspaceFolder}/node_modules/.bin/jest",
+                        "--runInBand",
+                        "--no-cache",
+                    },
+                    console = "integratedTerminal",
+                    internalConsoleOptions = "neverOpen",
+                },
+            }
+            require('dapui').setup()
         end,
     },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },

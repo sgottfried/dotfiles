@@ -3,6 +3,7 @@ local default_opts = { remap = false }
 
 local wk = require("which-key")
 wk.add({
+    { "gb", function() require 'dap'.toggle_breakpoint() end, desc = "toggle breakpoint" },
     { "<leader>;", ':', desc = "Run Command" },
     { "<leader><leader>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
     { "<leader>b", group = "buffer" },
@@ -39,6 +40,14 @@ wk.add({
         "Search project"
     },
     { "<leader>t", group = "Neotest" },
+    { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "debug test" },
+    {
+        "<leader>tt",
+        function() require("neotest").run.run() end,
+        desc =
+        "run test under cursor"
+    },
+
     { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "test file" },
     {
         "<leader>tt",
