@@ -99,6 +99,7 @@ require("lazy").setup({
     },
     {
         "nvim-neotest/neotest",
+        lazy = false,
         dependencies = { "nvim-neotest/nvim-nio", "nvim-lua/plenary.nvim", "antoinemadec/FixCursorHold.nvim",
             "nvim-treesitter/nvim-treesitter", "nvim-neotest/neotest-jest" },
         config = function()
