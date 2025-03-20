@@ -143,39 +143,25 @@ require("lazy").setup({
                         "9229" },
                 },
             }
-            dap.configurations.javascript = {
-                {
-                    type = "pwa-node",
-                    request = "launch",
-                    name = "Debug Jest Tests",
-                    runtimeExecutable = "node",
-                    runtimeArgs = {
-                        "--inspect-brk",
-                        "${workspaceFolder}/node_modules/.bin/jest",
-                        "--runInBand",
-                        "--no-cache",
+            for _, language in ipairs({ "javascript", "javascript.jsx", "typescript", "typescript.tsx" }) do
+                dap.configurations[language] = {
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Debug Jest Tests",
+                        runtimeExecutable = "node",
+                        runtimeArgs = {
+                            "--inspect-brk",
+                            "${workspaceFolder}/node_modules/.bin/jest",
+                            "--runInBand",
+                            "--no-cache",
+                        },
+                        console = "integratedTerminal",
+                        internalConsoleOptions = "neverOpen",
                     },
-                    console = "integratedTerminal",
-                    internalConsoleOptions = "neverOpen",
-                },
-            }
+                }
+            end
 
-            dap.configurations.typescript = {
-                {
-                    type = "pwa-node",
-                    request = "launch",
-                    name = "Debug Jest Tests",
-                    runtimeExecutable = "node",
-                    runtimeArgs = {
-                        "--inspect-brk",
-                        "${workspaceFolder}/node_modules/.bin/jest",
-                        "--runInBand",
-                        "--no-cache",
-                    },
-                    console = "integratedTerminal",
-                    internalConsoleOptions = "neverOpen",
-                },
-            }
             require('dapui').setup()
         end,
     },
