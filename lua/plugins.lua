@@ -105,6 +105,7 @@ require("lazy").setup({
         config = function()
             require('neotest').setup({
                 adapters = { require('neotest-jest')({
+                    jestCommand = "npx jest",
                     cwd = function(path)
                         return vim
                             .fn.getcwd()
