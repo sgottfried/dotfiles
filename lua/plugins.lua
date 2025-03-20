@@ -118,6 +118,57 @@ require("lazy").setup({
             })
         end
     },
+    {
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            "rcarriga/nvim-dap-ui",
+            "mxsdev/nvim-dap-vscode-js",
+
+        },
+        config = function()
+            require("dap-vscode-js").setup({
+                debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+                adapters = { "pwa-node" },
+            })
+
+            local dap = require("dap")
+            local dapui = require("dapui")
+
+
+            dap.configurations.javascript = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Debug Jest Tests",
+                    runtimeExecutable = "node",
+                    runtimeArgs = {
+                        "--inspect-brk",
+                        "${workspaceFolder}/node_modules/.bin/jest",
+                        "--runInBand",
+                        "--no-cache",
+                    },
+                    console = "integratedTerminal",
+                    internalConsoleOptions = "neverOpen",
+                }
+            }
+            dap.configurations.typescript = { {
+                type = "pwa-node",
+                request = "launch",
+                name = "Debug Jest Tests",
+                runtimeExecutable = "node",
+                runtimeArgs = {
+                    "--inspect-brk",
+                    "${workspaceFolder}/node_modules/.bin/jest",
+                    "--runInBand",
+                    "--no-cache",
+                },
+                console = "integratedTerminal",
+                internalConsoleOptions = "neverOpen",
+            } }
+
+            dapui.setup()
+        end,
+    },
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", },
     { "vhyrro/luarocks.nvim", priority = 1000, config = true },
     { 'creativenull/efmls-configs-nvim', version = 'v1.x.x', },
