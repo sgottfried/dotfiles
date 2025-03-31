@@ -43,7 +43,7 @@ wk.add({
     { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "debug test" },
     {
         "<leader>tt",
-        function() require("neotest").run.run() end,
+        function() require("neotest").run.run({ jestCommand = 'npx jest --coverage' }) end,
         desc =
         "run test under cursor"
     },
