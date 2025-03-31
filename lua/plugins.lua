@@ -126,14 +126,6 @@ require("lazy").setup({
         config = function()
             require("coverage").setup({
                 auto_reload = true,
-                lang = {
-                    javascript = { coverage_file = "./coverage/lcov.info" },
-                    typescript = { coverage_file = "./coverage/lcov.info" },
-                    ["javascript.jsx"] = { coverage_file = "./coverage/lcov.info" },
-                    ["typescript.tsx"] = { coverage_file = "./coverage/lcov.info" },
-                    javascriptreact = { coverage_file = "./coverage/lcov.info" },
-                    typescriptreact = { coverage_file = "./coverage/lcov.info" }
-                }
             })
         end,
     },
