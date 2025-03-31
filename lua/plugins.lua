@@ -121,6 +121,15 @@ require("lazy").setup({
         end
     },
     {
+        "andythigpen/nvim-coverage",
+        version = "*",
+        config = function()
+            require("coverage").setup({
+                auto_reload = true,
+            })
+        end,
+    },
+    {
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
