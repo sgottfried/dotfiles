@@ -37,7 +37,6 @@ require("lazy").setup({
         "folke/snacks.nvim",
         opts = {
             image = {},
-            picker = {}
         }
     },
     {
@@ -68,6 +67,17 @@ require("lazy").setup({
                 vim.cmd("colorscheme gruvbox")
             end,
         },
+    },
+     {
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    {
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require('telescope').load_extension('projects')
+            require('project_nvim').setup {}
+        end
     },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { 'tpope/vim-fugitive' },

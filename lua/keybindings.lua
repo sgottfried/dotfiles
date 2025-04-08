@@ -1,11 +1,10 @@
 local default_opts = { remap = false }
 
-
 local wk = require("which-key")
 wk.add({
     { "gb", function() require 'dap'.toggle_breakpoint() end, desc = "toggle breakpoint" },
     { "<leader>;", ':', desc = "Run Command" },
-    { "<leader><leader>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    { "<leader><leader>", ':Telescope find_files<CR>', desc = "Telescope find files" },
     { "<leader>b", group = "buffer" },
     {
         '<leader>bS',
@@ -15,7 +14,7 @@ wk.add({
     },
     {
         '<leader>bi',
-        function() Snacks.picker.buffers() end,
+        ':Telescope buffers<CR>',
         desc =
         "List buffers"
     },
@@ -29,8 +28,8 @@ wk.add({
     { "<leader>g", group = "Git" },
     { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
     { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
-    { "<leader>hh", function() Snacks.picker.help() end, desc = "Search Helptags" },
-    { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
+    { "<leader>hh", ':Telescope help_tags<CR>', desc = "Search Helptags" },
+    { "<leader>p", function() require 'telescope'.extensions.projects.projects {} end, desc = "Switch Project" },
     {
         "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
     },
@@ -39,7 +38,7 @@ wk.add({
     },
     {
         "<leader>s",
-        function() Snacks.picker.grep() end,
+        ':Telescope live_grep<CR>',
         desc =
         "Search project"
     },
