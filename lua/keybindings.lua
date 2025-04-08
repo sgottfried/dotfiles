@@ -31,7 +31,6 @@ wk.add({
     { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
     { "<leader>hh", function() Snacks.picker.help() end, desc = "Search Helptags" },
     { "<leader>oa", ':Org agenda t<CR>', desc = "Open Org Agenda" },
-    { "<leader>pp", function() Snacks.picker.projects() end, desc = "Switch project" },
     {
         "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
     },
