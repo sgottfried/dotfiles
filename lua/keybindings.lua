@@ -65,6 +65,7 @@ wk.add({
         "run test watch"
     },
     { "<leader>w", proxy = "<c-w>", group = "windows" },
+    { "<leader>x", ":.lua<CR>", desc = "Execute Lua line" },
 })
 
 

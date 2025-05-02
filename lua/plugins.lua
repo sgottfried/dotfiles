@@ -40,38 +40,6 @@ require("lazy").setup({
         }
     },
     {
-        "folke/trouble.nvim",
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
-        cmd = "Trouble",
-        keys = {
-            {
-                "<leader>xx",
-                "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
-            },
-            {
-                "<leader>xX",
-                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Buffer Diagnostics (Trouble)",
-            },
-            {
-                "<leader>xs",
-                "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
-            },
-            {
-                "<leader>xl",
-                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP Definitions / references / ... (Trouble)",
-            },
-            {
-                "<leader>xQ",
-                "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
-            },
-        },
-    },
-    {
         "CopilotC-Nvim/CopilotChat.nvim",
         dependencies = {
             { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
@@ -100,9 +68,9 @@ require("lazy").setup({
             end,
         },
     },
-    {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+     {
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+      dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
         'ahmedkhalf/project.nvim',
