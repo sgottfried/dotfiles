@@ -186,21 +186,21 @@
      ((file-exists-p (expand-file-name "package.json" parent)) parent)
      (t (my/find-package-root (directory-file-name parent))))))
 
-(defun my/dap-debug-jest-current-file ()
-  "Debug the current test file with Jest using dap-mode, starting from the nearest package root."
-  (interactive)
-  (let* ((file-path buffer-file-name)
-         (package-root (my/find-package-root file-path))
-         (relative-test-file (file-relative-name file-path package-root))
-         (jest-bin (expand-file-name "node_modules/.bin/jest" package-root)))
-    (unless (and (file-exists-p jest-bin) (file-executable-p jest-bin))
-      (error "jest binary not found at %s" jest-bin))
+(defun my/dap-debug-nx-jest-project (project-name)
+  "Debug the given Nx Jest project."
+  (interactive "sNx Project Name: ")
+  (let* ((project-root (projectile-project-root))
+         (jest-bin (expand-file-name "node_modules/.bin/nx" project-root)))
     (dap-debug
      (list :type "node"
            :request "launch"
-           :name "Jest Current File"
+           :name (concat "Nx Jest: " project-name)
            :program jest-bin
-           :args (list relative-test-file "--runInBand")
-           :cwd package-root
+           :args (list "test" project-name "--runInBand")
+           :cwd project-root
            :console "integratedTerminal"
            :internalConsoleOptions "neverOpen"))))
+
+(map! :leader
+      (:prefix ("d" . "debug")
+       :desc "Debug Nx Jest project" "n" #'my/dap-debug-nx-jest-project))
