@@ -178,13 +178,29 @@
 ;; blamer-mode
 (use-package! blamer :defer t :config (blamer-mode 1))
 
-(require 'dap-node)
-(dap-register-debug-template "Jest Tests"
-                             (list :type "node"
-                                   :request "launch"
-                                   :name "Jest Tests"
-                                   :program "${workspaceFolder}/node_modules/.bin/jest"
-                                   :args '("--runInBand")
-                                   :cwd "${workspaceFolder}"
-                                   :console "integratedTerminal"
-                                   :internalConsoleOptions "neverOpen"))
+(defun my/find-package-root (path)
+  "Walk up from PATH to find the nearest directory with package.json."
+  (let ((parent (file-name-directory (directory-file-name path))))
+    (cond
+     ((null parent) nil)
+     ((file-exists-p (expand-file-name "package.json" parent)) parent)
+     (t (my/find-package-root (directory-file-name parent))))))
+
+(defun my/dap-debug-jest-current-file ()
+  "Debug the current test file with Jest using dap-mode, starting from the nearest package root."
+  (interactive)
+  (let* ((file-path buffer-file-name)
+         (package-root (my/find-package-root file-path))
+         (relative-test-file (file-relative-name file-path package-root))
+         (jest-bin (expand-file-name "node_modules/.bin/jest" package-root)))
+    (unless (and (file-exists-p jest-bin) (file-executable-p jest-bin))
+      (error "jest binary not found at %s" jest-bin))
+    (dap-debug
+     (list :type "node"
+           :request "launch"
+           :name "Jest Current File"
+           :program jest-bin
+           :args (list relative-test-file "--runInBand")
+           :cwd package-root
+           :console "integratedTerminal"
+           :internalConsoleOptions "neverOpen"))))
