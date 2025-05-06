@@ -177,3 +177,14 @@
 
 ;; blamer-mode
 (use-package! blamer :defer t :config (blamer-mode 1))
+
+(require 'dap-node)
+(dap-register-debug-template "Jest Tests"
+                             (list :type "node"
+                                   :request "launch"
+                                   :name "Jest Tests"
+                                   :program "${workspaceFolder}/node_modules/.bin/jest"
+                                   :args '("--runInBand")
+                                   :cwd "${workspaceFolder}"
+                                   :console "integratedTerminal"
+                                   :internalConsoleOptions "neverOpen"))

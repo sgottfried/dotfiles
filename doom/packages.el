@@ -56,3 +56,4 @@
 (package! org-bullets)
 (package! feature-mode)
 (package! edit-server)
+(package! dap-mode)
