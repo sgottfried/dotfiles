@@ -204,3 +204,5 @@
 (map! :leader
       (:prefix ("d" . "debug")
        :desc "Debug Nx Jest project" "n" #'my/dap-debug-nx-jest-project))
+
+(require 'dap-node)
