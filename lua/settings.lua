@@ -26,3 +26,15 @@ vim.opt.path:remove "/usr/include"
 vim.opt.wildignore:append "**/.git/*"
 vim.opt.wildignore:append "**/node_modules/*"
 vim.opt.wildignorecase = true
+
+-- set diagnostics to virtual text
+vim.diagnostic.config({
+    virtual_text = {
+        prefix = '●', -- Could be '●', '▎', 'x'
+        spacing = 4,
+    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})
