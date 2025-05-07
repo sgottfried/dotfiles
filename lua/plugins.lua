@@ -18,6 +18,7 @@ require("lazy").setup({
     'APZelos/blamer.nvim',
     'HiPhish/rainbow-delimiters.nvim',
     'airblade/vim-gitgutter',
+    'alnav3/sonarlint.nvim',
     'dhruvasagar/vim-table-mode',
     'github/copilot.vim',
     'hrsh7th/cmp-nvim-lsp',
@@ -68,9 +69,9 @@ require("lazy").setup({
             end,
         },
     },
-     {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
-      dependencies = { 'nvim-lua/plenary.nvim' }
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
         'ahmedkhalf/project.nvim',
