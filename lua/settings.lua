@@ -26,6 +26,8 @@ vim.opt.path:remove "/usr/include"
 vim.opt.wildignore:append "**/.git/*"
 vim.opt.wildignore:append "**/node_modules/*"
 vim.opt.wildignorecase = true
+vim.opt.foldmethod = 'indent'
+vim.opt.foldenable = false
 
 -- set diagnostics to virtual text
 vim.diagnostic.config({
