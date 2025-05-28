@@ -37,6 +37,7 @@ require("lazy").setup({
     {
         "folke/snacks.nvim",
         opts = {
+            picker = {},
             image = {},
         }
     },
@@ -69,19 +70,15 @@ require("lazy").setup({
             end,
         },
     },
-    {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
-        dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    {
-        'ahmedkhalf/project.nvim',
-        config = function()
-            require('telescope').load_extension('projects')
-            require('project_nvim').setup {}
-        end
-    },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
-    { 'tpope/vim-fugitive' },
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "sindrets/diffview.nvim",
+            "folke/snacks.nvim",
+        },
+    },
     {
         "folke/which-key.nvim",
         event = "VeryLazy",

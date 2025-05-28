@@ -4,7 +4,7 @@ local wk = require("which-key")
 wk.add({
     { "gb", function() require 'dap'.toggle_breakpoint() end, desc = "toggle breakpoint" },
     { "<leader>;", ':', desc = "Run Command" },
-    { "<leader><leader>", ':Telescope find_files<CR>', desc = "Telescope find files" },
+    { "<leader><leader>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
     { "<leader>b", group = "buffer" },
     {
         '<leader>bS',
@@ -14,7 +14,7 @@ wk.add({
     },
     {
         '<leader>bi',
-        ':Telescope buffers<CR>',
+        function() Snacks.picker.buffers() end,
         desc =
         "List buffers"
     },
@@ -24,12 +24,10 @@ wk.add({
     { "<leader>dd", ':DapContinue<CR>', desc = "Continue Debugging" },
     { "<leader>di", ':DapStepInto<CR>', desc = "Step Into" },
     { "<leader>do", ':DapStepOver<CR>', desc = "Step Over" },
-    { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
     { "<leader>g", group = "Git" },
-    { "<leader>gd", ':Gvdiffsplit<CR>', desc = "Fugitive Diff" },
-    { "<leader>gg", ':G<CR>', desc = "Open Fugitive" },
-    { "<leader>hh", ':Telescope help_tags<CR>', desc = "Search Helptags" },
-    { "<leader>p", function() require 'telescope'.extensions.projects.projects {} end, desc = "Switch Project" },
+    { "<leader>gd", function() require 'neogit'.open({ "diff" }) end, desc = "Neogit diff" },
+    { "<leader>gg", function() require 'neogit'.open() end, desc = "Open Neogit" },
+    { "<leader>p", function() Snacks.picker.projects() end, desc = "Switch Project" },
     {
         "<leader>nj", ":Neorg journal today<CR>", desc = "Neorg journal for today"
     },
@@ -38,7 +36,7 @@ wk.add({
     },
     {
         "<leader>s",
-        ':Telescope live_grep<CR>',
+        function() Snacks.picker.grep() end,
         desc =
         "Search project"
     },
