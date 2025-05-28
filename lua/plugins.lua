@@ -37,8 +37,9 @@ require("lazy").setup({
     {
         "folke/snacks.nvim",
         opts = {
-            picker = {},
             image = {},
+            indent = {},
+            picker = {},
         }
     },
     {
