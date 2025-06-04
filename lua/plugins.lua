@@ -37,9 +37,10 @@ require("lazy").setup({
     {
         "folke/snacks.nvim",
         opts = {
+            dashboard = {},
             image = {},
             indent = {},
-            picker = {},
+            picker = {}
         }
     },
     {
@@ -79,6 +80,15 @@ require("lazy").setup({
             "sindrets/diffview.nvim",
             "folke/snacks.nvim",
         },
+        config = function()
+            require("neogit").setup({
+                kind = "split_above_all",
+                integrations = {
+                    diffview = true,
+                    snacks = true,
+                },
+            })
+        end
     },
     {
         "folke/which-key.nvim",
