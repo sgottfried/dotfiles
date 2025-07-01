@@ -20,7 +20,7 @@ end
 
 -- Sets up all language servers (aside from ts_ls and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "jsonls", "terraformls" }
+local servers = { "bashls", "cssls", "jsonls", "tailwindcss", "terraformls" }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
@@ -96,25 +96,3 @@ nvim_lsp.lua_ls.setup {
 }
 
 require("mason").setup()
-
-require('sonarlint').setup({
-    server = {
-        cmd = {
-            'sonarlint-language-server',
-            -- Ensure that sonarlint-language-server uses stdio channel
-            '-stdio',
-            '-analyzers',
-            -- paths to the analyzers you need, using those for python and java in this example
-            vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
-            vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
-        }
-    },
-    filetypes = {
-        -- Tested and working
-        'javascript',
-        'typescript',
-        'javascriptreact',
-        'typescriptreact',
-        'java',
-    }
-})
