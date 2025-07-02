@@ -20,13 +20,20 @@ end
 
 -- Sets up all language servers (aside from ts_ls and lua_ls)
 -- with the on_attach from above and the capabilities from nvim-cmp (completion)
-local servers = { "bashls", "cssls", "jsonls", "tailwindcss", "terraformls" }
+local servers = { "bashls", "cssls", "jsonls", "terraformls" }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
         capabilities = capabilities
     }
 end
+
+nvim_lsp.tailwindcss.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "javascript.jsx",
+        "typescript.tsx" },
+}
 
 -- Sets up ts_ls with the on_attach from above, the capabilities from nvim-cmp (completion),
 -- a root directory that contains `.git`, and the ability to organize imports.
