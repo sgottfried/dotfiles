@@ -33,6 +33,12 @@ nvim_lsp.tailwindcss.setup {
     capabilities = capabilities,
     filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "javascript.jsx",
         "typescript.tsx" },
+    init_options = {
+        userLanguages = {
+            typescript = { tsx = 'javascript' },
+            javascript = { jsx = 'javascript' },
+        },
+    },
 }
 
 -- Sets up ts_ls with the on_attach from above, the capabilities from nvim-cmp (completion),
