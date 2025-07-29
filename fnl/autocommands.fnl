@@ -1,27 +1,30 @@
 (vim.api.nvim_create_autocmd [:CursorHold]
                              {:callback (fn [] (vim.diagnostic.open_float))
-                              :pattern "*"})
+                             :pattern "*"})
 (vim.api.nvim_create_autocmd [:BufWritePre]
                              {:callback (fn [] (vim.lsp.buf.format))})
 (vim.api.nvim_create_autocmd :QuickFixCmdPost
                              {:command (vim.cmd :cwindow)
-                              :nested true
-                              :pattern ["[^l]*"]})
+                             :nested true
+                             :pattern ["[^l]*"]})
 (vim.api.nvim_create_autocmd :Filetype
                              {:callback (fn [] (set vim.opt.bufhidden :delete))
-                              :pattern [:gitcommit :gitrebase :gitconfig]})
+                             :pattern [:gitcommit :gitrebase :gitconfig]})
 
 (vim.api.nvim_create_autocmd :TermOpen
                              {:callback (fn [] (set vim.wo.number false)
                                           (set vim.wo.relativenumber false))
-                              :pattern ["*"]})
+                             :pattern ["*"]})
+(vim.api.nvim_create_autocmd [:BufWritePre]
+                             {:callback (fn [] (vim.cmd ":!fennel --compile % > ./wezterm.lua"))
+                             :pattern ["wezterm.fnl"]})
 (fn insert-neorg-link []
   (let [link (vim.fn.input "Link: ")
-        text (vim.fn.input "Text: ")]
+             text (vim.fn.input "Text: ")]
     (vim.api.nvim_set_current_line (.. "{" link "}[" text "]"))))
 (fn insert-markdown-link []
   (let [link (vim.fn.input "Link: ")
-        text (vim.fn.input "Text: ")]
+             text (vim.fn.input "Text: ")]
     (vim.api.nvim_set_current_line (.. "[" text "](" link ")"))))
 (vim.api.nvim_create_autocmd :Filetype
                              {:callback (fn []
@@ -36,13 +39,13 @@
                                           (vim.keymap.set :i :<C-d>
                                                           "<Plug>(neorg.tempus.insert-date.insert-mode)"
                                                           {:buffer true}))
-                              :pattern :norg})
+                             :pattern :norg})
 (vim.api.nvim_create_autocmd :Filetype
                              {:callback (fn []
                                           (vim.keymap.set :i :<C-l>
                                                           insert-markdown-link
                                                           {:buffer true}))
-                              :pattern :markdown})
+                             :pattern :markdown})
 (vim.api.nvim_create_autocmd [:UIEnter]
                              {:callback (fn [event]
                                           (local client
