@@ -10,9 +10,6 @@
 (vim.api.nvim_create_autocmd :Filetype
                              {:callback (fn [] (set vim.opt.bufhidden :delete))
                               :pattern [:gitcommit :gitrebase :gitconfig]})
-(vim.api.nvim_create_autocmd :Filetype
-                             {:callback (fn [] (vim.cmd "set ft=clojure"))
-                              :pattern ["fennel"]})
 
 (vim.api.nvim_create_autocmd :TermOpen
                              {:callback (fn [] (set vim.wo.number false)

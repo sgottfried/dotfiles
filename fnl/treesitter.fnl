@@ -1,5 +1,6 @@
 ((. (require :nvim-treesitter.configs) :setup) {:auto_install false
-                                                :ensure_installed [:vimdoc
+                                                :ensure_installed [:fennel
+                                                                   :vimdoc
                                                                    :javascript
                                                                    :typescript
                                                                    :tsx
