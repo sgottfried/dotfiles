@@ -21,7 +21,7 @@
               (let [input "wezterm.fnl"
                     output "wezterm.lua"
                     ok (vim.fn.system (.. "fennel --compile " input " > " output))]
-                (when (not= 0 (vim.v.shell_error))
+                (when (not= 0 vim.v.shell_error)
                   (vim.notify (.. "Failed to compile " input) :error))))})
 
 (fn insert-neorg-link []
