@@ -15,9 +15,15 @@
                              {:callback (fn [] (set vim.wo.number false)
                                           (set vim.wo.relativenumber false))
                              :pattern ["*"]})
-(vim.api.nvim_create_autocmd [:BufWritePre]
-                             {:callback (fn [] (vim.cmd ":!fennel --compile % > ./wezterm.lua"))
-                             :pattern ["wezterm.fnl"]})
+(vim.api.nvim_create_autocmd ["BufWritePost"]
+ {:pattern "wezterm.fnl"
+  :callback (fn []
+              (let [input "wezterm.fnl"
+                    output "wezterm.lua"
+                    ok (vim.fn.system (.. "fennel --compile " input " > " output))]
+                (when (not= 0 (vim.v.shell_error))
+                  (vim.notify (.. "Failed to compile " input) :error))))})
+
 (fn insert-neorg-link []
   (let [link (vim.fn.input "Link: ")
              text (vim.fn.input "Text: ")]
