@@ -30,6 +30,7 @@ require("lazy").setup({
     'nvim-lua/plenary.nvim',
     'pangloss/vim-javascript',
     'tpope/vim-commentary',
+    'tpope/vim-fugitive',
     'tpope/vim-projectionist',
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
@@ -73,23 +74,6 @@ require("lazy").setup({
         },
     },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
-    {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "sindrets/diffview.nvim",
-            "folke/snacks.nvim",
-        },
-        config = function()
-            require("neogit").setup({
-                kind = "split_above_all",
-                integrations = {
-                    diffview = true,
-                    snacks = true,
-                },
-            })
-        end
-    },
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
@@ -205,18 +189,4 @@ require("lazy").setup({
     },
     { 'stevearc/oil.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, },
     { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
-    {
-        'pwntester/octo.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'folke/snacks.nvim',
-            'nvim-tree/nvim-web-devicons',
-        },
-        config = function()
-            require "octo".setup({
-                github_hostname = "github.ford.com",
-                picker = "snacks",
-            })
-        end
-    }
 })
