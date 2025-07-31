@@ -41,13 +41,14 @@ wk.add({
         function()
             local term_buf = vim.fn.bufnr('term://*')
             if term_buf == -1 then
-                vim.cmd('botright split | terminal')
+                vim.cmd('botright split | resize 20 | terminal')
             else
-                vim.cmd('botright split | buffer ' .. term_buf)
+                vim.cmd('botright split | resize 20 | buffer ' .. term_buf)
             end
         end,
         desc = "Open Terminal"
     },
+
 
     {
         "<leader>s",
