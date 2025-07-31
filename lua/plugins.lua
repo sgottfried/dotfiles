@@ -28,6 +28,7 @@ require("lazy").setup({
     'mfussenegger/nvim-jdtls',
     'neovim/nvim-lspconfig',
     'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
     'pangloss/vim-javascript',
     'tpope/vim-commentary',
     'tpope/vim-fugitive',
@@ -35,15 +36,6 @@ require("lazy").setup({
     'tpope/vim-surround',
     'tpope/vim-unimpaired',
     'williamboman/mason.nvim',
-    {
-        "folke/snacks.nvim",
-        opts = {
-            dashboard = {},
-            image = {},
-            indent = {},
-            picker = {}
-        }
-    },
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         dependencies = {
@@ -96,9 +88,16 @@ require("lazy").setup({
                 ["core.dirman"] = { config = { default_workspace = "journal", workspaces = { journal = "~/notes" }, }, },
                 ["core.qol.todo_items"] = {},
                 ["core.ui"] = {},
-            }
+                ["core.integrations.telescope"] = {
+                    config = {
+                        insert_file_link = {
+                            show_title_preview = true,
+                        }
+                    }
+                },
+            },
         },
-        dependencies = { { "nvim-lua/plenary.nvim" } }
+        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } }
     },
     {
         "nvim-neotest/neotest",
@@ -189,4 +188,25 @@ require("lazy").setup({
     },
     { 'stevearc/oil.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, },
     { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('telescope').setup {
+                extensions = {
+                    ["ui-select"] = {
+                        require("telescope.themes").get_dropdown {}
+                    }
+                }
+            }
+            require('telescope').load_extension('ui-select')
+        end
+    },
+    {
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require('telescope').load_extension('projects')
+            require('project_nvim').setup {}
+        end
+    },
 })
