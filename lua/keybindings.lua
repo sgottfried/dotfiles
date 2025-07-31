@@ -37,6 +37,19 @@ wk.add({
         "<leader>nm", ":MigrateYesterdayTasks<CR>", desc = "Neorg journal migrate tasks"
     },
     {
+        "<leader>ot",
+        function()
+            local term_buf = vim.fn.bufnr('term://*')
+            if term_buf == -1 then
+                vim.cmd('botright split | terminal')
+            else
+                vim.cmd('botright split | buffer ' .. term_buf)
+            end
+        end,
+        desc = "Open Terminal"
+    },
+
+    {
         "<leader>s",
         ':Telescope live_grep<CR>',
         desc =
