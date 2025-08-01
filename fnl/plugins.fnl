@@ -27,6 +27,7 @@
                               :tpope/vim-projectionist
                               :tpope/vim-surround
                               :tpope/vim-unimpaired
+                              :udayvir-singh/tangerine.nvim
                               :williamboman/mason.nvim
                               {1 :CopilotC-Nvim/CopilotChat.nvim
                               :build "make tiktoken"
