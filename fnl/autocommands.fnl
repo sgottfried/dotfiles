@@ -14,6 +14,19 @@
                              {:callback (fn [] (set vim.wo.number false)
                                           (set vim.wo.relativenumber false))
                              :pattern ["*"]})
+(vim.api.nvim_create_autocmd 
+  "BufWritePost"
+  {:pattern "wezterm.fnl"
+   :callback (fn []
+              (let [output (vim.fn.system 
+                            (.. "fennel -c " 
+                                (vim.fn.expand "%") 
+                                " > " 
+                                (vim.fn.expand "%:r") 
+                                ".lua"))]
+                (when (not= vim.v.shell_error 0)
+                  (vim.notify (.. "Error compiling wezterm.fnl:\n" output)
+                             vim.log.levels.ERROR))))})
 (fn insert-neorg-link []
   (let [link (vim.fn.input "Link: ")
              text (vim.fn.input "Text: ")]
