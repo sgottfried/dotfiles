@@ -21,7 +21,7 @@
 
 (vim.api.nvim_create_autocmd "BufWinLeave"
   {:pattern ["COMMIT_EDITMSG" "MERGE_MSG" "REBASE_EDITMSG"]
-   :callback #(vim-feedkeys "<leader>ot")
+   :callback #(vim-feedkeys "<leader>otA")
    :desc "Run <leader>ot when closing git commit/rebase/merge buffers"})
 
 (vim.api.nvim_create_autocmd 
