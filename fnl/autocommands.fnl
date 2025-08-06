@@ -14,6 +14,16 @@
                              {:callback (fn [] (set vim.wo.number false)
                                           (set vim.wo.relativenumber false))
                              :pattern ["*"]})
+(fn vim-feedkeys [keys]
+  (vim.api.nvim_feedkeys
+    (vim.api.nvim_replace_termcodes keys true false true)
+    "m" false))
+
+(vim.api.nvim_create_autocmd "BufWinLeave"
+  {:pattern ["COMMIT_EDITMSG" "MERGE_MSG" "REBASE_EDITMSG"]
+   :callback #(vim-feedkeys "<leader>ot")
+   :desc "Run <leader>ot when closing git commit/rebase/merge buffers"})
+
 (vim.api.nvim_create_autocmd 
   "BufWritePost"
   {:pattern "wezterm.fnl"
