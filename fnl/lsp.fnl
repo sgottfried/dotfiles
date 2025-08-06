@@ -56,4 +56,28 @@
                        :workspace {:checkThirdParty false
                        :library (vim.api.nvim_get_runtime_file ""
                                                                true)}}}})
+( local fennel-config
+        {
+        :cmd [ "fennel-language-server" ]
+        :filetypes [ "fennel" ]
+        :single_file_support true
+        :root_dir ((. (require :lspconfig) :util :root_pattern) :fnl)
+        :settings {
+        :fennel {
+        :workspace {
+        :library (vim.api.nvim_list_runtime_paths)
+        :checkThirdParty false
+        }
+        :diagnostics {
+        :globals [ "vim" ]
+        }}
+        }
+        :on_attach (fn [client bufnr]
+                     (set client.server_capabilities.document_formatting
+                          true)
+                     (set client.server_capabilities.document_range_formatting
+                          true)
+                     (on-attach client bufnr)
+                     )})
+((. (require :lspconfig) :fennel_language_server :setup) fennel-config)
 ((. (require :mason) :setup))	

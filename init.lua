@@ -19,7 +19,7 @@ end
 bootstrap("https://github.com/udayvir-singh/tangerine.nvim")
 
 -- Optional and only needed if you also want the macros
-bootstrap("https://github.com/udayvir-singh/hibiscus.nvim")
+-- bootstrap("https://github.com/udayvir-singh/hibiscus.nvim")
 
 require 'tangerine'.setup {
     target = vim.fn.stdpath [[data]] .. "/tangerine",

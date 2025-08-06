@@ -142,6 +142,13 @@
                               {1 :windwp/nvim-autopairs
                               :event :InsertEnter
                               :opts {}}
+                              {1 :Olical/conjure
+                              :ft [:fennel]
+                              :lazy true
+                              :dependencies [[ :PaterJason/cmp-conjure]]
+                              :init (fn []
+                                      (set vim.g.conjure#debug true)
+                              )}
                               {1 :nvim-telescope/telescope.nvim
                               :config (fn []
                                         ((. (require :telescope) :setup) {:extensions {:ui-select [((. (require :telescope.themes)
