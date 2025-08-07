@@ -1,0 +1,11 @@
+-- [nfnl] fnl/config/init.fnl
+require("config.plugins")
+require("config.settings")
+require("config.theme")
+require("config.neorgFunctions")
+require("config.keybindings")
+require("config.autocommands")
+require("config.lsp")
+require("config.completion")
+require("config.treesitter")
+return require("config.debugger")

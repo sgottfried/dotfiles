@@ -1,3 +1,4 @@
+(set vim.g.colorscheme "default")
 (set vim.g.copilot_filetypes {:norg false :org false})
 (set vim.g.blamer_date_format "%m/%d/%y")
 (set vim.g.blamer_enabled 1)
