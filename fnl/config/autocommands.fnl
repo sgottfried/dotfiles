@@ -14,6 +14,22 @@
                              {:callback (fn [] (set vim.wo.number false)
                                           (set vim.wo.relativenumber false))
                              :pattern ["*"]})
+(match (pcall require :nfnl.api.compile-file)
+  (true nfnl-compile)
+  (do
+    (print "NFNL compile module loaded successfully!")
+    
+    ;; Create autogroup for NFNL compilation
+    (local nfnl-group (vim.api.nvim_create_augroup :nfnl-compile {:clear true}))
+    
+    ;; Setup autocompilation on save
+    (vim.api.nvim_create_autocmd :BufWritePost
+                                 {:group nfnl-group
+                                  :pattern "*.fnl"
+                                  :callback (fn []
+                                              (let [file (vim.fn.expand "%:p")]
+                                                (print (.. "Compiling " file))
+                                                (nfnl-compile file)))})))
 (fn vim-feedkeys [keys]
   (vim.api.nvim_feedkeys
     (vim.api.nvim_replace_termcodes keys true false true)

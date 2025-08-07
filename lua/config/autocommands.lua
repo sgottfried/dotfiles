@@ -19,7 +19,29 @@ local function _4_()
   return nil
 end
 vim.api.nvim_create_autocmd("TermOpen", {callback = _4_, pattern = {"*"}})
-local function _5_()
+do
+  local _5_, _6_ = pcall(require, "nfnl.api.compile-file")
+  if ((_5_ == true) and (nil ~= _6_)) then
+    local nfnl_compile = _6_
+    print("NFNL compile module loaded successfully!")
+    local nfnl_group = vim.api.nvim_create_augroup("nfnl-compile", {clear = true})
+    local function _7_()
+      local file = vim.fn.expand("%:p")
+      print(("Compiling " .. file))
+      return nfnl_compile(file)
+    end
+    vim.api.nvim_create_autocmd("BufWritePost", {group = nfnl_group, pattern = "*.fnl", callback = _7_})
+  else
+  end
+end
+local function vim_feedkeys(keys)
+  return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "m", false)
+end
+local function _9_()
+  return vim_feedkeys("<leader>otA")
+end
+vim.api.nvim_create_autocmd("BufWinLeave", {pattern = {"COMMIT_EDITMSG", "MERGE_MSG", "REBASE_EDITMSG"}, callback = _9_, desc = "Run <leader>ot when closing git commit/rebase/merge buffers"})
+local function _10_()
   local output = vim.fn.system(("fennel -c " .. vim.fn.expand("%") .. " > " .. vim.fn.expand("%:r") .. ".lua"))
   if (vim.v.shell_error ~= 0) then
     return vim.notify(("Error compiling wezterm.fnl:\n" .. output), vim.log.levels.ERROR)
@@ -27,7 +49,7 @@ local function _5_()
     return nil
   end
 end
-vim.api.nvim_create_autocmd("BufWritePost", {pattern = "wezterm.fnl", callback = _5_})
+vim.api.nvim_create_autocmd("BufWritePost", {pattern = "wezterm.fnl", callback = _10_})
 local function insert_neorg_link()
   local link = vim.fn.input("Link: ")
   local text = vim.fn.input("Text: ")
@@ -38,19 +60,19 @@ local function insert_markdown_link()
   local text = vim.fn.input("Text: ")
   return vim.api.nvim_set_current_line(("[" .. text .. "](" .. link .. ")"))
 end
-local function _7_()
+local function _12_()
   vim.opt_local.conceallevel = 2
   vim.opt_local.wrap = false
   vim.keymap.set("n", "<leader>t", "<Plug>(neorg.qol.todo-items.todo.task-cycle)", {buffer = true})
   vim.keymap.set("i", "<C-l>", insert_neorg_link, {buffer = true})
   return vim.keymap.set("i", "<C-d>", "<Plug>(neorg.tempus.insert-date.insert-mode)", {buffer = true})
 end
-vim.api.nvim_create_autocmd("Filetype", {callback = _7_, pattern = "norg"})
-local function _8_()
+vim.api.nvim_create_autocmd("Filetype", {callback = _12_, pattern = "norg"})
+local function _13_()
   return vim.keymap.set("i", "<C-l>", insert_markdown_link, {buffer = true})
 end
-vim.api.nvim_create_autocmd("Filetype", {callback = _8_, pattern = "markdown"})
-local function _9_(event)
+vim.api.nvim_create_autocmd("Filetype", {callback = _13_, pattern = "markdown"})
+local function _14_(event)
   local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
   if ((client ~= nil) and (client.name == "Firenvim")) then
     vim.o.laststatus = 0
@@ -59,4 +81,4 @@ local function _9_(event)
     return nil
   end
 end
-return vim.api.nvim_create_autocmd({"UIEnter"}, {callback = _9_})
+return vim.api.nvim_create_autocmd({"UIEnter"}, {callback = _14_})
