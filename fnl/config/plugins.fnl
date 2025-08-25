@@ -35,7 +35,7 @@
                               {1 :CopilotC-Nvim/CopilotChat.nvim
                               :build "make tiktoken"
                               :config (fn []
-                                        ((. (require :CopilotChat) :setup)))
+                                        ((. (require :CopilotChat) :setup) {:model "claude-sonnet-3.5" }))
                               :dependencies [[:github/copilot.vim]
                                              {1 :nvim-lua/plenary.nvim
                                              :branch :master}]}
@@ -151,7 +151,7 @@
                               :dependencies [[ :PaterJason/cmp-conjure]]
                               :init (fn []
                                       (set vim.g.conjure#debug true)
-                              )}
+                                      )}
                               {1 :nvim-telescope/telescope.nvim
                               :config (fn []
                                         ((. (require :telescope) :setup) {:extensions {:ui-select [((. (require :telescope.themes)
@@ -160,8 +160,4 @@
                                             :load_extension) :ui-select))
                               :dependencies [:nvim-lua/plenary.nvim]
                               :tag :0.1.8}
-                              {1 :ahmedkhalf/project.nvim
-                              :config (fn []
-                                        ((. (require :telescope)
-                                            :load_extension) :projects)
-                                        ((. (require :project_nvim) :setup) {}))}])	
+                              ])	
