@@ -35,12 +35,12 @@
 (add-keybinding :<leader>di ":DapStepInto<CR>" "Step Into")
 (add-keybinding :<leader>do ":DapStepOver<CR>" "Step Over")
 (add-keybinding :<leader>gD ":Gvdiffsplit!<CR>" "Fugitive Merge")
+(add-keybinding :<leader>gb "DapToggleBreakpoint" "toggle breakpoint")
 (add-keybinding :<leader>gd ":Gvdiffsplit<CR>" "Fugitive Diff")
 (add-keybinding :<leader>gg ":G<CR>" "Open Fugitive")
 (add-keybinding :<leader>hh ":Telescope help_tags<CR>" "Search Helptags")
 (add-keybinding :<leader>nj ":Neorg journal today<CR>" "Neorg journal for today")
 (add-keybinding :<leader>nm ":MigrateYesterdayTasks<CR>" "Neorg journal migrate tasks")
-(add-keybinding :gb "DapToggleBreakpoint" "toggle breakpoint")
 (add-keybinding :<leader>ot (fn []
                              (let [term-buf (vim.fn.bufnr "term://*")]
                                (if (= term-buf (- 1))
