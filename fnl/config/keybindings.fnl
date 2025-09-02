@@ -57,7 +57,7 @@
 (add-keybinding :<leader>tw "<cmd>lua require('neotest').run.run({ jestCommand = 'npx jest --watch ' })<cr>" "run test watch")
 (add-keybinding :<leader>x ":.lua<CR>" "Execute Lua line")
 (add-keybinding :Y "\"+y" "Yank to system clipboard")
-(add-proxy-group :w :windows :<c-w>)
+(add-proxy-group :<leader>w :windows :<c-w>)
 (add-terminal-mode-keybinding "<C-[" "<C-\\><C-n>")
 (add-terminal-mode-keybinding :jk "<C-\\><C-n>")
 (add-visual-mode-keybinding :<leader>x ":lua<CR>")
