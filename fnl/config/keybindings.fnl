@@ -67,7 +67,7 @@
 (add-keybinding :gb ":DapToggleBreakpoint<CR>" "toggle breakpoint")
 (add-keybinding :Y "\"+y" "Yank to system clipboard")
 (add-proxy-group :<leader>w :windows :<c-w>)
-(add-terminal-mode-keybinding "<C-[" "<C-\\><C-n>")
+(add-terminal-mode-keybinding "<C-[>" "<C-\\><C-n>")
 (add-terminal-mode-keybinding :jk "<C-\\><C-n>")
 (add-visual-mode-keybinding :<leader>x ":lua<CR>")
 (add-visual-mode-keybinding :Y "\"+y")
