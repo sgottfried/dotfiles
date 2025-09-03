@@ -1,6 +1,6 @@
 (local lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim))
 (local chat-model (if (= (os.getenv "NEOVIM_ENVIRONMENT") "work")
-                     "claude-4-sonnet"
+                     "claude-4.0-sonnet"
                      "claude-3.5-sonnet"))
 (when (not (vim.loop.fs_stat lazypath))
   (vim.fn.system [:git

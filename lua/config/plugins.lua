@@ -2,7 +2,7 @@
 local lazypath = (vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 local chat_model
 if (os.getenv("NEOVIM_ENVIRONMENT") == "work") then
-  chat_model = "claude-4-sonnet"
+  chat_model = "claude-4.0-sonnet"
 else
   chat_model = "claude-3.5-sonnet"
 end
