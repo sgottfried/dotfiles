@@ -1,4 +1,7 @@
 (local lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim))
+(local chat-model (if (= (os.getenv "NEOVIM_ENVIRONMENT") "work")
+                     "claude-4-sonnet"
+                     "claude-3.5-sonnet"))
 (when (not (vim.loop.fs_stat lazypath))
   (vim.fn.system [:git
                    :clone
@@ -35,7 +38,7 @@
                               {1 :CopilotC-Nvim/CopilotChat.nvim
                               :build "make tiktoken"
                               :config (fn []
-                                        ((. (require :CopilotChat) :setup) {:model "claude-sonnet-3.5" }))
+                                        ((. (require :CopilotChat) :setup) {:model chat-model}))
                               :dependencies [[:github/copilot.vim]
                                              {1 :nvim-lua/plenary.nvim
                                              :branch :master}]}
