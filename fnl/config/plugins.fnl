@@ -1,7 +1,10 @@
+(import-macros {: if-work? } "config.macros")
+
 (local lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim))
-(local chat-model (if (= (os.getenv "NEOVIM_ENVIRONMENT") "work")
-                     "claude-4.0-sonnet"
-                     "claude-3.5-sonnet"))
+(var chat-model "claude-3.5-sonnet")
+(if-work?
+  (set chat-model "claude-sonnet-4"))
+
 (when (not (vim.loop.fs_stat lazypath))
   (vim.fn.system [:git
                    :clone
