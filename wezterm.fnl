@@ -42,6 +42,7 @@
         {:action (act.ActivatePaneDirection :Right) :key :l :mods :LEADER}
         {:action (act.ActivateTabRelative 1) :key :n :mods :LEADER}
         {:action (act.ActivateTabRelative (- 1)) :key :p :mods :LEADER}
+        {:action act.ActivateCopyMode :key "[" :mods :LEADER}
         {:action act.TogglePaneZoomState :key :z :mods :LEADER}]
  :leader {:key :Space :mods :CTRL :timeout_milliseconds 1000}
  :tab_bar_at_bottom true
