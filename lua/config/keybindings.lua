@@ -38,7 +38,7 @@ wk.add(_4_(...))
 local function _7_(...)
   local tbl_21_ = {}
   local i_22_ = 0
-  for __2_auto, _8_ in ipairs({{"D", ":Gvdiffsplit!<CR>", "Git Merge"}, {"d", ":Gvdiffsplit<CR>", "Git Diff"}, {"g", ":G<CR>", "Open Fugitive"}}) do
+  for __2_auto, _8_ in ipairs({{"D", ":Gvdiffsplit!<CR>", "Git Merge"}, {"b", ":Git blame<CR>", "Git Blame"}, {"d", ":Gvdiffsplit<CR>", "Git Diff"}, {"g", ":G<CR>", "Open Fugitive"}}) do
     local keybinding_3_auto = _8_[1]
     local command_4_auto = _8_[2]
     local desc_5_auto = _8_[3]
@@ -69,39 +69,13 @@ local function _10_(...)
   return tbl_21_
 end
 wk.add(_10_(...))
-local function _13_(...)
-  local tbl_21_ = {}
-  local i_22_ = 0
-  local function _15_()
-    return require("neotest").run.run({strategy = "dap"})
-  end
-  local function _16_()
-    return require("neotest").run.run(vim.fn.expand("%"))
-  end
-  local function _17_()
-    return require("neotest").run.run({jestCommand = "npx jest --coverage"})
-  end
-  for __2_auto, _14_ in ipairs({{"d", _15_, "Debug Test"}, {"f", _16_, "Test File"}, {"t", _17_, "Run Test Under Cursor"}, {"w", "<cmd>lua require('neotest').run.run({ jestCommand = 'npx jest --watch ' })<cr>", "Run Test in Watch Mode"}}) do
-    local keybinding_3_auto = _14_[1]
-    local command_4_auto = _14_[2]
-    local desc_5_auto = _14_[3]
-    local val_23_ = {("<leader>t" .. keybinding_3_auto), command_4_auto, desc = desc_5_auto}
-    if (nil ~= val_23_) then
-      i_22_ = (i_22_ + 1)
-      tbl_21_[i_22_] = val_23_
-    else
-    end
-  end
-  return tbl_21_
-end
-wk.add(_13_(...))
 vim.keymap.set("i", "jk", "<Esc>")
 wk.add({{"-", ":Oil<CR>", desc = "Open parent directory"}})
 wk.add({{"<leader>;", ":", desc = "desc"}})
 wk.add({{"<leader><leader>", ":Telescope find_files<CR>", desc = "Telescope find files"}})
 wk.add({{"<leader>c", ":copen<CR>", desc = "Open Quickfix"}})
 wk.add({{"<leader>hh", ":Telescope help_tags<CR>", desc = "Search Helptags"}})
-local function _19_()
+local function _13_()
   local term_buf = vim.fn.bufnr("term://*")
   if (term_buf == ( - 1)) then
     return vim.cmd("botright split | resize 20 | terminal")
@@ -109,7 +83,7 @@ local function _19_()
     return vim.cmd(("botright split | resize 20 | buffer " .. term_buf))
   end
 end
-wk.add({{"<leader>ot", _19_, desc = "Open Terminal"}})
+wk.add({{"<leader>ot", _13_, desc = "Open Terminal"}})
 wk.add({{"<leader>s", ":Telescope live_grep<CR>", desc = "Search project"}})
 wk.add({{"<leader>x", ":.lua<CR>", desc = "Execute Lua line"}})
 wk.add({{"gb", ":DapToggleBreakpoint<CR>", desc = "toggle breakpoint"}})

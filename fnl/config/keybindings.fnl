@@ -34,6 +34,7 @@
                                  ])
 (add-group :<leader>g :Git [
                             [:D ":Gvdiffsplit!<CR>" "Git Merge"]
+                            [:b ":Git blame<CR>" "Git Blame"]
                             [:d ":Gvdiffsplit<CR>" "Git Diff"]
                             [:g ":G<CR>" "Open Fugitive"]
                             ])
@@ -41,15 +42,6 @@
                               [:m ":MigrateYesterdayTasks<CR>" "Neorg journal migrate tasks" ]
                              [:j ":Neorg journal today<CR>" "Neorg journal for today"]
                              ])
-(add-group :<leader>t :Neotest [
-                                [:d (fn []
-                                      ((. (require :neotest) :run :run) {:strategy :dap})) "Debug Test"]
-                                [:f (fn []
-                                      ((. (require :neotest) :run :run) (vim.fn.expand "%"))) "Test File"]
-                                [:t (fn []
-                                      ((. (require :neotest) :run :run) {:jestCommand "npx jest --coverage"})) "Run Test Under Cursor"]
-                                [:w "<cmd>lua require('neotest').run.run({ jestCommand = 'npx jest --watch ' })<cr>" "Run Test in Watch Mode"]
-                                ])
 (add-insert-mode-keybinding :jk :<Esc>)
 (add-keybinding "-" ":Oil<CR>" "Open parent directory")
 (add-keybinding "<leader>;" ":" :desc "Run Command")
