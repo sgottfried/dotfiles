@@ -13,17 +13,14 @@
                    :--branch=stable
                    lazypath]))
 (vim.opt.rtp:prepend lazypath)
-((. (require :lazy) :setup) [:APZelos/blamer.nvim
+((. (require :lazy) :setup) [
                               :HiPhish/rainbow-delimiters.nvim
                               :airblade/vim-gitgutter
-                              :alnav3/sonarlint.nvim
-                              :dhruvasagar/vim-table-mode
                               :github/copilot.vim
                               :hrsh7th/cmp-nvim-lsp
                               :hrsh7th/nvim-cmp
                               :ianks/vim-tsx
                               :leafgarland/typescript-vim
-                              :mfussenegger/nvim-jdtls
                               :neovim/nvim-lspconfig
                               :nvim-lua/plenary.nvim
                               :nvim-telescope/telescope-ui-select.nvim
@@ -48,24 +45,6 @@
                               {1 :ellisonleao/gruvbox.nvim
                               :config true
                               :priority 1000}
-                              {1 :f-person/auto-dark-mode.nvim
-                              :opts {:set_dark_mode (fn []
-                                                      (vim.api.nvim_set_option_value :background
-                                                                                     :dark
-                                                                                     {})
-                                                      ((. (require :gruvbox)
-                                                          :setup) {:contrast :hard})
-                                                      (vim.cmd "colorscheme gruvbox"))
-                              :set_light_mode (fn []
-                                                (vim.api.nvim_set_option_value :background
-                                                                               :light
-                                                                               {})
-                                                ((. (require :gruvbox)
-                                                    :setup) {:contrast :hard})
-                                                (vim.cmd "colorscheme gruvbox"))
-                              :update_interval 1000}}
-                              {1 :glacambre/firenvim
-                              :build ":call firenvim#install(0)"}
                               {1 :folke/which-key.nvim
                               :event :VeryLazy
                               :keys [{1 :<leader>?
@@ -85,25 +64,6 @@
                               :core.journal {:config {:workspace :journal}}
                               :core.qol.todo_items {}
                               :core.ui {}}}
-                              :version "*"}
-                              {1 :nvim-neotest/neotest
-                              :config (fn []
-                                        ((. (require :neotest) :setup) {:adapters [((require :neotest-jest) {:cwd (fn [path]
-                                                                                                                    (vim.fn.getcwd))
-                                                                                                            :jestCommand "npx jest"})]
-                                                                       :icons {:failed ""
-                                                                       :passed ""
-                                                                       :running ""
-                                                                       :unknown ""}}))
-                              :dependencies [:nvim-neotest/nvim-nio
-                                              :nvim-lua/plenary.nvim
-                                              :antoinemadec/FixCursorHold.nvim
-                                              :nvim-treesitter/nvim-treesitter
-                                              :nvim-neotest/neotest-jest]
-                              :lazy false}
-                              {1 :andythigpen/nvim-coverage
-                              :config (fn []
-                                        ((. (require :coverage) :setup) {:auto_reload true}))
                               :version "*"}
                               {1 :mfussenegger/nvim-dap
                               :config (fn []
