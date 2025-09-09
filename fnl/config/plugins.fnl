@@ -127,4 +127,8 @@
                                            :load_extension) :ui-select))
                              :dependencies [:nvim-lua/plenary.nvim]
                              :tag :0.1.8}
+                             { 1 :folke/snacks.nvim
+                             :opts {
+                             :image {}
+                             }}
                              ])	
