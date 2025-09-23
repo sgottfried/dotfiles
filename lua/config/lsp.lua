@@ -1,7 +1,6 @@
 -- [nfnl] fnl/config/lsp.fnl
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-local nvim_lsp = require("lspconfig")
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...)
     return vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -16,9 +15,11 @@ local function on_attach(client, bufnr)
 end
 local servers = {"bashls", "cssls", "jsonls", "terraformls"}
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup({capabilities = capabilities, on_attach = on_attach})
+  vim.lsp.config[lsp] = {capabilities = capabilities, on_attach = on_attach}
+  vim.lsp.enable(lsp)
 end
-nvim_lsp.tailwindcss.setup({capabilities = capabilities, filetypes = {"html", "javascript", "typescript", "javascriptreact", "typescriptreact", "javascript.jsx", "typescript.tsx"}, init_options = {userLanguages = {javascript = {jsx = "javascript"}, typescript = {tsx = "javascript"}}}, on_attach = on_attach})
+vim.lsp.config.tailwindcss = {capabilities = capabilities, filetypes = {"html", "javascript", "typescript", "javascriptreact", "typescriptreact", "javascript.jsx", "typescript.tsx"}, init_options = {userLanguages = {javascript = {jsx = "javascript"}, typescript = {tsx = "javascript"}}}, on_attach = on_attach}
+vim.lsp.enable("tailwindcss")
 local function _1_(client, bufnr)
   if client.config.flags then
     client.config.flags.allow_incremental_sync = true
@@ -28,19 +29,23 @@ local function _1_(client, bufnr)
   client.server_capabilities.document_range_formatting = false
   return on_attach(client, bufnr)
 end
-nvim_lsp.ts_ls.setup({capabilities = capabilities, on_attach = _1_, root_dir = nvim_lsp.util.root_pattern(".git")})
+vim.lsp.config.ts_ls = {capabilities = capabilities, on_attach = _1_}
+vim.lsp.enable("ts_ls")
 local eslint = require("efmls-configs.linters.eslint_d")
 local prettier = require("efmls-configs.formatters.prettier_d")
 local languages = {javascript = {eslint, prettier}, ["javascript.jsx"] = {eslint, prettier}, typescript = {eslint, prettier}, ["typescript.tsx"] = {eslint, prettier}}
 local efmls_config = {filetypes = vim.tbl_keys(languages), init_options = {documentFormatting = true, documentRangeFormatting = true}, settings = {languages = languages, rootMarkers = {".git/"}}}
-require("lspconfig").efm.setup(efmls_config)
-nvim_lsp.lua_ls.setup({capabilities = capabilities, on_attach = on_attach, settings = {Lua = {diagnostics = {globals = {"vim"}}, runtime = {version = "LuaJIT"}, telemetry = {enable = false}, workspace = {library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false}}}})
+vim.lsp.config.efm = efmls_config
+vim.lsp.enable("efm")
+vim.lsp.config.lua_ls = {capabilities = capabilities, on_attach = on_attach, settings = {Lua = {diagnostics = {globals = {"vim"}}, runtime = {version = "LuaJIT"}, telemetry = {enable = false}, workspace = {library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false}}}}
+vim.lsp.enable("lua_ls")
 local fennel_config
 local function _3_(client, bufnr)
   client.server_capabilities.document_formatting = true
   client.server_capabilities.document_range_formatting = true
   return on_attach(client, bufnr)
 end
-fennel_config = {cmd = {"fennel-language-server"}, filetypes = {"fennel"}, single_file_support = true, root_dir = require("lspconfig").util.root_pattern("fnl"), settings = {fennel = {workspace = {library = vim.api.nvim_list_runtime_paths(), checkThirdParty = false}, diagnostics = {globals = {"vim"}}}}, on_attach = _3_}
-require("lspconfig").fennel_language_server.setup(fennel_config)
+fennel_config = {cmd = {"fennel-language-server"}, filetypes = {"fennel"}, single_file_support = true, settings = {fennel = {workspace = {library = vim.api.nvim_list_runtime_paths(), checkThirdParty = false}, diagnostics = {globals = {"vim"}}}}, on_attach = _3_}
+vim.lsp.config.fennel_language_server = fennel_config
+vim.lsp.enable("fennel_language_server")
 return require("mason").setup()
