@@ -126,7 +126,7 @@
                                      )}
                              {1 :nvim-telescope/telescope.nvim
                              :lazy true
-                             :cmd :Telescope
+                             :cmd [:Telescope :CopilotChat]
                              :config (fn []
                                        ((. (require :telescope) :setup) {:extensions {:ui-select [((. (require :telescope.themes)
                                                                                                       :get_dropdown) {})]}})
