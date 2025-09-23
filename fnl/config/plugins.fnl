@@ -31,7 +31,10 @@
                              :tpope/vim-projectionist
                              :tpope/vim-surround
                              :tpope/vim-unimpaired
-                             :williamboman/mason.nvim
+                             { 1 :williamboman/mason.nvim
+                             :lazy true
+                             :cmd :Mason
+                             }
                              { 1 :Olical/nfnl
                              :ft :fennel
                              :config (fn [])
@@ -40,6 +43,8 @@
                              :build "make tiktoken"
                              :config (fn []
                                        ((. (require :CopilotChat) :setup) {:model chat-model}))
+                             :lazy true
+                             :cmd :CopilotChat
                              :dependencies [[:github/copilot.vim]
                                             {1 :nvim-lua/plenary.nvim
                                             :branch :master}]}
@@ -55,7 +60,8 @@
                              {1 :nvim-neorg/neorg
                              :dependencies [[:nvim-lua/plenary.nvim]
                                             [:nvim-neorg/neorg-telescope]]
-                             :lazy false
+                             :cmd :Neorg
+                             :lazy true
                              :opts {:load {:core.concealer {}
                              :core.defaults {}
                              :core.dirman {:config {:default_workspace :journal
@@ -67,6 +73,8 @@
                              :core.ui {}}}
                              :version "*"}
                              {1 :mfussenegger/nvim-dap
+                             :cmd :DapContinue
+                             :lazy true
                              :config (fn []
                                        ((. (require :mason-nvim-dap) :setup) {:ensure_installed [:js-debug-adapter]})
                                        (local dap (require :dap))
@@ -120,6 +128,8 @@
                                      (set vim.g.conjure#debug true)
                                      )}
                              {1 :nvim-telescope/telescope.nvim
+                             :lazy true
+                             :cmd :Telescope
                              :config (fn []
                                        ((. (require :telescope) :setup) {:extensions {:ui-select [((. (require :telescope.themes)
                                                                                                       :get_dropdown) {})]}})
