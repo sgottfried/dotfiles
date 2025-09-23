@@ -106,9 +106,6 @@
                                              :jay-babu/mason-nvim-dap.nvim]}
                              {1 :nvim-treesitter/nvim-treesitter
                              :build ":TSUpdate"}
-                             {1 :vhyrro/luarocks.nvim
-                             :config true
-                             :priority 1000}
                              {1 :creativenull/efmls-configs-nvim
                              :version :v1.x.x}
                              {1 :nvim-lualine/lualine.nvim
