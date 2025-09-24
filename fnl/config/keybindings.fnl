@@ -45,7 +45,7 @@
 (add-insert-mode-keybinding :jk :<Esc>)
 (add-keybinding "-" ":Oil<CR>" "Open parent directory")
 (add-keybinding "<leader>;" ":" :desc "Run Command")
-(add-keybinding :<leader><leader> "lua Snacks.picker.smart()<CR>" "Snacks find files")
+(add-keybinding :<leader><leader> ":lua Snacks.picker.smart()<CR>" "Snacks find files")
 (add-keybinding :<leader>c ":copen<CR>" "Open Quickfix")
 (add-keybinding :<leader>hh ":lua Snacks.picker.help()<CR>" "Search Helptags")
 (add-keybinding :<leader>ot (fn []
