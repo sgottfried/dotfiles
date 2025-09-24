@@ -2,14 +2,14 @@
                     (vim.lsp.protocol.make_client_capabilities)))
 
 (fn on-attach [client bufnr]
-  (let [opts {:noremap true :silent true}
-        map (fn [mode lhs rhs] (vim.api.nvim_buf_set_keymap bufnr mode lhs rhs opts))]
-    (map :n :<leader>a "<Cmd>lua vim.lsp.buf.code_action()<CR>")
-    (map :n :gd "<Cmd>lua vim.lsp.buf.definition()<CR>")
-    (map :n :gh "<Cmd>lua vim.lsp.buf.hover()<CR>")
-    (map :n :ge "<Cmd>lua vim.diagnostic.open_float()<CR>")
-    (map :n :gr "<cmd>lua vim.lsp.buf.references()<CR>")
-    (map :n :gR "<cmd>lua vim.lsp.buf.rename()<CR>")))
+  (fn buf-set-keymap [...] (vim.api.nvim_buf_set_keymap bufnr ...))
+  (local opts {:noremap true :silent true})
+  (buf-set-keymap :n :<leader>a "<Cmd>lua vim.lsp.buf.code_action()<CR>" opts)
+  (buf-set-keymap :n :gd "<Cmd>lua vim.lsp.buf.definition()<CR>" opts)
+  (buf-set-keymap :n :gh "<Cmd>lua vim.lsp.buf.hover()<CR>" opts)
+  (buf-set-keymap :n :ge "<Cmd>lua vim.diagnostic.open_float()<CR>" opts)
+  (buf-set-keymap :n :gr "<cmd>lua vim.lsp.buf.references()<CR>" opts)
+  (buf-set-keymap :n :gR "<cmd>lua vim.lsp.buf.rename()<CR>" opts))
 
 (local base-config {: capabilities : on-attach})
 
