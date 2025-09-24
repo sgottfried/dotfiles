@@ -1,16 +1,18 @@
 -- [nfnl] fnl/config/lsp.fnl
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local function on_attach(client, bufnr)
-  local function buf_set_keymap(...)
-    return vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
   local opts = {noremap = true, silent = true}
-  buf_set_keymap("n", "<leader>a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", "gh", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap("n", "ge", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  return buf_set_keymap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  local map
+  local function _1_(mode, lhs, rhs)
+    return vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+  end
+  map = _1_
+  map("n", "<leader>a", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
+  map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
+  map("n", "gh", "<Cmd>lua vim.lsp.buf.hover()<CR>")
+  map("n", "ge", "<Cmd>lua vim.diagnostic.open_float()<CR>")
+  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+  return map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>")
 end
 local base_config = {capabilities = capabilities, ["on-attach"] = on_attach}
 local simple_servers = {"bashls", "cssls", "jsonls", "terraformls"}
@@ -25,7 +27,7 @@ do
 end
 do
   local ts_config
-  local function _1_(client, bufnr)
+  local function _2_(client, bufnr)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     else
@@ -34,7 +36,7 @@ do
     client.server_capabilities.document_range_formatting = false
     return on_attach(client, bufnr)
   end
-  ts_config = vim.tbl_extend("force", base_config, {["on-attach"] = _1_})
+  ts_config = vim.tbl_extend("force", base_config, {["on-attach"] = _2_})
   vim.lsp.config["ts_ls"] = ts_config
   vim.lsp.enable("ts_ls")
 end
@@ -53,12 +55,12 @@ do
 end
 do
   local fennel_config
-  local function _3_(client, bufnr)
+  local function _4_(client, bufnr)
     client.server_capabilities.document_formatting = true
     client.server_capabilities.document_range_formatting = true
     return on_attach(client, bufnr)
   end
-  fennel_config = vim.tbl_extend("force", base_config, {cmd = {"fennel-language-server"}, filetypes = {"fennel"}, single_file_support = true, settings = {fennel = {workspace = {library = vim.api.nvim_list_runtime_paths(), checkThirdParty = false}, diagnostics = {globals = {"vim"}}}}, ["on-attach"] = _3_})
+  fennel_config = vim.tbl_extend("force", base_config, {cmd = {"fennel-language-server"}, filetypes = {"fennel"}, single_file_support = true, settings = {fennel = {workspace = {library = vim.api.nvim_list_runtime_paths(), checkThirdParty = false}, diagnostics = {globals = {"vim"}}}}, ["on-attach"] = _4_})
   vim.lsp.config["fennel_language_server"] = fennel_config
   vim.lsp.enable("fennel_language_server")
 end
