@@ -4,7 +4,7 @@ local wk = require("which-key")
 local function _1_(...)
   local tbl_21_ = {}
   local i_22_ = 0
-  for __2_auto, _2_ in ipairs({{"S", ":noa w<CR>", "Save (without formatting)"}, {"i", ":Telescope buffers<CR>", "List buffers"}, {"s", ":w<CR>", "Save"}}) do
+  for __2_auto, _2_ in ipairs({{"S", ":noa w<CR>", "Save (without formatting)"}, {"i", ":lua Snacks.picker.buffers()<CR>", "List buffers"}, {"s", ":w<CR>", "Save"}}) do
     local keybinding_3_auto = _2_[1]
     local command_4_auto = _2_[2]
     local desc_5_auto = _2_[3]
@@ -72,9 +72,9 @@ wk.add(_10_(...))
 vim.keymap.set("i", "jk", "<Esc>")
 wk.add({{"-", ":Oil<CR>", desc = "Open parent directory"}})
 wk.add({{"<leader>;", ":", desc = "desc"}})
-wk.add({{"<leader><leader>", ":Telescope find_files<CR>", desc = "Telescope find files"}})
+wk.add({{"<leader><leader>", "lua Snacks.picker.smart()<CR>", desc = "Snacks find files"}})
 wk.add({{"<leader>c", ":copen<CR>", desc = "Open Quickfix"}})
-wk.add({{"<leader>hh", ":Telescope help_tags<CR>", desc = "Search Helptags"}})
+wk.add({{"<leader>hh", ":lua Snacks.picker.help()<CR>", desc = "Search Helptags"}})
 local function _13_()
   local term_buf = vim.fn.bufnr("term://*")
   if (term_buf == ( - 1)) then
@@ -84,7 +84,7 @@ local function _13_()
   end
 end
 wk.add({{"<leader>ot", _13_, desc = "Open Terminal"}})
-wk.add({{"<leader>s", ":Telescope live_grep<CR>", desc = "Search project"}})
+wk.add({{"<leader>s", ":lua Snacks.picker.grep()<CR>", desc = "Search project"}})
 wk.add({{"<leader>x", ":.lua<CR>", desc = "Execute Lua line"}})
 wk.add({{"gb", ":DapToggleBreakpoint<CR>", desc = "toggle breakpoint"}})
 wk.add({{"Y", "\"+y", desc = "Yank to system clipboard"}})

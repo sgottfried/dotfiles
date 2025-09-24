@@ -24,7 +24,7 @@
 
 (add-group :<leader>b :buffer [
                                [:S ":noa w<CR>" "Save (without formatting)"]
-                               [:i ":Telescope buffers<CR>" "List buffers"]
+                               [:i ":lua Snacks.picker.buffers()<CR>" "List buffers"]
                                [:s ":w<CR>" "Save"]
                                ])
 (add-group :<leader>d :debugger [
@@ -45,16 +45,16 @@
 (add-insert-mode-keybinding :jk :<Esc>)
 (add-keybinding "-" ":Oil<CR>" "Open parent directory")
 (add-keybinding "<leader>;" ":" :desc "Run Command")
-(add-keybinding :<leader><leader> ":Telescope find_files<CR>" "Telescope find files")
+(add-keybinding :<leader><leader> "lua Snacks.picker.smart()<CR>" "Snacks find files")
 (add-keybinding :<leader>c ":copen<CR>" "Open Quickfix")
-(add-keybinding :<leader>hh ":Telescope help_tags<CR>" "Search Helptags")
+(add-keybinding :<leader>hh ":lua Snacks.picker.help()<CR>" "Search Helptags")
 (add-keybinding :<leader>ot (fn []
                               (let [term-buf (vim.fn.bufnr "term://*")]
                                 (if (= term-buf (- 1))
                                     (vim.cmd "botright split | resize 20 | terminal")
                                     (vim.cmd (.. "botright split | resize 20 | buffer "
                                                  term-buf))))) "Open Terminal")
-(add-keybinding :<leader>s ":Telescope live_grep<CR>" "Search project")
+(add-keybinding :<leader>s ":lua Snacks.picker.grep()<CR>" "Search project")
 (add-keybinding :<leader>x ":.lua<CR>" "Execute Lua line")
 (add-keybinding :gb ":DapToggleBreakpoint<CR>" "toggle breakpoint")
 (add-keybinding :Y "\"+y" "Yank to system clipboard")

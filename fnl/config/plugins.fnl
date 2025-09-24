@@ -24,7 +24,6 @@
                              :leafgarland/typescript-vim
                              :neovim/nvim-lspconfig
                              :nvim-lua/plenary.nvim
-                             :nvim-telescope/telescope-ui-select.nvim
                              :pangloss/vim-javascript
                              :tpope/vim-commentary
                              :tpope/vim-fugitive
@@ -58,15 +57,13 @@
                                            ((. (require :which-key) :show) {:global false}))
                                        :desc "Buffer Local Keymaps (which-key)"}]}
                              {1 :nvim-neorg/neorg
-                             :dependencies [[:nvim-lua/plenary.nvim]
-                                            [:nvim-neorg/neorg-telescope]]
+                             :dependencies [[:nvim-lua/plenary.nvim]]
                              :cmd :Neorg
                              :lazy true
                              :opts {:load {:core.concealer {}
                              :core.defaults {}
                              :core.dirman {:config {:default_workspace :journal
                              :workspaces {:journal "~/notes"}}}
-                             :core.integrations.telescope {:config {:insert_file_link {:show_title_preview true}}}
                              :core.integrations.treesitter {}
                              :core.journal {:config {:workspace :journal}}
                              :core.qol.todo_items {}
@@ -124,18 +121,9 @@
                              :init (fn []
                                      (set vim.g.conjure#debug true)
                                      )}
-                             {1 :nvim-telescope/telescope.nvim
-                             :lazy true
-                             :cmd [:Telescope :CopilotChat]
-                             :config (fn []
-                                       ((. (require :telescope) :setup) {:extensions {:ui-select [((. (require :telescope.themes)
-                                                                                                      :get_dropdown) {})]}})
-                                       ((. (require :telescope)
-                                           :load_extension) :ui-select))
-                             :dependencies [:nvim-lua/plenary.nvim]
-                             :tag :0.1.8}
                              { 1 :folke/snacks.nvim
                              :opts {
                              :image {}
+                             :picker {}
                              }}
                              ])	
