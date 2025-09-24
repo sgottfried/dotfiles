@@ -42,6 +42,11 @@
                               [:m ":MigrateYesterdayTasks<CR>" "Neorg journal migrate tasks" ]
                              [:j ":Neorg journal today<CR>" "Neorg journal for today"]
                              ])
+(add-group :<leader>t :testing [
+                                [:d (fn [] ((. (require :neotest) :run :run) {:strategy "dap"})) "Debug nearest test"]
+                                [:f (fn [] ((. (require :neotest) :run :run) (vim.fn.expand "%"))) "Run test file"]
+                                [:t (fn [] ((. (require :neotest) :run :run))) "Run nearest test"]
+                                ])
 (add-insert-mode-keybinding :jk :<Esc>)
 (add-keybinding "-" ":Oil<CR>" "Open parent directory")
 (add-keybinding "<leader>;" ":" :desc "Run Command")

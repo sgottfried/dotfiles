@@ -69,13 +69,39 @@ local function _10_(...)
   return tbl_21_
 end
 wk.add(_10_(...))
+local function _13_(...)
+  local tbl_21_ = {}
+  local i_22_ = 0
+  local function _15_()
+    return require("neotest").run.run({strategy = "dap"})
+  end
+  local function _16_()
+    return require("neotest").run.run(vim.fn.expand("%"))
+  end
+  local function _17_()
+    return require("neotest").run.run()
+  end
+  for __2_auto, _14_ in ipairs({{"d", _15_, "Debug nearest test"}, {"f", _16_, "Run test file"}, {"t", _17_, "Run nearest test"}}) do
+    local keybinding_3_auto = _14_[1]
+    local command_4_auto = _14_[2]
+    local desc_5_auto = _14_[3]
+    local val_23_ = {("<leader>t" .. keybinding_3_auto), command_4_auto, desc = desc_5_auto}
+    if (nil ~= val_23_) then
+      i_22_ = (i_22_ + 1)
+      tbl_21_[i_22_] = val_23_
+    else
+    end
+  end
+  return tbl_21_
+end
+wk.add(_13_(...))
 vim.keymap.set("i", "jk", "<Esc>")
 wk.add({{"-", ":Oil<CR>", desc = "Open parent directory"}})
 wk.add({{"<leader>;", ":", desc = "desc"}})
 wk.add({{"<leader><leader>", ":lua Snacks.picker.smart()<CR>", desc = "Snacks find files"}})
 wk.add({{"<leader>c", ":copen<CR>", desc = "Open Quickfix"}})
 wk.add({{"<leader>hh", ":lua Snacks.picker.help()<CR>", desc = "Search Helptags"}})
-local function _13_()
+local function _19_()
   local term_buf = vim.fn.bufnr("term://*")
   if (term_buf == ( - 1)) then
     return vim.cmd("botright split | resize 20 | terminal")
@@ -83,7 +109,7 @@ local function _13_()
     return vim.cmd(("botright split | resize 20 | buffer " .. term_buf))
   end
 end
-wk.add({{"<leader>ot", _13_, desc = "Open Terminal"}})
+wk.add({{"<leader>ot", _19_, desc = "Open Terminal"}})
 wk.add({{"<leader>s", ":lua Snacks.picker.grep()<CR>", desc = "Search project"}})
 wk.add({{"<leader>x", ":.lua<CR>", desc = "Execute Lua line"}})
 wk.add({{"gb", ":DapToggleBreakpoint<CR>", desc = "toggle breakpoint"}})
