@@ -146,32 +146,6 @@
                              :dependencies [:rcarriga/nvim-dap-ui
                                              :jay-babu/mason-nvim-dap.nvim]}
 
-                             ;; Testing
-                             {
-                             1 :nvim-neotest/neotest
-                             :dependencies [
-                                            :nvim-neotest/nvim-nio
-                                            :nvim-lua/plenary.nvim
-                                            :antoinemadec/FixCursorHold.nvim
-                                            :nvim-treesitter/nvim-treesitter
-                                            :nvim-neotest/neotest-jest
-                                            ]
-                             :config (fn []
-                                       ((. (require :neotest) :setup) {
-                                          :adapters [
-                                                     ((require "neotest-jest") {
-                                                                               :jestCommand "npx jest"
-                                                                               :jestArguments (fn [defaultArguments context]
-                                                                                                defaultArguments
-                                                                                                )
-                                                                               :jestConfigFile :jest.config.ts
-                                                                               :cwd (fn [path]
-                                                                                      (vim.fn.getcwd)
-                                                                                      )
-                                                                               :isTestFile (. (require :neotest-jest.jest-util) :defaultIsTestFile)
-                                                                               })
-                                                     ]
-                                          })) }
                              ;; Misc
                              {1 :folke/snacks.nvim
                              :event :VeryLazy
