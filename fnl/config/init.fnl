@@ -8,3 +8,4 @@
 (require :config.treesitter)
 ; (require :config.debugger)
 (require :config.gtd)
+(require :config.meetings)

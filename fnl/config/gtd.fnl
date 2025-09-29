@@ -51,3 +51,30 @@
   (vim.keymap.set :n :<leader>nr M.review {:desc "GTD: Weekly Review"})
   (vim.keymap.set :n :<leader>nf M.find-files {:desc "GTD: Find Files"})
   (vim.keymap.set :n :<leader>ng M.grep {:desc "GTD: Search Content"})
+
+;; In your GTD module
+(fn M.capture-from-meeting []
+  (let [lines (vim.api.nvim_buf_get_lines 0 0 -1 false)
+        actions []
+        meeting-file (vim.fn.expand "%:t:r")]
+    (each [_ line (ipairs lines)]
+      (when (line:match "^%s*%- %[ %]")
+        (let [action (.. line " [from: " meeting-file "]")]
+          (table.insert actions action))))
+    (when (> (length actions) 0)
+      (let [inbox-path (.. gtd-dir "/inbox.md")
+            existing (vim.fn.readfile inbox-path)
+            new-content (vim.list_extend existing 
+                          (vim.list_extend ["" (.. "## " (os.date "%Y-%m-%d %H:%M") 
+                                                   " - Meeting Actions")] 
+                                          actions))]
+        (vim.fn.writefile new-content inbox-path)
+        (print (.. "Captured " (length actions) " actions to GTD inbox"))))))
+
+;; Add command
+(vim.api.nvim_create_user_command :GTDCaptureFromMeeting
+  M.capture-from-meeting {})
+
+;; Add keymap
+(vim.keymap.set :n :<leader>nm ":GTDCaptureFromMeeting<CR>"
+  {:desc "GTD: Capture from meeting"})

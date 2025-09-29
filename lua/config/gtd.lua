@@ -56,4 +56,27 @@ vim.keymap.set("n", "<leader>nw", M.waiting, {desc = "GTD: Waiting For"})
 vim.keymap.set("n", "<leader>ns", M.someday, {desc = "GTD: Someday/Maybe"})
 vim.keymap.set("n", "<leader>nr", M.review, {desc = "GTD: Weekly Review"})
 vim.keymap.set("n", "<leader>nf", M["find-files"], {desc = "GTD: Find Files"})
-return vim.keymap.set("n", "<leader>ng", M.grep, {desc = "GTD: Search Content"})
+vim.keymap.set("n", "<leader>ng", M.grep, {desc = "GTD: Search Content"})
+M["capture-from-meeting"] = function()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local actions = {}
+  local meeting_file = vim.fn.expand("%:t:r")
+  for _, line in ipairs(lines) do
+    if line:match("^%s*%- %[ %]") then
+      local action = (line .. " [from: " .. meeting_file .. "]")
+      table.insert(actions, action)
+    else
+    end
+  end
+  if (#actions > 0) then
+    local inbox_path = (gtd_dir .. "/inbox.md")
+    local existing = vim.fn.readfile(inbox_path)
+    local new_content = vim.list_extend(existing, vim.list_extend({"", ("## " .. os.date("%Y-%m-%d %H:%M") .. " - Meeting Actions")}, actions))
+    vim.fn.writefile(new_content, inbox_path)
+    return print(("Captured " .. #actions .. " actions to GTD inbox"))
+  else
+    return nil
+  end
+end
+vim.api.nvim_create_user_command("GTDCaptureFromMeeting", M["capture-from-meeting"], {})
+return vim.keymap.set("n", "<leader>nm", ":GTDCaptureFromMeeting<CR>", {desc = "GTD: Capture from meeting"})
