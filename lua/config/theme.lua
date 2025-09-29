@@ -1,5 +1,4 @@
 -- [nfnl] fnl/config/theme.fnl
-vim.api.nvim_set_option_value("background", "dark", {})
 require("gruvbox").setup({contrast = "hard"})
 vim.cmd("colorscheme gruvbox")
 vim.cmd(" hi! TermCursor guifg=NONE guibg=#ebdbb2 gui=NONE cterm=NONE ")
