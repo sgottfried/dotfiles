@@ -53,28 +53,10 @@
                 (when (not= vim.v.shell_error 0)
                   (vim.notify (.. "Error compiling wezterm.fnl:\n" output)
                              vim.log.levels.ERROR))))})
-(fn insert-neorg-link []
-  (let [link (vim.fn.input "Link: ")
-             text (vim.fn.input "Text: ")]
-    (vim.api.nvim_set_current_line (.. "{" link "}[" text "]"))))
 (fn insert-markdown-link []
   (let [link (vim.fn.input "Link: ")
              text (vim.fn.input "Text: ")]
     (vim.api.nvim_set_current_line (.. "[" text "](" link ")"))))
-(vim.api.nvim_create_autocmd :Filetype
-                             {:callback (fn []
-                                          (set vim.opt_local.conceallevel 2)
-                                          (set vim.opt_local.wrap false)
-                                          (vim.keymap.set :n :<leader>t
-                                                          "<Plug>(neorg.qol.todo-items.todo.task-cycle)"
-                                                          {:buffer true})
-                                          (vim.keymap.set :i :<C-l>
-                                                          insert-neorg-link
-                                                          {:buffer true})
-                                          (vim.keymap.set :i :<C-d>
-                                                          "<Plug>(neorg.tempus.insert-date.insert-mode)"
-                                                          {:buffer true}))
-                             :pattern :norg})
 (vim.api.nvim_create_autocmd :Filetype
                              {:callback (fn []
                                           (vim.keymap.set :i :<C-l>

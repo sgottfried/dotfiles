@@ -84,18 +84,7 @@
                                         ((. (require :CopilotChat) :setup) {:model chat-model}))
                               :cmd :CopilotChat
                               :dependencies [:github/copilot.vim :plenary.nvim]}
-                             ;; Notes and Organization
-                             {1 :nvim-neorg/neorg
-                              :dependencies [:plenary.nvim]
-                              :cmd :Neorg
-                              :opts {:load {:core.concealer {}
-                                            :core.defaults {}
-                                            :core.dirman {:config {:default_workspace :journal
-                                                                   :workspaces {:journal "~/notes"}}}
-                                            :core.integrations.treesitter {}
-                                            :core.journal {:config {:workspace :journal}}
-                                            :core.qol.todo_items {}
-                                            :core.ui {}}}}
+
                              ;; Debugging
                              {1 :mfussenegger/nvim-dap
                               :cmd [:DapContinue :DapToggleBreakpoint]

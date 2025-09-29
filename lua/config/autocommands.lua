@@ -50,29 +50,16 @@ local function _10_()
   end
 end
 vim.api.nvim_create_autocmd("BufWritePost", {pattern = "wezterm.fnl", callback = _10_})
-local function insert_neorg_link()
-  local link = vim.fn.input("Link: ")
-  local text = vim.fn.input("Text: ")
-  return vim.api.nvim_set_current_line(("{" .. link .. "}[" .. text .. "]"))
-end
 local function insert_markdown_link()
   local link = vim.fn.input("Link: ")
   local text = vim.fn.input("Text: ")
   return vim.api.nvim_set_current_line(("[" .. text .. "](" .. link .. ")"))
 end
 local function _12_()
-  vim.opt_local.conceallevel = 2
-  vim.opt_local.wrap = false
-  vim.keymap.set("n", "<leader>t", "<Plug>(neorg.qol.todo-items.todo.task-cycle)", {buffer = true})
-  vim.keymap.set("i", "<C-l>", insert_neorg_link, {buffer = true})
-  return vim.keymap.set("i", "<C-d>", "<Plug>(neorg.tempus.insert-date.insert-mode)", {buffer = true})
-end
-vim.api.nvim_create_autocmd("Filetype", {callback = _12_, pattern = "norg"})
-local function _13_()
   return vim.keymap.set("i", "<C-l>", insert_markdown_link, {buffer = true})
 end
-vim.api.nvim_create_autocmd("Filetype", {callback = _13_, pattern = "markdown"})
-local function _14_(event)
+vim.api.nvim_create_autocmd("Filetype", {callback = _12_, pattern = "markdown"})
+local function _13_(event)
   local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
   if ((client ~= nil) and (client.name == "Firenvim")) then
     vim.o.laststatus = 0
@@ -81,4 +68,4 @@ local function _14_(event)
     return nil
   end
 end
-return vim.api.nvim_create_autocmd({"UIEnter"}, {callback = _14_})
+return vim.api.nvim_create_autocmd({"UIEnter"}, {callback = _13_})

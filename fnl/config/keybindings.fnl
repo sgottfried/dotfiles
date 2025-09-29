@@ -38,10 +38,7 @@
                             [:d ":Gvdiffsplit<CR>" "Git Diff"]
                             [:g ":G<CR>" "Open Fugitive"]
                             ])
-(add-group :<leader>n :neorg [
-                              [:m ":MigrateYesterdayTasks<CR>" "Neorg journal migrate tasks" ]
-                             [:j ":Neorg journal today<CR>" "Neorg journal for today"]
-                             ])
+(wk.add [{1 :<leader>n :group :notes}])
 (add-insert-mode-keybinding :jk :<Esc>)
 (add-keybinding "-" ":Oil<CR>" "Open parent directory")
 (add-keybinding "<leader>;" ":" :desc "Run Command")
