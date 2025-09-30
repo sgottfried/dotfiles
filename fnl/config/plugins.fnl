@@ -37,7 +37,7 @@
                               :event [:BufRead :BufNewFile]}
                              {1 :APZelos/blamer.nvim
                               :event [:BufRead :BufNewFile]}
-                             {1 :tpope/vim-fugitive :cmd [:Git :G]}
+                             {1 :tpope/vim-fugitive :cmd [:Git :G :Gvdiffsplit :Gvdiffsplit! :Gread]}
                              ;; LSP and Completion
                              {1 :neovim/nvim-lspconfig :event :BufReadPre}
                              {1 :hrsh7th/nvim-cmp
