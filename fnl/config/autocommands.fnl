@@ -11,8 +11,7 @@
                              {:callback (fn [] (set vim.opt.bufhidden :delete))
                              :pattern [:gitcommit :gitrebase :gitconfig]})
 (vim.api.nvim_create_autocmd :TermOpen
-                             {:callback (fn [] (set vim.bo.number false)
-                                          (set vim.bo.relativenumber false))
+                             {:callback (fn [] (vim.cmd "setlocal nonumber norelativenumber"))
                              :pattern ["*"]})
 (match (pcall require :nfnl.api.compile-file)
   (true nfnl-compile)

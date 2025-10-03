@@ -14,9 +14,7 @@ local function _3_()
 end
 vim.api.nvim_create_autocmd("Filetype", {callback = _3_, pattern = {"gitcommit", "gitrebase", "gitconfig"}})
 local function _4_()
-  vim.bo.number = false
-  vim.bo.relativenumber = false
-  return nil
+  return vim.cmd("setlocal nonumber norelativenumber")
 end
 vim.api.nvim_create_autocmd("TermOpen", {callback = _4_, pattern = {"*"}})
 do
