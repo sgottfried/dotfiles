@@ -71,6 +71,22 @@ wk.add({{"<leader>ot", _10_, desc = "Open Terminal"}})
 wk.add({{"<leader>s", ":lua Snacks.picker.grep()<CR>", desc = "Search project"}})
 wk.add({{"<leader>x", ":.lua<CR>", desc = "Execute Lua line"}})
 wk.add({{"gb", ":DapToggleBreakpoint<CR>", desc = "toggle breakpoint"}})
+local function _12_()
+  return vim.lsp.buf.definition()
+end
+wk.add({{"gd", _12_, desc = "LSP Go to definition"}})
+local function _13_()
+  return vim.lsp.buf.hover()
+end
+wk.add({{"gh", _13_, desc = "LSP Hover"}})
+local function _14_()
+  return vim.lsp.buf.references()
+end
+wk.add({{"gr", _14_, desc = "LSP references"}})
+local function _15_()
+  return vim.lsp.buf.rename()
+end
+wk.add({{"gR", _15_, desc = "LSP rename"}})
 wk.add({{"Y", "\"+y", desc = "Yank to system clipboard"}})
 wk.add({{"<leader>w", group = "windows", proxy = "<c-w>"}})
 vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", default_opts)
