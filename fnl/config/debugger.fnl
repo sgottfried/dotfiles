@@ -1,5 +1,0 @@
-(local (dap dapui) (values (require :dap) (require :dapui)))
-(dapui.setup)
-(fn dap.listeners.after.event_initialized.dapui_config [] (dapui.open))
-(fn dap.listeners.before.event_terminated.dapui_config [] (dapui.close))
-(fn dap.listeners.before.event_exited.dapui_config [] (dapui.close))	

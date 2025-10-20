@@ -1,5 +1,4 @@
--- [nfnl] fnl/config/settings.fnl
-vim.g.copilot_filetypes = {norg = false, org = false}
+vim.g.copilot_filetypes = { norg = false, org = false }
 vim.g.blamer_date_format = "%m/%d/%y"
 vim.g.blamer_enabled = 1
 vim.g.blamer_show_in_visual_modes = 0
@@ -29,4 +28,11 @@ vim.opt.wildignore:append("**/node_modules/*")
 vim.opt.wildignorecase = true
 vim.opt.foldmethod = "indent"
 vim.opt.foldenable = false
-return vim.diagnostic.config({severity_sort = true, signs = true, underline = true, virtual_text = {prefix = "\226\151\143", spacing = 4}, update_in_insert = false})
+vim.diagnostic.config({
+    severity_sort = true,
+    signs = true,
+    underline = true,
+    virtual_text = { prefix = "\226\151\143", spacing = 4 },
+    update_in_insert = false
+}
+)
