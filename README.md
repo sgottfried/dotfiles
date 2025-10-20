@@ -1,4 +1,4 @@
-My Neovim, VSCode-Neovim, and Kitty terminal configs.
+My Neovim and Wezterm terminal configs.
   
 ### Get Started
 Install [Wezterm](https://wezterm.org/index.html).

@@ -1,3 +1,4 @@
+vim.cmd("filetype plugin indent on")
 vim.g.copilot_filetypes = { norg = false, org = false }
 vim.g.blamer_date_format = "%m/%d/%y"
 vim.g.blamer_enabled = 1
@@ -29,10 +30,10 @@ vim.opt.wildignorecase = true
 vim.opt.foldmethod = "indent"
 vim.opt.foldenable = false
 vim.diagnostic.config({
-    severity_sort = true,
-    signs = true,
-    underline = true,
-    virtual_text = { prefix = "\226\151\143", spacing = 4 },
-    update_in_insert = false
+  severity_sort = true,
+  signs = true,
+  underline = true,
+  virtual_text = { prefix = "\226\151\143", spacing = 4 },
+  update_in_insert = false
 }
 )
