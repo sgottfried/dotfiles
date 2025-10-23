@@ -103,6 +103,8 @@
 (evil-define-key 'normal 'global (kbd ",d") 'magit-ediff-show-unstaged)
 (evil-define-key 'normal 'global (kbd ",l") 'doom/toggle-line-numbers)
 (evil-define-key 'insert 'global (kbd "jk") 'evil-escape)
+(evil-define-key 'normal 'global (kbd "s-{") '+workspace/switch-left)
+(evil-define-key 'normal 'global (kbd "s-}") '+workspace/switch-right)
 (map! :leader
       :desc "Toggle Alternate File"
       "f a" #'projectile-toggle-between-implementation-and-test)
