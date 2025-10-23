@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'semi-light))
-     ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 16))
+;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 16))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -106,6 +106,9 @@
 (map! :leader
       :desc "Toggle Alternate File"
       "f a" #'projectile-toggle-between-implementation-and-test)
+(map! :leader
+      :desc "Git diff unstaged"
+      "g d" #'magit-ediff-show-unstaged)
 
 (map! :leader
       :desc "Close other windows"
