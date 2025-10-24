@@ -58,9 +58,15 @@ require("lazy").setup({
     event = { "BufRead", "BufNewFile" }
   },
   {
-    "tpope/vim-fugitive",
-    cmd = { "Git", "G", "Gvdiffsplit", "Gread" }
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim"
+    },
+    cmd = { "Neogit" }
   },
+
   -- LSP and Completion
   {
     "neovim/nvim-lspconfig",
