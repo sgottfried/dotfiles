@@ -46,8 +46,6 @@ add_group("<leader>d", "debugger", {
 
 -- Git mappings
 add_group("<leader>g", "Git", {
-  -- { "D", ":Gvdiffsplit!<CR>", "Git Merge" },
-  -- { "d", ":Gvdiffsplit<CR>", "Git Diff" },
   { "g", ":Neogit<CR>", "Open Neogit" }
 })
 
