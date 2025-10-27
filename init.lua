@@ -8,4 +8,11 @@ require("completion")
 require("treesitter")
 require("gtd")
 require("meetings")
-require('oil').setup()
+require('oil').setup({
+  columns = {
+    "icon",
+    "size",
+    "mtime",
+    "permissions"
+  }
+})
