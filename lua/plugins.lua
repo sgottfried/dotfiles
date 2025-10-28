@@ -57,15 +57,6 @@ require("lazy").setup({
     "APZelos/blamer.nvim",
     event = { "BufRead", "BufNewFile" }
   },
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim"
-    },
-    cmd = { "Neogit" }
-  },
 
   -- LSP and Completion
   {

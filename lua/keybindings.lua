@@ -44,11 +44,6 @@ add_group("<leader>d", "debugger", {
   { "o", ":DapStepOver<CR>", "Step Over" }
 })
 
--- Git mappings
-add_group("<leader>g", "Git", {
-  { "g", ":Neogit<CR>", "Open Neogit" }
-})
-
 -- Notes group
 wk.add({ "<leader>n", name = "notes" })
 
