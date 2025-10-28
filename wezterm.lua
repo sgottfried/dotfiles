@@ -11,9 +11,31 @@ local function scheme_for_appearance(appearance)
 end
 
 wezterm.on('gui-startup', function(cmd)
-  local tab, pane, window = mux.spawn_window(cmd or {})
-  pane:split { size = 0.6, direction = "Top" }
-  pane:split { size = 0.5, direction = "Right" }
+  local success, initial_dir = wezterm.run_child_process({
+    'osascript',
+    '-e',
+    'set the_dir to text returned of (display dialog "Enter directory path:" default answer "' ..
+        os.getenv("HOME") .. '")'
+  })
+
+  -- Use home directory if dialog was cancelled or empty
+  initial_dir = (success and initial_dir ~= '') and initial_dir:gsub("^%s*(.-)%s*$", "%1") or os.getenv("HOME")
+  local tab, pane, window = mux.spawn_window({
+    cwd = initial_dir,
+    args = cmd,
+  })
+  pane:split { size = 0.6, direction = "Top", cwd = initial_dir }
+  pane:split { size = 0.5, direction = "Right", cwd = initial_dir }
+end)
+
+wezterm.on('mux-window-created', function(window, pane)
+  -- This ensures the command runs when a new tab/window is created
+  window:perform_action(
+    wezterm.action.Multiple {
+      wezterm.action.SendString 'gui-startup\n',
+    },
+    pane
+  )
 end)
 
 return {
