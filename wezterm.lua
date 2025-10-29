@@ -52,6 +52,7 @@ return {
     { action = act.TogglePaneZoomState, key = "z", mods = "LEADER" },
   },
   leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 },
+  native_macos_fullscreen_mode = true,
   tab_bar_at_bottom = true,
   use_fancy_tab_bar = false,
   window_decorations = "RESIZE",
