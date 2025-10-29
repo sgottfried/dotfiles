@@ -113,6 +113,3 @@ local fennel_config = vim.tbl_extend('force', base_config, {
 })
 vim.lsp.config.fennel_language_server = fennel_config
 vim.lsp.enable('fennel_language_server')
-
--- Initialize mason
-require('mason').setup()

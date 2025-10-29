@@ -50,6 +50,9 @@ wk.add({ "<leader>n", name = "notes" })
 -- Insert mode mappings
 add_insert_mode_keybinding("jk", "<Esc>")
 
+-- Git blame
+add_keybinding("<leader>gb", ":BlamerToggle<CR>", "Toggle Git Blame")
+
 -- Normal mode mappings
 add_keybinding("-", ":Oil<CR>", "Open parent directory")
 add_keybinding("<leader>;", ":", "Run Command")

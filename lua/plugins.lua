@@ -19,10 +19,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- Core Dependencies
-  { "nvim-tree/nvim-web-devicons", lazy = true },
-  { "nvim-lua/plenary.nvim", lazy = true },
-  -- Theme and UI
   {
     "ellisonleao/gruvbox.nvim",
     config = true,
@@ -47,7 +43,6 @@ require("lazy").setup({
       }
     }
   },
-  "f-person/auto-dark-mode.nvim",
   -- Git integration
   {
     "airblade/vim-gitgutter",
@@ -55,7 +50,8 @@ require("lazy").setup({
   },
   {
     "APZelos/blamer.nvim",
-    event = { "BufRead", "BufNewFile" }
+    event = { "BufRead", "BufNewFile" },
+    cmd = "BlamerToggle"
   },
 
   -- LSP and Completion
@@ -67,10 +63,6 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = { "hrsh7th/cmp-nvim-lsp" }
-  },
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason"
   },
   {
     "creativenull/efmls-configs-nvim",
@@ -147,6 +139,7 @@ require("lazy").setup({
     event = "VeryLazy",
     opts = {
       image = {},
-    }
+    },
+    ft = "markdown"
   }
 })
