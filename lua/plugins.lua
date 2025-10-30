@@ -139,6 +139,7 @@ require("lazy").setup({
     event = "VeryLazy",
     opts = {
       image = {},
+      picker = {}
     },
     ft = "markdown"
   }
