@@ -58,3 +58,4 @@
 (package! org-bullets)
 (package! copilot-chat)
 (package! tree-sitter-langs)
+(package! key-chord)
