@@ -140,6 +140,7 @@
 (add-hook 'feature-mode-hook 'display-line-numbers-mode)
 (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
 (display-time)
+(define-key global-map (kbd "M-<return>") 'toggle-frame-fullscreen)
 
 ;; performance optimizations
 (setq gc-cons-threshold (* 64 1024 1024)) ; 64MB during startup
