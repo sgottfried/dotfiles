@@ -19,6 +19,8 @@ ln -s /opt/homebrew/Cellar/emacs-plus@30/30.2/Emacs.app /Applications/Emacs.app
 ln -s <dotfiles_location>/doom  ~/.config/doom
 ```
 
+If vterm doesn't work in Emacs, see the following: https://github.com/akermu/emacs-libvterm/issues/471#issuecomment-1214274231
+
 Install lazygit
 ```
 brew install lazygit
