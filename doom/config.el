@@ -135,6 +135,8 @@
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
+(setq ns-use-native-fullscreen nil)  ; Disable native macOS fullscreen
+
 ;; performance optimizations
 (setq gc-cons-threshold (* 64 1024 1024)) ; 64MB during startup
 
