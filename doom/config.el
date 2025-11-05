@@ -129,6 +129,9 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+(setq org-roam-directory "~/notes/roam")
+(setq org-roam-complete-everywhere t)
+
 (require 'tree-sitter-langs)
 
 (require 'key-chord)
