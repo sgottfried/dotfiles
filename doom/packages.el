@@ -59,3 +59,4 @@
 (package! copilot-chat)
 (package! tree-sitter-langs)
 (package! key-chord)
+(package! feature-mode)
