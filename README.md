@@ -8,6 +8,17 @@ Install Neovim
 brew install neovim
 ```
 
+or for Emacs
+```
+brew install emacs-plus@30
+
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+
+ln -s /opt/homebrew/Cellar/emacs-plus@30/30.2/Emacs.app /Applications/Emacs.app
+ln -s <dotfiles_location>/doom  ~/.config/doom
+```
+
 Install lazygit
 ```
 brew install lazygit
