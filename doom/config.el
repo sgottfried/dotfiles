@@ -119,6 +119,10 @@
       "w o" #'delete-other-windows)
 (global-set-key (kbd "C-{") 'vterm-copy-mode)
 
+;; Projectile
+(setq projectile-project-search-path '("~/workspace/"))
+(setq projectile-auto-discover-mode 1)
+
 ;; Org-mode
 (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$"))
 (after! org
