@@ -142,8 +142,6 @@
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
-(setq ns-use-native-fullscreen nil)  ; Disable native macOS fullscreen
-
 (add-hook 'feature-mode-hook 'display-line-numbers-mode)
 (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
 (display-time)
