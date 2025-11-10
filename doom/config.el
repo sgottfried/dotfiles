@@ -41,8 +41,10 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
 
+;; if environment variable EMACS_ENVIRONMENT is not equal to "work"
+(if (not (string= (getenv "EMACS_ENVIRONMENT") "work"))
+    (setq org-directory "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -124,7 +126,9 @@
 (setq projectile-auto-discover-mode 1)
 
 ;; Org-mode
-(setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$"))
+(if (string= (getenv "EMACS_ENVIRONMENT") "work")
+    (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$"))
+  (setq org-agenda-files (directory-files-recursively "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org" "\\.org$")))
 (after! org
   (setq evil-auto-indent nil))
 (setq electric-indent-mode nil)
