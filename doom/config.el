@@ -127,8 +127,8 @@
 
 ;; Org-mode
 (if (string= (getenv "EMACS_ENVIRONMENT") "work")
-    (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$"))
-  (setq org-agenda-files (directory-files-recursively "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org" "\\.org$")))
+    (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$") org-gtd-directory "~/notes/gtd/")
+  (setq org-agenda-files (directory-files-recursively "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org" "\\.org$") org-gtd-directory "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org"))
 (after! org
   (setq evil-auto-indent nil))
 (setq electric-indent-mode nil)

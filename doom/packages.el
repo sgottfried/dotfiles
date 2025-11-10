@@ -60,3 +60,4 @@
 (package! tree-sitter-langs)
 (package! key-chord)
 (package! feature-mode)
+(package! org-gtd)
