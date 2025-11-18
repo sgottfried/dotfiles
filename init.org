@@ -66,10 +66,11 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
-		term-mode-hook
-		eshell-mode-hook
-		shell-mode-hook
-		vterm-mode-hook))
+                term-mode-hook
+                eshell-mode-hook
+                shell-mode-hook
+                tetris-mode
+                vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package rainbow-delimiters
@@ -115,11 +116,13 @@
     "h" '(:ignore t :which-key "help")
     "hf" '(counsel-describe-function :which-key "describe-function")
     "hv" '(counsel-describe-variable :which-key "describe-variable")
+    "n" '(:ignore t :which-key "notes")
+    "na" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
+    "nr" '(:ignore t :which-key "org roam")
+    "nri" '(org-roam-node-insert :which-key "insert node")
+    "nrf" '(org-roam-node-find :which-key "find node")
     "o" '(:ignore t :which-key "open")
-    "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
-    "or" '(:ignore t :which-key "org roam")
-    "ori" '(org-roam-node-insert :which-key "insert node")
-    "orf" '(org-roam-node-find :which-key "find node")
+    "ot" '(vterm t :which-key "open")
     "p" '(projectile-command-map :which-key "projectile")
     "t" '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
@@ -131,18 +134,6 @@
    "-" 'dired-jump))
 
 #+end_src
-** Hydra
-#+begin_src emacs-lisp
-(use-package hydra)
-(defhydra hydra-text-scale (:timeout 4)
-  "scale text"
-  ("j" text-scale-increase "in")
-  ("k" text-scale-decrease "out")
-  ("f" nil "finished" :exit t))
-
-(sg/leader-keys
-  "ts" '(hydra-text-scale/body :which-key "scale-text"))
-#+end_src
 ** Other
 #+begin_src emacs-lisp
 ;; Make ESC quit prompts
@@ -152,39 +143,38 @@
 * Ivy
 #+begin_src emacs-lisp
 (use-package ivy
-:diminish
-:bind (("C-s" . swiper)
-        :map ivy-minibuffer-map
-        ("TAB" . ivy-alt-done)
-        ("C-l" . ivy-alt-done)
-        ("C-j" . ivy-next-line)
-        ("C-k" . ivy-previous-line)
-        :map ivy-switch-buffer-map
-        ("C-k" . ivy-previous-line)
-        ("C-l" . ivy-done)
-        ("C-d" . ivy-switch-buffer-kill)
-        :map ivy-reverse-i-search-map
-        ("C-k" . ivy-previous-line)
-        ("C-d" . ivy-reverse-i-search-kill))
-:config
-(ivy-mode 1))
+  :diminish
+  :bind (:map ivy-minibuffer-map
+              ("TAB" . ivy-alt-done)
+              ("C-l" . ivy-alt-done)
+              ("C-j" . ivy-next-line)
+              ("C-k" . ivy-previous-line)
+              :map ivy-switch-buffer-map
+              ("C-k" . ivy-previous-line)
+              ("C-l" . ivy-done)
+              ("C-d" . ivy-switch-buffer-kill)
+              :map ivy-reverse-i-search-map
+              ("C-k" . ivy-previous-line)
+              ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode 1))
 
 (use-package ivy-rich
-:custom
-(evil-want-integration t)
-(evil-want-keybinding nil)
-(evil-want-C-u-scroll t)
-(evil-want-C-i-jump nil)
-:config
-(evil-mode 1)
-(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-(define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  :custom
+  (evil-want-integration t)
+  (evil-want-keybinding nil)
+  (evil-want-C-u-scroll t)
+  (evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-(evil-global-set-key 'motion "j" 'evil-next-visual-line)
-(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-(evil-set-initial-state 'messages-buffer-mode 'normal)
-(evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
 
 #+end_src
 
@@ -347,95 +337,76 @@
 	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
 	(sequence "WAIT(w)" "CANCELLED(c)")))    
 
- ;; Configure custom agenda views
-  (setq org-agenda-custom-commands
-   '(("d" "Dashboard"
-     ((agenda "" ((org-deadline-warning-days 7)))
-      (todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))
-      (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+;; Configure custom agenda views
+(setq org-agenda-custom-commands
+      '(("d" "Dashboard"
+	 ((agenda "" ((org-deadline-warning-days 7)))
+	  (todo "NEXT"
+		((org-agenda-overriding-header "Next Tasks")))
+	  (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
-    ("n" "Next Tasks"
-     ((todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))))
+	("n" "Next Tasks"
+	 ((todo "NEXT"
+		((org-agenda-overriding-header "Next Tasks")))))
 
-    ("W" "Work Tasks" tags-todo "+work-email")
+	("W" "Work Tasks" tags-todo "+work-email")
 
-    ;; Low-effort next actions
-    ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-     ((org-agenda-overriding-header "Low Effort Tasks")
-      (org-agenda-max-todos 20)
-      (org-agenda-files org-agenda-files)))
+	;; Low-effort next actions
+	("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+	 ((org-agenda-overriding-header "Low Effort Tasks")
+	  (org-agenda-max-todos 20)
+	  (org-agenda-files org-agenda-files)))
 
-    ("w" "Workflow Status"
-     ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
-      (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
-      (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "BACKLOG"
-            ((org-agenda-overriding-header "Project Backlog")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "READY"
-            ((org-agenda-overriding-header "Ready for Work")
-             (org-agenda-files org-agenda-files)))
-      (todo "ACTIVE"
-            ((org-agenda-overriding-header "Active Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "COMPLETED"
-            ((org-agenda-overriding-header "Completed Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "CANC"
-            ((org-agenda-overriding-header "Cancelled Projects")
-             (org-agenda-files org-agenda-files)))))))
+	("w" "Workflow Status"
+	 ((todo "WAIT"
+		((org-agenda-overriding-header "Waiting on External")
+		 (org-agenda-files org-agenda-files)))
+	  (todo "REVIEW"
+		((org-agenda-overriding-header "In Review")
+		 (org-agenda-files org-agenda-files)))
+	  (todo "PLAN"
+		((org-agenda-overriding-header "In Planning")
+		 (org-agenda-todo-list-sublevels nil)
+		 (org-agenda-files org-agenda-files)))
+	  (todo "BACKLOG"
+		((org-agenda-overriding-header "Project Backlog")
+		 (org-agenda-todo-list-sublevels nil)
+		 (org-agenda-files org-agenda-files)))
+	  (todo "READY"
+		((org-agenda-overriding-header "Ready for Work")
+		 (org-agenda-files org-agenda-files)))
+	  (todo "ACTIVE"
+		((org-agenda-overriding-header "Active Projects")
+		 (org-agenda-files org-agenda-files)))
+	  (todo "COMPLETED"
+		((org-agenda-overriding-header "Completed Projects")
+		 (org-agenda-files org-agenda-files)))
+	  (todo "CANC"
+		((org-agenda-overriding-header "Cancelled Projects")
+		 (org-agenda-files org-agenda-files)))))))
 
 (setq org-refile-targets '(("Archive.org" . (:maxlevel . 1))))
 
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 (add-hook 'after-init-hook '(lambda()
-    (interactive)
-    (org-agenda nil "d")
-    (delete-other-windows)
-))
+			      (interactive)
+			      (org-agenda nil "d")
+			      (delete-other-windows)
+			      ))
 
- (setq org-capture-templates
-    `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/notes/beorg/Tasks.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+(setq org-capture-templates
+      `(("t" "Tasks / Projects")
+	("tt" "Task" entry (file+olp "~/notes/beorg/Tasks.org" "Inbox")
+         "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
-      ("j" "Journal Entries")
-      ("jj" "Journal" entry
-           (file+olp+datetree "~/notes/beorg/Journal.org")
-           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-           :clock-in :clock-resume
-           :empty-lines 1)
-      ("jm" "Meeting" entry
-           (file+olp+datetree "~/notes/beorg/Journal.org")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
+	))
 
-      ("w" "Workflows")
-      ("we" "Checking Email" entry (file+olp+datetree "~/notes/beorg/Journal.org")
-           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
-
-      ("m" "Metrics Capture")
-      ("mw" "Weight" table-line (file+headline "~/notes/beorg/Metrics.org" "Weight")
-       "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
-
-  (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((emacs-lisp . t)
-(js . t)
-      ))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (js . t)
+   ))
 (setq org-confirm-babel-evaluate nil)
 
 (require 'org-tempo)
@@ -451,8 +422,8 @@
 
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
-  	  :hook (org-mode . org-auto-tangle-mode)
-  	  :config (setq org-auto-tangle-default t))
+  :hook (org-mode . org-auto-tangle-mode)
+  :config (setq org-auto-tangle-default t))
 
 #+end_src
 
@@ -471,28 +442,28 @@
   (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
-:hook (lsp-mode . lsp-ui-mode)
-:custom (lsp-doc-ui-position 'bottom))
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom (lsp-doc-ui-position 'bottom))
 
 (use-package lsp-ivy
-:after lsp)
+  :after lsp)
 #+end_src
 
 * Completion
 #+begin_src emacs-lisp
 (use-package company
-:after lsp-mode
-:hook (prog-mode . company-mode)
-:bind (:map company-active-map
-("<tab>" . company-complete-selection))
-(:map lsp-mode-map
-("<tab>" . company-indent-or-complete-common))
-:custom
-(company-minimum-prefix-length 1)
-(company-idle-delay 0.0))
+  :after lsp-mode
+  :hook (prog-mode . company-mode)
+  :bind (:map company-active-map
+	      ("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+	("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
 
 (use-package company-box
-:hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode))
 #+end_src
 
 * Flycheck
@@ -500,8 +471,8 @@
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
-:config
-(setq flycheck-check-syntax-automatically '(save mode-enable)))
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enable)))
 
 #+end_src
 * Perspective
@@ -528,7 +499,7 @@
          (typescript-mode . prettier-js-mode))
   :config
   (add-hook 'before-save-hook 'prettier-js))
-  #+end_src
+#+end_src
 ** JSON
 #+begin_src emacs-lisp
 (use-package json-mode)
