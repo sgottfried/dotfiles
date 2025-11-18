@@ -38,6 +38,7 @@
 (set-fringe-mode 10) ;Give some breathing room
 (menu-bar-mode -1) ;Disable the menu bar
 (setq visual-bell t) ;visual bell
+(setq ring-bell-function 'ignore)
 
 (use-package doom-themes
   :init (load-theme 'doom-gruvbox t))
