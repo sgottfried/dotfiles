@@ -1,5 +1,6 @@
 #+Title Sam's Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el
+#+auto_tangle: t
 
 * Top-level
 #+begin_src emacs-lisp
@@ -233,11 +234,7 @@
   (blamer-face ((t :foreground "#7a88cf"
                    :background nil
                    :height 140
-                   :italic t)))
-  :config
-  (global-blamer-mode 1))
-
-
+                   :italic t))))
 #+end_src
 * LLM
 #+begin_src emacs-lisp
@@ -275,11 +272,8 @@
 
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
-  :defer t
-  :hook (org-src-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-babel-safelist '("~/.config/emacs/init.org"))
-  )
+  	  :hook (org-mode . org-auto-tangle-mode)
+  	  :config (setq org-auto-tangle-default t))
 
 (defun sg/org-mode-setup ()
   (org-indent-mode)
