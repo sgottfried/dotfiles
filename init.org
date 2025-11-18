@@ -498,10 +498,10 @@
 * Perspective
 #+begin_src emacs-lisp
 (use-package perspective
-  :ensure t
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))
   :init
   (persp-mode))
-(setq persp-mode-prefix-key "C-x P")
 #+end_src
 * Languages
 ** Typescript

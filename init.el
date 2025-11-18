@@ -387,8 +387,6 @@
 (setq org-roam-directory "~/notes/roam")
 (setq org-roam-complete-everywhere t)
 
-(add-hook 'org-agenda-mode-hook #'evil-normal-state)
-
 (use-package org-auto-tangle
   	  :hook (org-mode . org-auto-tangle-mode)
   	  :config (setq org-auto-tangle-default t))
@@ -429,10 +427,10 @@
 (setq flycheck-check-syntax-automatically '(save mode-enable)))
 
 (use-package perspective
-  :ensure t
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))
   :init
   (persp-mode))
-(setq persp-mode-prefix-key "C-x P")
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
