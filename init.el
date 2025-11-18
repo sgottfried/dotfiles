@@ -72,11 +72,14 @@
     :global-prefix "C-S")
 
   (sg/leader-keys
+"SPC" '(counsel-projectile-find-file :which-key "find file in project")
     "/" '(counsel-projectile-rg :which-key "search project")
     ";" '(counsel-M-x :which-key "M-x")
+    "W" '(persp-switch :which-key "workspace switch")
     "b" '(:ignore t :which-key "buffer")
     "bi" '(counsel-buffer-or-recentf :which-key "switch")
     "bs" '(evil-write :which-key "save")
+    "f" '(find-file :which-key "find file")
     "g" '(magit-status :which-key "Git")
     "h" '(:ignore t :which-key "help")
     "hf" '(counsel-describe-function :which-key "describe-function")
@@ -200,6 +203,15 @@
 
 (setq gptel-model 'claude-sonnet-3.7
       gptel-backend (gptel-make-gh-copilot "Copilot"))
+
+(use-package copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+	      ("<tab>" . 'copilot-accept-completion)
+	      ("TAB" . 'copilot-accept-completion)
+	      ("C-TAB" . 'copilot-accept-completion-by-word)
+	      ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :defer t)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -415,6 +427,12 @@
   :init (global-flycheck-mode)
 :config
 (setq flycheck-check-syntax-automatically '(save mode-enable)))
+
+(use-package perspective
+  :ensure t
+  :init
+  (persp-mode))
+(setq persp-mode-prefix-key "C-x P")
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
