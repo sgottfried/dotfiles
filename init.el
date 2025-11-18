@@ -1,0 +1,443 @@
+;; Generated from init.org
+
+(use-package doom-themes
+  :init (load-theme 'doom-gruvbox t))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
+(when (member "Source Sans Pro" (font-family-list))
+  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :height 160 :weight 'regular))
+
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1) ;Disable visible scrollbar
+(tool-bar-mode -1) ;Disable the toolbar
+(tooltip-mode -1) ;Disable tooltips
+(set-fringe-mode 10) ;Give some breathing room
+(menu-bar-mode -1) ;Disable the menu bar
+(setq visual-bell t) ;visual bell
+
+(use-package doom-themes
+  :init (load-theme 'doom-gruvbox t))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		eshell-mode-hook
+		shell-mode-hook
+		vterm-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :custom
+  (which-key-idle-delay 0.3))
+
+(use-package general 
+  :config
+  (general-create-definer sg/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-S")
+
+  (sg/leader-keys
+    "/" '(counsel-projectile-rg :which-key "search project")
+    ";" '(counsel-M-x :which-key "M-x")
+    "b" '(:ignore t :which-key "buffer")
+    "bi" '(counsel-buffer-or-recentf :which-key "switch")
+    "bs" '(evil-write :which-key "save")
+    "g" '(magit-status :which-key "Git")
+    "h" '(:ignore t :which-key "help")
+    "hf" '(counsel-describe-function :which-key "describe-function")
+    "hv" '(counsel-describe-variable :which-key "describe-variable")
+    "o" '(:ignore t :which-key "open")
+    "oa" '(lambda () (org-agenda nil "d") :which-key "org agenda")
+    "p" '(projectile-command-map :which-key "projectile")
+    "t" '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "w" '(evil-window-map :which-key "window"))
+  
+  (general-define-key
+   :states 'normal
+   :keymaps 'override
+   "-" 'dired-jump))
+
+(use-package hydra)
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+
+(sg/leader-keys
+  "ts" '(hydra-text-scale/body :which-key "scale-text"))
+
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; Initialize package sources
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+(use-package diminish :ensure t)
+
+(use-package diminish :ensure t)
+
+(use-package ivy
+:diminish
+:bind (("C-s" . swiper)
+        :map ivy-minibuffer-map
+        ("TAB" . ivy-alt-done)
+        ("C-l" . ivy-alt-done)
+        ("C-j" . ivy-next-line)
+        ("C-k" . ivy-previous-line)
+        :map ivy-switch-buffer-map
+        ("C-k" . ivy-previous-line)
+        ("C-l" . ivy-done)
+        ("C-d" . ivy-switch-buffer-kill)
+        :map ivy-reverse-i-search-map
+        ("C-k" . ivy-previous-line)
+        ("C-d" . ivy-reverse-i-search-kill))
+:config
+(ivy-mode 1))
+
+(use-package ivy-rich
+:custom
+(evil-want-integration t)
+(evil-want-keybinding nil)
+(evil-want-C-u-scroll t)
+(evil-want-C-i-jump nil)
+:config
+(evil-mode 1)
+(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+(define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+(evil-global-set-key 'motion "j" 'evil-next-visual-line)
+(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+(evil-set-initial-state 'messages-buffer-mode 'normal)
+(evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package key-chord)
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom 
+  (projectile-completion-system 'ivy)
+  (projectile-switch-project-action #'projectile-dired)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/workspace")
+    (setq projectile-project-search-path '("~/workspace"))))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+(setq projectile-auto-discover-mode 1)
+
+(use-package magit
+  :commands (magit-status magit-get-current-branch)
+  :custom (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
+
+(use-package forge
+  :after magit)
+
+(use-package blamer
+  :ensure t
+  :bind (("s-i" . blamer-show-commit-info)
+         ("C-c i" . blamer-show-posframe-commit-info))
+  :defer 20
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                   :background nil
+                   :height 140
+                   :italic t)))
+  :config
+  (global-blamer-mode 1))
+
+(use-package gptel
+  :custom
+  (gptel-model 'claude-sonnet-3.7
+	       gptel-backend (gptel-make-gh-copilot "Copilot")
+	       gptel-default-mode 'org-mode))
+
+(use-package copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+	      ("<tab>" . 'copilot-accept-completion)
+	      ("TAB" . 'copilot-accept-completion)
+	      ("C-TAB" . 'copilot-accept-completion-by-word)
+	      ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :defer t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (js . t)
+   ))
+(setq org-confirm-babel-evaluate nil)
+
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("js" . "src js"))
+
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-src-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-babel-safelist '("~/.config/emacs/init.org"))
+  )
+
+(defun sg/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil))
+
+(use-package org
+  :hook (org-mode . sg/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾"
+	org-hide-emphasis-markers t)
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  )
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "◆" "◇" "✸" "✿")))
+
+(with-eval-after-load 'org-faces
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    
+    
+    (when (member "Source Sans Pro" (font-family-list))
+      (set-face-attribute (car face) nil :weight 'regular :height (cdr face) :font "Source Sans Pro"))))
+
+(setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$" nil nil 1))
+(setq electric-indent-mode nil)
+(setq org-src-preserve-indentation t)
+
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :foreground nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(defun sg/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+	visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :defer t
+  :hook (org-mode . sg/org-mode-visual-fill))
+
+(setq org-todo-keywords
+      '(
+	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
+	(sequence "WAIT(w)" "CANCELLED(c)")))    
+
+ ;; Configure custom agenda views
+  (setq org-agenda-custom-commands
+   '(("d" "Dashboard"
+     ((agenda "" ((org-deadline-warning-days 7)))
+      (todo "NEXT"
+        ((org-agenda-overriding-header "Next Tasks")))
+      (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+
+    ("n" "Next Tasks"
+     ((todo "NEXT"
+        ((org-agenda-overriding-header "Next Tasks")))))
+
+    ("W" "Work Tasks" tags-todo "+work-email")
+
+    ;; Low-effort next actions
+    ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+     ((org-agenda-overriding-header "Low Effort Tasks")
+      (org-agenda-max-todos 20)
+      (org-agenda-files org-agenda-files)))
+
+    ("w" "Workflow Status"
+     ((todo "WAIT"
+            ((org-agenda-overriding-header "Waiting on External")
+             (org-agenda-files org-agenda-files)))
+      (todo "REVIEW"
+            ((org-agenda-overriding-header "In Review")
+             (org-agenda-files org-agenda-files)))
+      (todo "PLAN"
+            ((org-agenda-overriding-header "In Planning")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
+      (todo "BACKLOG"
+            ((org-agenda-overriding-header "Project Backlog")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
+      (todo "READY"
+            ((org-agenda-overriding-header "Ready for Work")
+             (org-agenda-files org-agenda-files)))
+      (todo "ACTIVE"
+            ((org-agenda-overriding-header "Active Projects")
+             (org-agenda-files org-agenda-files)))
+      (todo "COMPLETED"
+            ((org-agenda-overriding-header "Completed Projects")
+             (org-agenda-files org-agenda-files)))
+      (todo "CANC"
+            ((org-agenda-overriding-header "Cancelled Projects")
+             (org-agenda-files org-agenda-files)))))))
+
+(setq org-refile-targets '(("Archive.org" . (:maxlevel . 1))))
+
+(advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+(add-hook 'after-init-hook '(lambda() (interactive) (org-agenda nil "d")))
+
+ (setq org-capture-templates
+    `(("t" "Tasks / Projects")
+      ("tt" "Task" entry (file+olp "~/notes/beorg/Tasks.org" "Inbox")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+
+      ("j" "Journal Entries")
+      ("jj" "Journal" entry
+           (file+olp+datetree "~/notes/beorg/Journal.org")
+           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+           :clock-in :clock-resume
+           :empty-lines 1)
+      ("jm" "Meeting" entry
+           (file+olp+datetree "~/notes/beorg/Journal.org")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :clock-in :clock-resume
+           :empty-lines 1)
+
+      ("w" "Workflows")
+      ("we" "Checking Email" entry (file+olp+datetree "~/notes/beorg/Journal.org")
+           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+
+      ("m" "Metrics Capture")
+      ("mw" "Weight" table-line (file+headline "~/notes/beorg/Metrics.org" "Weight")
+       "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+
+  (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+(js . t)
+      ))
+(setq org-confirm-babel-evaluate nil)
+
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("js" . "src js"))
+
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-src-mode . org-auto-tangle-mode)
+:config
+(setq org-auto-tangle-babel-safelist '("~/.config/emacs/init.org"))
+)
+
+(use-package org-roam)
+
+(use-package tree-sitter-langs)
+(require 'tree-sitter-langs)
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui
+:hook (lsp-mode . lsp-ui-mode)
+:custom (lsp-doc-ui-position 'bottom))
+
+(use-package lsp-ivy
+:after lsp)
+
+(use-package company
+:after lsp-mode
+:hook (prog-mode . company-mode)
+:bind (:map company-active-map
+("<tab>" . company-complete-selection))
+(:map lsp-mode-map
+("<tab>" . company-indent-or-complete-common))
+:custom
+(company-minimum-prefix-length 1)
+(company-idle-delay 0.0))
+
+(use-package company-box
+:hook (company-mode . company-box-mode))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode)
+:config
+(setq flycheck-check-syntax-automatically '(save mode-enable)))
+
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+
+(use-package prettier-js
+  :ensure t
+  :hook ((js-mode . prettier-js-mode)
+         (web-mode . prettier-js-mode)
+         (typescript-mode . prettier-js-mode))
+  :config
+  (add-hook 'before-save-hook 'prettier-js))
