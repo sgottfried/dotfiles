@@ -16,8 +16,6 @@
 (setq use-package-always-ensure t)
 (use-package diminish :ensure t)
 
-(use-package diminish :ensure t)
-
 (use-package doom-themes
   :init (load-theme 'doom-gruvbox t))
 
@@ -29,8 +27,6 @@
 (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
 (when (member "Source Sans Pro" (font-family-list))
   (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :height 160 :weight 'regular))
-
-(setq inhibit-startup-message t)
 
 (scroll-bar-mode -1) ;Disable visible scrollbar
 (tool-bar-mode -1) ;Disable the toolbar
@@ -49,6 +45,7 @@
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
+(setq inhibit-startup-screen t)
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
@@ -57,9 +54,6 @@
 		shell-mode-hook
 		vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -92,8 +86,8 @@
     "p" '(projectile-command-map :which-key "projectile")
     "t" '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
+    "xe" '(eval-last-sexp :which-key "eval last expression")
     "w" '(evil-window-map :which-key "window"))
-  
   (general-define-key
    :states 'normal
    :keymaps 'override
@@ -157,6 +151,8 @@
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
+;; enable evil-mode when opening org agenda
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
@@ -169,7 +165,6 @@
   (when (file-directory-p "~/workspace")
     (setq projectile-project-search-path '("~/workspace"))))
 
-(setq projectile-auto-discover-mode 1k)
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
@@ -201,20 +196,10 @@
   :config
   (editorconfig-mode 1))
 
-(use-package gptel
-  :custom
-  (gptel-model 'claude-sonnet-3.7
-	       gptel-backend (gptel-make-gh-copilot "Copilot")
-	       gptel-default-mode 'org-mode))
+(use-package gptel)
 
-(use-package copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-	      ("<tab>" . 'copilot-accept-completion)
-	      ("TAB" . 'copilot-accept-completion)
-	      ("C-TAB" . 'copilot-accept-completion-by-word)
-	      ("C-<tab>" . 'copilot-accept-completion-by-word))
-  :defer t)
+(setq gptel-model 'claude-sonnet-3.7
+      gptel-backend (gptel-make-gh-copilot "Copilot"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -227,10 +212,6 @@
 
 (add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("js" . "src js"))
-
-(use-package org-auto-tangle
-  	  :hook (org-mode . org-auto-tangle-mode)
-  	  :config (setq org-auto-tangle-default t))
 
 (defun sg/org-mode-setup ()
   (org-indent-mode)
@@ -346,7 +327,11 @@
 
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-(add-hook 'after-init-hook '(lambda() (interactive) (org-agenda nil "d")))
+(add-hook 'after-init-hook '(lambda()
+    (interactive)
+    (org-agenda nil "d")
+    (delete-other-windows)
+))
 
  (setq org-capture-templates
     `(("t" "Tasks / Projects")
@@ -386,16 +371,15 @@
 (add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("js" . "src js"))
 
-(use-package org-auto-tangle
-  :defer t
-  :hook (org-src-mode . org-auto-tangle-mode)
-:config
-(setq org-auto-tangle-babel-safelist '("~/.config/emacs/init.org"))
-)
-
 (use-package org-roam)
 (setq org-roam-directory "~/notes/roam")
 (setq org-roam-complete-everywhere t)
+
+(add-hook 'org-agenda-mode-hook #'evil-normal-state)
+
+(use-package org-auto-tangle
+  	  :hook (org-mode . org-auto-tangle-mode)
+  	  :config (setq org-auto-tangle-default t))
 
 (use-package tree-sitter-langs)
 (require 'tree-sitter-langs)
