@@ -434,8 +434,6 @@
 (use-package org-roam)
 (setq org-roam-directory "~/notes/roam")
 (setq org-roam-complete-everywhere t)
-
-(add-hook 'org-agenda-mode-hook #'evil-normal-state)
 #+end_src
 ** Auto-tangle Configuration Files
 
