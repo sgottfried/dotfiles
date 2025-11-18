@@ -102,6 +102,7 @@
     "ot" '(vterm t :which-key "open")
     "p" '(projectile-command-map :which-key "projectile")
     "t" '(:ignore t :which-key "toggles")
+    "tf" '(toggle-frame-fullscreen  :which-key "choose theme")
     "tt" '(counsel-load-theme :which-key "choose theme")
     "xe" '(eval-last-sexp :which-key "eval last expression")
     "w" '(evil-window-map :which-key "window"))
