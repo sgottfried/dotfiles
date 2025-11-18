@@ -168,6 +168,7 @@
   (when (file-directory-p "~/workspace")
     (setq projectile-project-search-path '("~/workspace"))))
 
+(setq projectile-auto-discover-mode 1k)
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
@@ -192,9 +193,12 @@
   (blamer-face ((t :foreground "#7a88cf"
                    :background nil
                    :height 140
-                   :italic t)))
+                   :italic t))))
+
+(use-package editorconfig
+  :ensure t
   :config
-  (global-blamer-mode 1))
+  (editorconfig-mode 1))
 
 (use-package gptel
   :custom
@@ -224,11 +228,8 @@
 (add-to-list 'org-structure-template-alist '("js" . "src js"))
 
 (use-package org-auto-tangle
-  :defer t
-  :hook (org-src-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-babel-safelist '("~/.config/emacs/init.org"))
-  )
+  	  :hook (org-mode . org-auto-tangle-mode)
+  	  :config (setq org-auto-tangle-default t))
 
 (defun sg/org-mode-setup ()
   (org-indent-mode)
@@ -392,6 +393,8 @@
 )
 
 (use-package org-roam)
+(setq org-roam-directory "~/notes/roam")
+(setq org-roam-complete-everywhere t)
 
 (use-package tree-sitter-langs)
 (require 'tree-sitter-langs)
@@ -441,3 +444,5 @@
          (typescript-mode . prettier-js-mode))
   :config
   (add-hook 'before-save-hook 'prettier-js))
+
+(use-package json-mode)

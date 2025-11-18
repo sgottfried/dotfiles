@@ -208,6 +208,7 @@
   (when (file-directory-p "~/workspace")
     (setq projectile-project-search-path '("~/workspace"))))
 
+(setq projectile-auto-discover-mode 1k)
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
@@ -235,6 +236,13 @@
                    :background nil
                    :height 140
                    :italic t))))
+#+end_src
+* Editorconfic
+#+begin_src emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 #+end_src
 * LLM
 #+begin_src emacs-lisp
@@ -437,6 +445,8 @@
 )
 
 (use-package org-roam)
+(setq org-roam-directory "~/notes/roam")
+(setq org-roam-complete-everywhere t)
 #+end_src
 
 * Tree-Sitter
@@ -504,3 +514,7 @@
   :config
   (add-hook 'before-save-hook 'prettier-js))
   #+end_src
+** JSON
+#+begin_src emacs-lisp
+(use-package json-mode)
+#+end_src
