@@ -246,9 +246,7 @@
 
 (setq gptel-model 'claude-sonnet-3.7
       gptel-backend (gptel-make-gh-copilot "Copilot"))
-#+end_src
 
-This prevents Emacs from opening the =*scratch*= buffer, as it defaults to no buffer unless you explicitly provide one.
 (use-package copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
