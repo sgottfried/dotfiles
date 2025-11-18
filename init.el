@@ -23,6 +23,8 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+(display-time)
+
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
 (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
 (when (member "Source Sans Pro" (font-family-list))
