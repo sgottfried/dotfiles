@@ -75,9 +75,9 @@
     :global-prefix "C-S")
 
   (sg/leader-keys
-"SPC" '(counsel-projectile-find-file :which-key "find file in project")
+    "SPC" '(counsel-projectile-find-file :which-key "find file in project")
     "/" '(counsel-projectile-rg :which-key "search project")
-    ";" '(counsel-M-x :which-key "M-x")
+    ";" '(counsel-M-x)
     "W" '(:ignore t :which-key "workspace")
     "Wn" '(persp-next :which-key "next")
     "Wp" '(persp-prev :which-key "next")
@@ -99,17 +99,28 @@
     "nrf" '(org-roam-node-find :which-key "find node")
     "o" '(:ignore t :which-key "open")
     "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
-    "ot" '(vterm t :which-key "open")
+    "ot" '(projectile-run-vterm t :which-key "open")
     "p" '(projectile-command-map :which-key "projectile")
     "t" '(:ignore t :which-key "toggles")
-    "tf" '(toggle-frame-fullscreen  :which-key "choose theme")
+    "tf" '(toggle-frame-fullscreen  :which-key "toggle fullscreen")
     "tt" '(counsel-load-theme :which-key "choose theme")
     "xe" '(eval-last-sexp :which-key "eval last expression")
     "w" '(evil-window-map :which-key "window"))
+
   (general-define-key
    :states 'normal
    :keymaps 'override
    "-" 'dired-jump))
+
+(general-define-key 
+ :states '(normal)
+ :keymaps 'override
+ "gt" 'persp-next)
+
+(general-define-key 
+ :states '(normal)
+ :keymaps 'override
+ "gT" 'persp-prev)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -146,7 +157,8 @@
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  (ivy-rich-mode))
 
 (use-package evil-collection
   :after evil
@@ -197,6 +209,13 @@
                    :background nil
                    :height 140
                    :italic t))))
+(use-package gptel-magit
+  :ensure t
+  :hook (magit-mode . gptel-magit-install))
+
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq magit-ediff-dwim-show-on-hunks t)
 
 (use-package editorconfig
   :ensure t
@@ -267,7 +286,7 @@
       (set-face-attribute (car face) nil :weight 'regular :height (cdr face) :font "Source Sans Pro"))))
 
 (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$" nil nil 1))
-(setq electric-indent-mode nil)
+(setq electric-indent-mode t)
 (setq org-src-preserve-indentation t)
 
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
@@ -288,7 +307,7 @@
 
 (setq org-todo-keywords
       '(
-	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
+	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "IN_PROGRESS(p)" "|" "DONE(d)")
 	(sequence "WAIT(w)" "CANCELLED(c)")))    
 
 ;; Configure custom agenda views
@@ -432,3 +451,10 @@
   (add-hook 'before-save-hook 'prettier-js))
 
 (use-package json-mode)
+
+(use-package feature-mode
+  :ensure t
+  :mode ("\\.feature\\'" . feature-mode))
+
+(use-package vterm
+    :ensure t)
