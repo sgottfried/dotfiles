@@ -1,4 +1,4 @@
-#+Title Sam's Emacs Configuration
+#+title:  Sam's Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el
 #+auto_tangle: t
 
@@ -73,10 +73,14 @@
                 shell-mode-hook
                 tetris-mode
                 vterm-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+  (add-hook mode (lambda () (display-line-numbers-mode 0)
+                   (git-gutter-mode 0)
+                                                   )))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package helpful)
 
 #+end_src
 
@@ -100,7 +104,7 @@
     :global-prefix "C-S")
 
   (sg/leader-keys
-"SPC" '(counsel-projectile-find-file :which-key "find file in project")
+    "SPC" '(counsel-projectile-find-file :which-key "find file in project")
     "/" '(counsel-projectile-rg :which-key "search project")
     ";" '(counsel-M-x :which-key "M-x")
     "W" '(:ignore t :which-key "workspace")
@@ -116,25 +120,36 @@
     "fp" '((lambda() (interactive)(find-file "~/workspace/dotfiles/init.org")) :which-key "init.org")
     "g" '(magit-status :which-key "Git")
     "h" '(:ignore t :which-key "help")
-    "hf" '(counsel-describe-function :which-key "describe-function")
-    "hv" '(counsel-describe-variable :which-key "describe-variable")
+    "hf" '(helpful-function :which-key "describe-function")
+    "hv" '(helpful-variable :which-key "describe-variable")
     "n" '(:ignore t :which-key "notes")
     "nr" '(:ignore t :which-key "org roam")
     "nri" '(org-roam-node-insert :which-key "insert node")
     "nrf" '(org-roam-node-find :which-key "find node")
     "o" '(:ignore t :which-key "open")
     "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
-    "ot" '(vterm t :which-key "open")
+    "ot" '(projectile-run-vterm t :which-key "open")
     "p" '(projectile-command-map :which-key "projectile")
     "t" '(:ignore t :which-key "toggles")
-    "tf" '(toggle-frame-fullscreen  :which-key "choose theme")
+    "tf" '(toggle-frame-fullscreen  :which-key "toggle fullscreen")
     "tt" '(counsel-load-theme :which-key "choose theme")
     "xe" '(eval-last-sexp :which-key "eval last expression")
     "w" '(evil-window-map :which-key "window"))
+
   (general-define-key
    :states 'normal
    :keymaps 'override
    "-" 'dired-jump))
+
+(general-define-key 
+ :states '(normal)
+ :keymaps 'override
+ "gt" 'persp-next)
+
+(general-define-key 
+ :states '(normal)
+ :keymaps 'override
+ "gT" 'persp-prev)
 
 #+end_src
 ** Other
@@ -177,7 +192,8 @@
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  (ivy-rich-mode))
 
 #+end_src
 
@@ -237,6 +253,30 @@
                    :background nil
                    :height 140
                    :italic t))))
+(use-package gptel-magit
+  :ensure t
+  :hook (magit-mode . gptel-magit-install)
+  :config
+  (setq gptel-default-mode 'org-mode ))
+
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq magit-ediff-dwim-show-on-hunks t)
+
+(use-package git-gutter)
+(require 'git-gutter)
+(global-git-gutter-mode +1)
+
+(use-package git-gutter-fringe)
+(require 'git-gutter-fringe)
+(with-eval-after-load 'git-gutter-fringe
+  (setq git-gutter-fr:modified-sign "≃"  ;; Sign for modified lines
+        git-gutter-fr:added-sign "+"     ;; Sign for added lines
+        git-gutter-fr:deleted-sign "-")  ;; Sign for deleted lines
+  (set-face-foreground 'git-gutter-fr:modified "yellow")
+  (set-face-foreground 'git-gutter-fr:added "green")
+  (set-face-foreground 'git-gutter-fr:deleted "red"))
+
 #+end_src
 * Editorconfig
 #+begin_src emacs-lisp
@@ -316,7 +356,7 @@
       (set-face-attribute (car face) nil :weight 'regular :height (cdr face) :font "Source Sans Pro"))))
 
 (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$" nil nil 1))
-(setq electric-indent-mode nil)
+(setq electric-indent-mode t)
 (setq org-src-preserve-indentation t)
 
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
@@ -337,7 +377,7 @@
 
 (setq org-todo-keywords
       '(
-	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
+	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "IN_PROGRESS(p)" "|" "DONE(d)")
 	(sequence "WAIT(w)" "CANCELLED(c)")))    
 
 ;; Configure custom agenda views
@@ -506,4 +546,16 @@
 ** JSON
 #+begin_src emacs-lisp
 (use-package json-mode)
+#+end_src
+** Gherkin
+#+begin_src emacs-lisp
+(use-package feature-mode
+  :ensure t
+  :mode ("\\.feature\\'" . feature-mode))
+#+end_src
+
+* Vterm
+#+begin_src emacs-lisp
+(use-package vterm
+    :ensure t)
 #+end_src
