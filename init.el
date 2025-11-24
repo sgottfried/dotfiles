@@ -311,6 +311,7 @@
       (set-face-attribute (car face) nil :weight 'regular :height (cdr face) :font "Source Sans Pro"))))
 
 (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$" nil nil 1))
+(setq org-gtd-directory "~/notes/beorg")
 (setq electric-indent-mode t)
 (setq org-src-preserve-indentation t)
 
