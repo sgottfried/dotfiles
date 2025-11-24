@@ -56,10 +56,14 @@
                 shell-mode-hook
                 tetris-mode
                 vterm-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+  (add-hook mode (lambda () (display-line-numbers-mode 0)
+                   (git-gutter-mode 0)
+                                                   )))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package helpful)
 
 (use-package which-key
   :init (which-key-mode)
@@ -77,7 +81,7 @@
   (sg/leader-keys
     "SPC" '(counsel-projectile-find-file :which-key "find file in project")
     "/" '(counsel-projectile-rg :which-key "search project")
-    ";" '(counsel-M-x)
+    ";" '(counsel-M-x :which-key "M-x")
     "W" '(:ignore t :which-key "workspace")
     "Wn" '(persp-next :which-key "next")
     "Wp" '(persp-prev :which-key "next")
@@ -91,12 +95,15 @@
     "fp" '((lambda() (interactive)(find-file "~/workspace/dotfiles/init.org")) :which-key "init.org")
     "g" '(magit-status :which-key "Git")
     "h" '(:ignore t :which-key "help")
-    "hf" '(counsel-describe-function :which-key "describe-function")
-    "hv" '(counsel-describe-variable :which-key "describe-variable")
+    "hf" '(helpful-function :which-key "describe-function")
+    "hv" '(helpful-variable :which-key "describe-variable")
     "n" '(:ignore t :which-key "notes")
+    "nt" '(:ignore t :which-key "tasks")
     "nr" '(:ignore t :which-key "org roam")
     "nri" '(org-roam-node-insert :which-key "insert node")
     "nrf" '(org-roam-node-find :which-key "find node")
+    "ntc" '(org-gtd-capture :which-key "capture task")
+    "nti" '(org-gtd-process-inbox :which-key "process inbox")
     "o" '(:ignore t :which-key "open")
     "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
     "ot" '(projectile-run-vterm t :which-key "open")
@@ -211,11 +218,27 @@
                    :italic t))))
 (use-package gptel-magit
   :ensure t
-  :hook (magit-mode . gptel-magit-install))
+  :hook (magit-mode . gptel-magit-install)
+  :config
+  (setq gptel-default-mode 'org-mode ))
 
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq magit-ediff-dwim-show-on-hunks t)
+
+(use-package git-gutter)
+(require 'git-gutter)
+(global-git-gutter-mode +1)
+
+(use-package git-gutter-fringe)
+(require 'git-gutter-fringe)
+(with-eval-after-load 'git-gutter-fringe
+  (setq git-gutter-fr:modified-sign "≃"  ;; Sign for modified lines
+        git-gutter-fr:added-sign "+"     ;; Sign for added lines
+        git-gutter-fr:deleted-sign "-")  ;; Sign for deleted lines
+  (set-face-foreground 'git-gutter-fr:modified "yellow")
+  (set-face-foreground 'git-gutter-fr:added "green")
+  (set-face-foreground 'git-gutter-fr:deleted "red"))
 
 (use-package editorconfig
   :ensure t
@@ -270,6 +293,8 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "◆" "◇" "✸" "✿")))
+
+(use-package org-gtd)
 
 (with-eval-after-load 'org-faces
   (dolist (face '((org-level-1 . 1.2)
