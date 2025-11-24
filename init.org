@@ -123,9 +123,12 @@
     "hf" '(helpful-function :which-key "describe-function")
     "hv" '(helpful-variable :which-key "describe-variable")
     "n" '(:ignore t :which-key "notes")
+    "nt" '(:ignore t :which-key "tasks")
     "nr" '(:ignore t :which-key "org roam")
     "nri" '(org-roam-node-insert :which-key "insert node")
     "nrf" '(org-roam-node-find :which-key "find node")
+    "ntc" '(org-gtd-capture :which-key "capture task")
+    "nti" '(org-gtd-process-inbox :which-key "process inbox")
     "o" '(:ignore t :which-key "open")
     "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
     "ot" '(projectile-run-vterm t :which-key "open")
@@ -303,7 +306,6 @@
 #+end_src
 * Org Mode
 ** Main config
-** Configure Babel Languagaes
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -340,6 +342,8 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "◆" "◇" "✸" "✿")))
+
+(use-package org-gtd)
 
 (with-eval-after-load 'org-faces
   (dolist (face '((org-level-1 . 1.2)
