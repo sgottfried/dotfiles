@@ -351,8 +351,8 @@
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "◆" "◇" "✸" "✿")))
 
+(setq org-gtd-update-ack "3.0.0")
 (use-package org-gtd)
-(setq org-gtd-update-ack "2.1.0")
 
 (with-eval-after-load 'org-faces
   (dolist (face '((org-level-1 . 1.2)
