@@ -121,6 +121,8 @@
     "g" '(magit-status :which-key "Git")
     "h" '(:ignore t :which-key "help")
     "hf" '(helpful-function :which-key "describe-function")
+    "hi" '(info :which-key "info")
+    "hm" '(describe-mode  :which-key "describe-mode")
     "hv" '(helpful-variable :which-key "describe-variable")
     "n" '(:ignore t :which-key "notes")
     "nt" '(:ignore t :which-key "tasks")
@@ -159,6 +161,7 @@
 #+begin_src emacs-lisp
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 #+end_src
 
 * Ivy
@@ -446,7 +449,7 @@
 (add-hook 'after-init-hook '(lambda()
 			      (interactive)
 			      (org-agenda nil "d")
-			      (delete-other-windows)
+			      (delete-other -windows)
 			      ))
 
 (setq org-capture-templates
