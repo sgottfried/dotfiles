@@ -294,6 +294,7 @@
    (js . t)
    ))
 (setq org-confirm-babel-evaluate nil)
+(setq org-agenda-window-setup 'only-window)
 
 (require 'org-tempo)
 
