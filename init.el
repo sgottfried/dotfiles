@@ -169,8 +169,14 @@
   (evil-set-initial-state 'dashboard-mode 'normal)
   (ivy-rich-mode))
 
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+
 (use-package evil-collection
   :after evil
+  :ensure t
   :config
   (evil-collection-init))
 
