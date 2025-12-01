@@ -76,7 +76,7 @@
   (general-create-definer sg/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
-    :global-prefix "C-S")
+    :global-prefix "C-SPC")
 
   (sg/leader-keys
     "SPC" '(counsel-projectile-find-file :which-key "find file in project")
@@ -300,6 +300,7 @@
   (org-bullets-bullet-list '("◉" "○" "●" "◆" "◇" "✸" "✿")))
 
 (use-package org-gtd)
+(setq org-gtd-update-ack "2.1.0")
 
 (with-eval-after-load 'org-faces
   (dolist (face '((org-level-1 . 1.2)
