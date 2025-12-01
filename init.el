@@ -16,8 +16,16 @@
 (setq use-package-always-ensure t)
 (use-package diminish :ensure t)
 
-(use-package doom-themes
-  :init (load-theme 'doom-gruvbox t))
+(use-package doom-themes)
+
+(defun sg/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'doom-gruvbox-light t))
+    ('dark (load-theme 'doom-gruvbox t))))
+
+(add-hook 'ns-system-appearance-change-functions #'sg/apply-theme)
 
 (use-package doom-modeline
   :ensure t
@@ -506,23 +514,3 @@
 
 (use-package vterm
     :ensure t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(blamer command-log-mode company-box copilot counsel-projectile
-	    diminish doom-modeline doom-themes evil-collection
-	    evil-commentary evil-org feature-mode flycheck forge
-	    general git-gutter-fringe gptel-magit helpful hydra
-	    indent-bars ivy-rich json-mode key-chord lsp-ivy lsp-ui
-	    org-auto-tangle org-bullets org-gtd org-roam perspective
-	    prettier-js rainbow-delimiters tree-sitter-langs
-	    typescript-mode visual-fill visual-fill-column vterm)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
