@@ -182,6 +182,9 @@
 
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
   :config
   (evil-mode 1))
 
@@ -194,10 +197,12 @@
 (use-package evil-org
   :ensure t
   :after org
-  :hook (org-mode . (lambda () evil-org-mode))
+  :hook
+  ((org-mode . evil-org-mode)
+   (org-agenda-mode . evil-org-mode))
   :config
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (evil-org-agenda-set-keys)) ;; Set Org Agenda-specific evil bindings
 
 (use-package key-chord)
 (require 'key-chord)
