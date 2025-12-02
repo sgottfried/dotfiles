@@ -198,8 +198,7 @@
   :ensure t
   :after org
   :hook
-  ((org-mode . evil-org-mode)
-   (org-agenda-mode . evil-org-mode))
+  ((org-agenda-mode . evil-org-mode))
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)) ;; Set Org Agenda-specific evil bindings
