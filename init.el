@@ -62,7 +62,6 @@
                 term-mode-hook
                 eshell-mode-hook
                 shell-mode-hook
-                tetris-mode
                 vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0)
                    (git-gutter-mode 0)
@@ -96,7 +95,7 @@
     "Wr" '(persp-rename :which-key "rename")
     "Ws" '(persp-switch :which-key "switch")
     "b" '(:ignore t :which-key "buffer")
-    "bi" '(counsel-buffer-or-recentf :which-key "switch")
+    "bi" '(ivy-switch-buffer :which-key "switch")
     "bn" '(evil-jump-forward :which-key "forward")
     "bo" '(evil-jump-backward :which-key "backward")
     "bs" '(evil-write :which-key "save")
