@@ -144,6 +144,7 @@
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(define-key global-map (kbd "C-x g") 'magit-status)
 
 (use-package ivy
   :diminish
@@ -169,7 +170,6 @@
   (evil-want-C-u-scroll t)
   (evil-want-C-i-jump nil)
   :config
-  (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
@@ -184,11 +184,9 @@
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1))
+  (setq evil-want-keybinding nil))
 
-(use-package evil-collection
+  (use-package evil-collection
   :after evil
   :ensure t
   :config
