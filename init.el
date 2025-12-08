@@ -16,14 +16,12 @@
 (setq use-package-always-ensure t)
 (use-package diminish :ensure t)
 
-(use-package doom-themes)
-
 (defun sg/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
-    ('light (load-theme 'doom-gruvbox-light t))
-    ('dark (load-theme 'doom-gruvbox t))))
+    ('light (load-theme 'modus-operandi  t))
+    ('dark (load-theme 'modus-vivendi  t))))
 
 (add-hook 'ns-system-appearance-change-functions #'sg/apply-theme)
 
@@ -62,6 +60,7 @@
                 term-mode-hook
                 eshell-mode-hook
                 shell-mode-hook
+                tetris-mode-hook
                 vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0)
                    (git-gutter-mode 0)
