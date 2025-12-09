@@ -234,6 +234,8 @@
 (use-package forge
   :after magit)
 
+(setq auth-sources '("~/.authinfo"))
+
 (use-package blamer
   :ensure t
   :bind (("s-i" . blamer-show-commit-info)
