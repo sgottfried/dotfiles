@@ -44,9 +44,6 @@
 (setq visual-bell t) ;visual bell
 (setq ring-bell-function 'ignore)
 
-(use-package doom-themes
-  :init (load-theme 'doom-gruvbox t))
-
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
