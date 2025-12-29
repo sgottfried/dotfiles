@@ -144,7 +144,7 @@ require("lazy").setup({
       workspaces = {
         {
           name = "Sam's Notes",
-          path = "/Users/sam/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sam's Notes",
+          path = "~/notes/obsidian",
         },
       },
     }
