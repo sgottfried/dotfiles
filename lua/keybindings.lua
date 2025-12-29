@@ -46,6 +46,13 @@ add_group("<leader>d", "debugger", {
 
 -- Notes group
 wk.add({ "<leader>n", name = "notes" })
+add_group("<leader>n", "notes", {
+  { "t", ":Obsidian today<CR>", "Open Today's Note" },
+  { "y", ":Obsidian yesterday<CR>", "Open Yesterday's Note" },
+  { "ss", ":Obsidian search<CR>", "Search Notes" },
+  { "st", function() require("snacks").picker.grep({ cwd = "~/notes/obsidian", search = "- \\[ \\]" }) end,
+    "Find Unfinished Tasks" },
+})
 
 -- Insert mode mappings
 add_insert_mode_keybinding("jk", "<Esc>")

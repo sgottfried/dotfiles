@@ -6,8 +6,6 @@ require("autocommands")
 require("lsp")
 require("completion")
 require("treesitter")
-require("gtd")
-require("meetings")
 require('oil').setup({
   columns = {
     "icon",

@@ -5,6 +5,7 @@ vim.g.blamer_show_in_visual_modes = 0
 vim.g.jsx_ext_required = false
 vim.g.mapleader = " "
 vim.o.autoindent = true
+vim.o.conceallevel = 2
 vim.o.completeopt = "menuone,noselect"
 vim.o.cursorline = true
 vim.o.dir = (os.getenv("HOME") .. "/.vim/tmp")
