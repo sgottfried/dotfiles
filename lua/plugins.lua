@@ -133,6 +133,23 @@ require("lazy").setup({
     dependencies = { "github/copilot.vim", "plenary.nvim" }
   },
 
+  -- Notes
+  {
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- use latest release, remove to use latest commit
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false, -- this will be removed in the next major release
+      workspaces = {
+        {
+          name = "Sam's Notes",
+          path = "/Users/sam/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sam's Notes",
+        },
+      },
+    }
+  },
+
   -- Misc
   {
     "folke/snacks.nvim",
