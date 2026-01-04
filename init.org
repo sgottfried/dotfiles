@@ -319,6 +319,18 @@
   (set-face-foreground 'git-gutter-fr:added "green")
   (set-face-foreground 'git-gutter-fr:deleted "red"))
 
+;; performance tuning
+(setq magit-refresh-status-buffer nil)
+(setq magit-status-sections-hook
+      '(magit-insert-status-headers
+        magit-insert-untracked-files
+        magit-insert-unstaged-changes
+        magit-insert-staged-changes))
+(setq magit-process-connection-type nil)
+(setq magit-diff-context 3)
+(setq magit-auto-revert-mode nil)
+(setq magit-status-show-hunk-summary nil)
+
 #+end_src
 * Editorconfig
 #+begin_src emacs-lisp

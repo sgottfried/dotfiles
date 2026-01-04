@@ -279,6 +279,18 @@
   (set-face-foreground 'git-gutter-fr:added "green")
   (set-face-foreground 'git-gutter-fr:deleted "red"))
 
+;; performance tuning
+(setq magit-refresh-status-buffer nil)
+(setq magit-status-sections-hook
+      '(magit-insert-status-headers
+        magit-insert-untracked-files
+        magit-insert-unstaged-changes
+        magit-insert-staged-changes))
+(setq magit-process-connection-type nil)
+(setq magit-diff-context 3)
+(setq magit-auto-revert-mode nil)
+(setq magit-status-show-hunk-summary nil)
+
 (use-package editorconfig
   :ensure t
   :config
@@ -534,14 +546,14 @@
  '(evil-disable-insert-state-bindings t)
  '(package-selected-packages
    '(blamer code-review command-log-mode company-box copilot
-	    counsel-projectile diminish doom-modeline doom-themes
-	    eglot evil-collection evil-commentary evil-org
-	    expand-region feature-mode flycheck general
-	    git-gutter-fringe gptel-magit helpful hydra indent-bars
-	    ivy-rich json-mode key-chord lsp-ivy lsp-ui nnreddit
-	    org-auto-tangle org-bullets org-gtd org-roam perspective
-	    prettier-js rainbow-delimiters tree-sitter-langs
-	    typescript-mode visual-fill visual-fill-column vterm)))
+	    counsel-projectile diminish doom-modeline eglot
+	    evil-collection evil-commentary evil-org expand-region
+	    feature-mode flycheck general git-gutter-fringe
+	    gptel-magit helpful hydra indent-bars ivy-rich json-mode
+	    key-chord lsp-ivy lsp-ui nnreddit org-auto-tangle
+	    org-bullets org-gtd org-roam perspective prettier-js
+	    rainbow-delimiters tree-sitter-langs typescript-mode
+	    visual-fill visual-fill-column vterm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
