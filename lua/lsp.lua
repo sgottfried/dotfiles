@@ -90,26 +90,3 @@ local lua_config = vim.tbl_extend('force', base_config, {
 })
 vim.lsp.config.lua_ls = lua_config
 vim.lsp.enable('lua_ls')
-
--- Fennel LSP configuration
-local fennel_config = vim.tbl_extend('force', base_config, {
-  cmd = { 'fennel-language-server' },
-  filetypes = { 'fennel' },
-  single_file_support = true,
-  settings = {
-    fennel = {
-      workspace = {
-        library = vim.api.nvim_list_runtime_paths(),
-        checkThirdParty = false
-      },
-      diagnostics = { globals = { 'vim' } }
-    }
-  },
-  on_attach = function(client, bufnr)
-    client.server_capabilities.document_formatting = true
-    client.server_capabilities.document_range_formatting = true
-    on_attach(client, bufnr)
-  end
-})
-vim.lsp.config.fennel_language_server = fennel_config
-vim.lsp.enable('fennel_language_server')
