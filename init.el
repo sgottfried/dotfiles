@@ -275,6 +275,7 @@
 (setq magit-diff-context 3)
 (setq magit-auto-revert-mode nil)
 (setq magit-status-show-hunk-summary nil)
+(setq magit-fetch nil)
 
 (use-package editorconfig
   :ensure t
