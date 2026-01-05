@@ -88,8 +88,8 @@
     :global-prefix "C-SPC")
 
   (sg/leader-keys
-    "SPC" '(counsel-projectile-find-file :which-key "find file in project")
-    "/" '(counsel-projectile-rg :which-key "search project")
+    "SPC" '(project-find-file :which-key "find file in project")
+    "/" '(project-search  :which-key "search project")
     ";" '(counsel-M-x :which-key "M-x")
     "W" '(:ignore t :which-key "workspace")
     "Wn" '(persp-next :which-key "next")
@@ -120,8 +120,7 @@
     "nti" '(org-gtd-process-inbox :which-key "process inbox")
     "o" '(:ignore t :which-key "open")
     "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
-    "ot" '(projectile-run-vterm t :which-key "open")
-    "p" '(projectile-command-map :which-key "projectile")
+    "ot" '(project-eshell t :which-key "open")
     "t" '(:ignore t :which-key "toggles")
     "tf" '(toggle-frame-fullscreen  :which-key "toggle fullscreen")
     "tt" '(counsel-load-theme :which-key "choose theme")
@@ -215,23 +214,6 @@
   (evil-commentary-mode))
 
 ;; enable evil-mode when opening org agenda
-
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom 
-  (projectile-completion-system 'ivy)
-  (projectile-switch-project-action #'projectile-dired)
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/workspace")
-    (setq projectile-project-search-path '("~/workspace"))))
-
-(use-package counsel-projectile
-  :config (counsel-projectile-mode))
-
-(setq projectile-auto-discover-mode 1)
 
 (use-package magit
   :commands (magit-status magit-get-current-branch)
@@ -534,29 +516,3 @@
 (use-package feature-mode
   :ensure t
   :mode ("\\.feature\\'" . feature-mode))
-
-(use-package vterm
-    :ensure t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-disable-insert-state-bindings t)
- '(package-selected-packages
-   '(blamer code-review command-log-mode company-box copilot
-	    counsel-projectile diminish doom-modeline eglot
-	    evil-collection evil-commentary evil-org expand-region
-	    feature-mode flycheck general git-gutter-fringe
-	    gptel-magit helpful hydra indent-bars ivy-rich json-mode
-	    key-chord lsp-ivy lsp-ui nnreddit org-auto-tangle
-	    org-bullets org-gtd org-roam perspective prettier-js
-	    rainbow-delimiters tree-sitter-langs typescript-mode
-	    visual-fill visual-fill-column vterm)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
