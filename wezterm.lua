@@ -50,6 +50,15 @@ return {
     { action = act.ActivateTabRelative(-1), key = "p", mods = "LEADER" },
     { action = act.ActivateCopyMode, key = "[", mods = "LEADER" },
     { action = act.TogglePaneZoomState, key = "z", mods = "LEADER" },
+    { key = "r", mods = "LEADER", action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+    },
   },
   leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 },
   native_macos_fullscreen_mode = true,
