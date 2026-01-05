@@ -53,6 +53,9 @@ add_group("<leader>n", "notes", {
 
 -- Tasks group
 add_group("<leader>t", "tasks", {
+  { "i", function()
+    vim.api.nvim_put({ '- [ ] ' }, 'c', true, true)
+  end, "Insert New Task" },
   { "s", function() require("snacks").picker.grep({ cwd = "~/notes/obsidian", search = "- \\[ \\]" }) end,
     "Find Unfinished Tasks" },
 })
