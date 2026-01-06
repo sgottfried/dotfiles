@@ -154,7 +154,12 @@ require("lazy").setup({
         folder = "templates",
         date_format = "%Y-%m-%d-%a",
         time_format = "%H:%M",
-      }
+      },
+      checkbox = {
+        enabled = true,
+        create_new = true,
+        order = { " ", ">", "x" },
+      },
     }
 
   },
