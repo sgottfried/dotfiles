@@ -147,7 +147,13 @@ require("lazy").setup({
           path = "~/notes/obsidian",
         },
       },
+      templates = {
+        folder = "templates",
+        date_format = "%Y-%m-%d-%a",
+        time_format = "%H:%M",
+      }
     }
+
   },
 
   -- Misc
