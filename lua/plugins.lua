@@ -172,7 +172,7 @@ require("lazy").setup({
     opts = {
       image = {},
       picker = {
-        layout = { preset = "ivy_split" }
+        layout = { preview = false, preset = "ivy_split" }
       }
     },
   }
