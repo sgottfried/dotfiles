@@ -8,7 +8,6 @@ local function _1_()
 end
 
 require("lualine").setup({
-  options = { theme = "retrobox" },
   sections = {
     lualine_c = {
       "filename",
