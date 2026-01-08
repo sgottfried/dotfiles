@@ -20,6 +20,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = true
+  },
+  {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function() end,
@@ -166,7 +171,9 @@ require("lazy").setup({
     priority = 1000,
     opts = {
       image = {},
-      picker = {}
+      picker = {
+        layout = { preset = "ivy_split" }
+      }
     },
   }
 })
