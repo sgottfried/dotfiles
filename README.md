@@ -21,7 +21,7 @@ ln -s <dotfiles_location>/init.lua ~/.config/nvim/init.lua
 ln -s <dotfiles_location>/lua ~/.config/nvim/lua
 
 ln -s <dotfiles_location>/tmux.conf ~/.tmux.conf
-ln -s <dotfiles_location>/ghostty.conf ~/config/ghostty/config
+ln -s <dotfiles_location>/ghostty.conf ~/.config/ghostty/config
 ln -s ~/workspace/dotfiles/lazygit.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
 

@@ -20,11 +20,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "ellisonleao/gruvbox.nvim",
-    config = true,
-    priority = 1000
-  },
-  {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function() end,
@@ -167,11 +162,11 @@ require("lazy").setup({
   -- Misc
   {
     "folke/snacks.nvim",
-    event = "VeryLazy",
+    lazy = false,
+    priority = 1000,
     opts = {
       image = {},
       picker = {}
     },
-    ft = "markdown"
   }
 })
