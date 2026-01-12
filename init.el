@@ -282,10 +282,12 @@
   :config
   (editorconfig-mode 1))
 
-(use-package gptel)
-
+(use-package gptel
+:config
 (setq gptel-model 'claude-sonnet-3.7
       gptel-backend (gptel-make-gh-copilot "Copilot"))
+  :defer t
+  )
 
 (use-package copilot
   :hook (prog-mode . copilot-mode)
@@ -302,7 +304,6 @@
    (js . t)
    ))
 (setq org-confirm-babel-evaluate nil)
-(setq org-agenda-window-setup 'only-window)
 
 (require 'org-tempo)
 
@@ -426,12 +427,6 @@
 (setq org-refile-targets '(("Archive.org" . (:maxlevel . 1))))
 
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-(add-hook 'after-init-hook '(lambda()
-			      (interactive)
-			      (org-agenda nil "d")
-			      (delete-other -windows)
-			      ))
 
 (setq org-capture-templates
       `(("t" "Tasks / Projects")
