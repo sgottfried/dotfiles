@@ -19,6 +19,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- {
+  --   dir = "~/workspace/nvim-plugins/stackmap.nvim"
+  -- },
+  { 'nvim-lua/plenary.nvim', cmd = "PlenaryBustedFile" },
   {
     "ellisonleao/gruvbox.nvim",
     priority = 1000,

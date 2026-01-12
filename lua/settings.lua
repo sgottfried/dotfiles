@@ -17,6 +17,7 @@ vim.o.incsearch = true
 vim.o.laststatus = 3
 vim.o.mouse = "a"
 vim.o.number = true
+vim.o.relativenumber = true
 vim.o.shiftwidth = 4
 vim.o.smartcase = true
 vim.o.softtabstop = 4
