@@ -1,5 +1,5 @@
 vim.cmd("filetype plugin indent on")
-vim.g.copilot_filetypes = { norg = false, org = false }
+vim.g.copilot_filetypes = { norg = false, org = false, markdown = false }
 vim.g.blamer_date_format = "%m/%d/%y"
 vim.g.blamer_show_in_visual_modes = 0
 vim.g.jsx_ext_required = false
