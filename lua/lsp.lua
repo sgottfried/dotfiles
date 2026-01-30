@@ -51,14 +51,15 @@ local ts_config = vim.tbl_extend('force', base_config, {
 vim.lsp.config.ts_ls = ts_config
 vim.lsp.enable('ts_ls')
 
+vim.lsp.enable('eslint')
+
 -- EFM configuration
-local eslint = require('efmls-configs.linters.eslint_d')
 local prettier = require('efmls-configs.formatters.prettier_d')
 local languages = {
-  javascript = { eslint, prettier },
-  ['javascript.jsx'] = { eslint, prettier },
-  typescript = { eslint, prettier },
-  ['typescript.tsx'] = { eslint, prettier }
+  javascript = { prettier },
+  ['javascript.jsx'] = { prettier },
+  typescript = { prettier },
+  ['typescript.tsx'] = { prettier }
 }
 local efm_config = {
   filetypes = vim.tbl_keys(languages),
