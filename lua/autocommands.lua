@@ -18,6 +18,17 @@ vim.api.nvim_create_autocmd("Filetype", {
   pattern = { "gitcommit", "gitrebase", "gitconfig" }
 })
 
+vim.api.nvim_create_autocmd("Filetype", {
+  callback = function() 
+    vim.pack.add({
+      'https://github.com/ianks/vim-tsx',
+      'https://github.com/leafgarland/typescript-vim',
+      'https://github.com/pangloss/vim-javascript',
+    })
+  end,
+  pattern = { "typescript", "javascript", "javascript.jsx", "typescript.tsx" }
+})
+
 vim.api.nvim_create_autocmd("TermOpen", {
   callback = function() vim.cmd("setlocal nonumber norelativenumber") end,
   pattern = { "*" }
@@ -82,4 +93,10 @@ vim.api.nvim_create_autocmd({ "UIEnter" }, {
       vim.o.laststatus = 0
     end
   end
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
 })
