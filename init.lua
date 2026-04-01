@@ -6,11 +6,3 @@ require("autocommands")
 require("lsp")
 require("completion")
 require("treesitter")
-require('oil').setup({
-  columns = {
-    "icon",
-    "size",
-    "mtime",
-    "permissions"
-  }
-})
