@@ -26,7 +26,7 @@ end
 -- Tailwind configuration
 local tailwind_config = vim.tbl_extend('force', base_config, {
   filetypes = { 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact',
-    'javascript.jsx', 'typescript.tsx' },
+    'javascriptreact', 'typescriptreact' },
   init_options = {
     userLanguages = {
       javascript = { jsx = 'javascript' },
@@ -37,8 +37,12 @@ local tailwind_config = vim.tbl_extend('force', base_config, {
 vim.lsp.config.tailwindcss = tailwind_config
 vim.lsp.enable('tailwindcss')
 
+vim.lsp.enable('marksman')
+
 -- TypeScript configuration
 local ts_config = vim.tbl_extend('force', base_config, {
+  cmd = { 'typescript-language-server', '--stdio' },
+  filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
   on_attach = function(client, bufnr)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
@@ -57,9 +61,9 @@ vim.lsp.enable('eslint')
 local prettier = require('efmls-configs.formatters.prettier_d')
 local languages = {
   javascript = { prettier },
-  ['javascript.jsx'] = { prettier },
+  javascriptreact = { prettier },
   typescript = { prettier },
-  ['typescript.tsx'] = { prettier }
+  typescriptreact = { prettier }
 }
 local efm_config = {
   filetypes = vim.tbl_keys(languages),
