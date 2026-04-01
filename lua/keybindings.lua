@@ -32,23 +32,42 @@ end
 
 -- Buffer mappings
 add_group("<leader>b", "buffer", {
-  { "S", ":noa w<CR>", "Save (without formatting)" },
+  { "S", ":noa w<CR>",                       "Save (without formatting)" },
   { "i", ":lua Snacks.picker.buffers()<CR>", "List buffers" },
-  { "s", ":w<CR>", "Save" }
-})
-
--- Debugger mappings
-add_group("<leader>d", "debugger", {
-  { "d", ":DapContinue<CR>", "Continue Debugging" },
-  { "i", ":DapStepInto<CR>", "Step Into" },
-  { "o", ":DapStepOver<CR>", "Step Over" }
+  { "s", ":w<CR>",                           "Save" }
 })
 
 -- Notes group
 add_group("<leader>n", "notes", {
-  { "t", ":Obsidian today<CR>", "Open Today's Note" },
-  { "y", ":Obsidian yesterday<CR>", "Open Yesterday's Note" },
-  { "ss", ":Obsidian search<CR>", "Search Notes" },
+  { "t", function()
+    local daily_note = os.date('%Y-%m-%d')
+    local file_path = vim.fn.expand('~/notes/dailies/' .. daily_note .. '.md')
+    local template_path = vim.fn.expand('~/notes/dailies/template.md')
+
+    -- Check if the daily note doesn't exist
+    if vim.fn.filereadable(file_path) == 0 then
+      -- Copy template to new daily note
+      if vim.fn.filereadable(template_path) == 1 then
+        vim.fn.system('cp ' .. vim.fn.shellescape(template_path) .. ' ' ..
+          vim.fn.shellescape(file_path))
+      end
+
+      -- Prepend the date header
+      local date_header = '# ' .. os.date('%A, %B %d, %Y')
+      local content = vim.fn.readfile(file_path)
+      table.insert(content, 1, date_header)
+      table.insert(content, 2, '')
+      vim.fn.writefile(content, file_path)
+    end
+
+    vim.cmd('edit ' .. file_path)
+  end, "Open today's daily note" },
+  { "y", function()
+    local yesterday = os.date('%Y-%m-%d', os.time() - 86400)
+    local file_path = vim.fn.expand('~/notes/dailies/' .. yesterday .. '.md')
+    vim.cmd('edit ' .. file_path)
+  end, "Open yesterday's daily note" },
+  { "s", function() require("snacks").picker.grep({ cwd = "~/notes" }) end, "Search notes" },
 })
 
 -- Tasks group
@@ -56,7 +75,7 @@ add_group("<leader>t", "tasks", {
   { "i", function()
     vim.api.nvim_put({ '- [ ] ' }, 'c', true, true)
   end, "Insert New Task" },
-  { "s", function() require("snacks").picker.grep({ cwd = "~/notes/obsidian", search = "- \\[([ >])\\]" }) end,
+  { "s", function() require("snacks").picker.grep({ cwd = "~/notes", search = "- \\[([ >])\\]" }) end,
     "Find Unfinished Tasks" },
 })
 
@@ -82,7 +101,6 @@ add_keybinding("<leader>ot", function()
 end, "Open Terminal")
 add_keybinding("<leader>s", ":lua Snacks.picker.grep()<CR>", "Search project")
 add_keybinding("<leader>x", ":.lua<CR>", "Execute Lua line")
-add_keybinding("gb", ":DapToggleBreakpoint<CR>", "toggle breakpoint")
 add_keybinding("gd", function() vim.lsp.buf.definition() end, "LSP Go to definition")
 add_keybinding("gh", function() vim.lsp.buf.hover() end, "LSP Hover")
 add_keybinding("gr", function() vim.lsp.buf.references() end, "LSP references")
