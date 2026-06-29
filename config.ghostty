@@ -48,7 +48,7 @@ font-family = Fira Code
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 fullscreen = true
-theme = dark:Gruvbox Material Dark,light:Gruvbox Material Light
+theme = Gruvbox Material Dark
 
 keybind = ctrl+space>h=goto_split:left
 keybind = ctrl+space>j=goto_split:down
