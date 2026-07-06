@@ -21,14 +21,7 @@
   :config
   (load-theme 'doom-gruvbox t))
 
-(defun sg/apply-theme (appearance)
-  "Load theme, taking current system APPEARANCE into consideration."
-  (mapc #'disable-theme custom-enabled-themes)
-  (pcase appearance
-    ('light (load-theme 'doom-gruvbox-light  t))
-    ('dark (load-theme 'doom-gruvbox  t))))
-
-(add-hook 'ns-system-appearance-change-functions #'sg/apply-theme)
+(load-theme 'doom-gruvbox t)
 
 (use-package doom-modeline
   :ensure t
@@ -103,7 +96,7 @@
     "bs" '(evil-write :which-key "save")
     "f" '(:ignore t :which-key "file")
     "ff" '(find-file :which-key "find")
-    "fp" '((lambda() (interactive)(find-file "~/workspace/dotfiles/init.org")) :which-key "init.org")
+    "fp" '((lambda() (interactive)(find-file "~/workspace/dotfiles/init.el")) :which-key "init.el")
     "g" '(magit-status :which-key "Git")
     "h" '(:ignore t :which-key "help")
     "hf" '(helpful-function :which-key "describe-function")

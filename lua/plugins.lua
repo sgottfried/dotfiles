@@ -36,6 +36,11 @@ vim.pack.add({
   'https://github.com/folke/snacks.nvim',
 })
 
+require("markdown_agenda").setup({
+  notes_dir = vim.fn.expand("~/notes"),
+  include_done = false,
+})
+
 require('oil').setup({
   columns = {
     "icon",
