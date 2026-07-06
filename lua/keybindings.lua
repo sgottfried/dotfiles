@@ -32,9 +32,9 @@ end
 
 -- Buffer mappings
 add_group("<leader>b", "buffer", {
-  { "S", ":noa w<CR>",                       "Save (without formatting)" },
+  { "S", ":noa w<CR>", "Save (without formatting)" },
   { "i", ":lua Snacks.picker.buffers()<CR>", "List buffers" },
-  { "s", ":w<CR>",                           "Save" }
+  { "s", ":w<CR>", "Save" }
 })
 
 -- Notes group
@@ -91,6 +91,7 @@ add_keybinding("<leader>;", ":", "Run Command")
 add_keybinding("<leader><leader>", ":lua Snacks.picker.smart()<CR>", "Snacks find files")
 add_keybinding("<leader>c", ":copen<CR>", "Open Quickfix")
 add_keybinding("<leader>hh", ":lua Snacks.picker.help()<CR>", "Search Helptags")
+add_keybinding("<leader>oa", ":MarkdownAgenda<CR>", "Open Agenda")
 add_keybinding("<leader>ot", function()
   local term_buf = vim.fn.bufnr("term://*")
   if term_buf == -1 then
