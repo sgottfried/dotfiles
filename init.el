@@ -14,6 +14,7 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+(setq use-package-always-defer t)
 (use-package diminish :ensure t)
 
 (use-package doom-themes
@@ -143,6 +144,7 @@
 (define-key global-map (kbd "C-x g") 'magit-status)
 
 (use-package ivy
+  :defer nil
   :diminish
   :bind (:map ivy-minibuffer-map
               ("TAB" . ivy-alt-done)
@@ -179,6 +181,7 @@
 
 (use-package evil
   :ensure t
+  :defer nil
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
@@ -224,7 +227,6 @@
   :ensure t
   :bind (("s-i" . blamer-show-commit-info)
          ("C-c i" . blamer-show-posframe-commit-info))
-  :defer 20
   :custom
   (blamer-idle-time 0.3)
   (blamer-min-offset 70)
@@ -271,7 +273,7 @@
 (setq magit-fetch nil)
 
 (use-package editorconfig
-  :ensure t
+  :ensure T
   :config
   (editorconfig-mode 1))
 
@@ -279,8 +281,8 @@
 :config
 (setq gptel-model 'claude-sonnet-3.7
       gptel-backend (gptel-make-gh-copilot "Copilot"))
-  :defer t
   )
+(gptel-make-openai-oauth "OpenAI-sub") ;Any name of your choosing
 
 (use-package copilot
   :hook (prog-mode . copilot-mode)
@@ -289,7 +291,7 @@
 	      ("TAB" . 'copilot-accept-completion)
 	      ("C-TAB" . 'copilot-accept-completion-by-word)
 	      ("C-<tab>" . 'copilot-accept-completion-by-word))
-  :defer t)
+  )
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -361,7 +363,6 @@
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :defer t
   :hook (org-mode . sg/org-mode-visual-fill))
 
 (setq org-todo-keywords
@@ -508,3 +509,22 @@
 (use-package feature-mode
   :ensure t
   :mode ("\\.feature\\'" . feature-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(blamer company-box copilot diminish doom-modeline doom-themes
+	    evil-collection evil-commentary evil-org feature-mode
+	    flycheck forge general git-gutter-fringe gptel-magit
+	    helpful ivy-rich json-mode key-chord lsp-ivy lsp-ui
+	    org-auto-tangle org-bullets org-gtd org-roam perspective
+	    prettier-js rainbow-delimiters tree-sitter-langs
+	    typescript-mode visual-fill-column)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
