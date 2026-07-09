@@ -1,5 +1,3 @@
-;; Generated from init.org
-
 ;; Initialize package sources
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -13,19 +11,17 @@
   (package-install 'use-package))
 
 (require 'use-package)
+(setq use-package-compute-statistics t)
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
 (use-package diminish :ensure t)
 
 (use-package doom-themes
-  :ensure t
+  :defer nil
   :config
   (load-theme 'doom-gruvbox t))
 
-(load-theme 'doom-gruvbox t)
-
 (use-package doom-modeline
-  :ensure t
   :init (doom-modeline-mode 1))
 
 (display-time)
@@ -45,7 +41,6 @@
 (electric-pair-mode)
 
 (use-package doom-modeline
-  :ensure t
   :init (doom-modeline-mode 1))
 
 (column-number-mode)
@@ -56,9 +51,7 @@
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 eshell-mode-hook
-                shell-mode-hook
-                tetris-mode-hook
-                vterm-mode-hook))
+                ))
   (add-hook mode (lambda () (display-line-numbers-mode 0)
                    (git-gutter-mode 0)
                                                    )))
@@ -163,8 +156,6 @@
 
 (use-package ivy-rich
   :custom
-  (evil-want-integration t)
-  (evil-want-keybinding nil)
   (evil-want-C-u-scroll t)
   (evil-want-C-i-jump nil)
   :config
@@ -180,7 +171,6 @@
   (ivy-rich-mode))
 
 (use-package evil
-  :ensure t
   :defer nil
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -188,19 +178,10 @@
   (evil-mode 1))
 
   (use-package evil-collection
-  :after evil
-  :ensure t
+  :defer nil
+  :after (evil magit)
   :config
   (evil-collection-init))
-
-(use-package evil-org
-  :ensure t
-  :after org
-  :hook
-  ((org-agenda-mode . evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)) ;; Set Org Agenda-specific evil bindings
 
 (use-package key-chord)
 (require 'key-chord)
@@ -218,13 +199,7 @@
   :commands (magit-status magit-get-current-branch)
   :custom (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
-(use-package forge
-  :after magit)
-
-(setq auth-sources '("~/.authinfo"))
-
 (use-package blamer
-  :ensure t
   :bind (("s-i" . blamer-show-commit-info)
          ("C-c i" . blamer-show-posframe-commit-info))
   :custom
@@ -236,10 +211,7 @@
                    :height 140
                    :italic t))))
 (use-package gptel-magit
-  :ensure t
-  :hook (magit-mode . gptel-magit-install)
-  :config
-  (setq gptel-default-mode 'org-mode ))
+  :hook (magit-mode . gptel-magit-install))
 
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -273,16 +245,14 @@
 (setq magit-fetch nil)
 
 (use-package editorconfig
-  :ensure T
   :config
   (editorconfig-mode 1))
 
 (use-package gptel
 :config
 (setq gptel-model 'claude-sonnet-3.7
-      gptel-backend (gptel-make-gh-copilot "Copilot"))
-  )
-(gptel-make-openai-oauth "OpenAI-sub") ;Any name of your choosing
+      gptel-backend (gptel-make-openai-oauth "OpenAI-sub")
+      gptel-default-mode 'org-mode))
 
 (use-package copilot
   :hook (prog-mode . copilot-mode)
@@ -370,53 +340,6 @@
 	(sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "IN_PROGRESS(p)" "|" "DONE(d)")
 	(sequence "WAIT(w)" "CANCELLED(c)")))    
 
-;; Configure custom agenda views
-(setq org-agenda-custom-commands
-      '(("d" "Dashboard"
-	 ((agenda "" ((org-deadline-warning-days 7)))
-	  (todo "NEXT"
-		((org-agenda-overriding-header "Next Tasks")))
-	  (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
-
-	("n" "Next Tasks"
-	 ((todo "NEXT"
-		((org-agenda-overriding-header "Next Tasks")))))
-
-	("W" "Work Tasks" tags-todo "+work-email")
-
-	;; Low-effort next actions
-	("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-	 ((org-agenda-overriding-header "Low Effort Tasks")
-	  (org-agenda-max-todos 20)
-	  (org-agenda-files org-agenda-files)))
-
-	("w" "Workflow Status"
-	 ((todo "WAIT"
-		((org-agenda-overriding-header "Waiting on External")
-		 (org-agenda-files org-agenda-files)))
-	  (todo "REVIEW"
-		((org-agenda-overriding-header "In Review")
-		 (org-agenda-files org-agenda-files)))
-	  (todo "PLAN"
-		((org-agenda-overriding-header "In Planning")
-		 (org-agenda-todo-list-sublevels nil)
-		 (org-agenda-files org-agenda-files)))
-	  (todo "BACKLOG"
-		((org-agenda-overriding-header "Project Backlog")
-		 (org-agenda-todo-list-sublevels nil)
-		 (org-agenda-files org-agenda-files)))
-	  (todo "READY"
-		((org-agenda-overriding-header "Ready for Work")
-		 (org-agenda-files org-agenda-files)))
-	  (todo "ACTIVE"
-		((org-agenda-overriding-header "Active Projects")
-		 (org-agenda-files org-agenda-files)))
-	  (todo "COMPLETED"
-		((org-agenda-overriding-header "Completed Projects")
-		 (org-agenda-files org-agenda-files)))
-	  (todo "CANC"
-		((org-agenda-overriding-header "Cancelled Projects")
-		 (org-agenda-files org-agenda-files)))))))
 
 (setq org-refile-targets '(("Archive.org" . (:maxlevel . 1))))
 
@@ -444,10 +367,6 @@
 (use-package org-roam)
 (setq org-roam-directory "~/notes/roam")
 (setq org-roam-complete-everywhere t)
-
-(use-package org-auto-tangle
-  :hook (org-mode . org-auto-tangle-mode)
-  :config (setq org-auto-tangle-default t))
 
 (use-package tree-sitter-langs)
 (require 'tree-sitter-langs)
@@ -479,16 +398,9 @@
   :hook (company-mode . company-box-mode))
 
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enable)))
-
-(use-package perspective
-  :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))
-  :init
-  (persp-mode))
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -497,7 +409,6 @@
   (setq typescript-indent-level 2))
 
 (use-package prettier-js
-  :ensure t
   :hook ((js-mode . prettier-js-mode)
          (web-mode . prettier-js-mode)
          (typescript-mode . prettier-js-mode))
@@ -507,24 +418,4 @@
 (use-package json-mode)
 
 (use-package feature-mode
-  :ensure t
   :mode ("\\.feature\\'" . feature-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(blamer company-box copilot diminish doom-modeline doom-themes
-	    evil-collection evil-commentary evil-org feature-mode
-	    flycheck forge general git-gutter-fringe gptel-magit
-	    helpful ivy-rich json-mode key-chord lsp-ivy lsp-ui
-	    org-auto-tangle org-bullets org-gtd org-roam perspective
-	    prettier-js rainbow-delimiters tree-sitter-langs
-	    typescript-mode visual-fill-column)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
