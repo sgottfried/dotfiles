@@ -34,6 +34,9 @@ vim.pack.add({
 
   -- Misc
   'https://github.com/folke/snacks.nvim',
+
+  -- Markdown
+  'https://github.com/YousefHadder/markdown-plus.nvim',
 })
 
 require("markdown_agenda").setup({
