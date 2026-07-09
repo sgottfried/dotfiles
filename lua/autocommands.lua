@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
-  callback = function() 
+  callback = function()
     vim.pack.add({
       'https://github.com/ianks/vim-tsx',
       'https://github.com/leafgarland/typescript-vim',
@@ -48,31 +48,8 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
   desc = "Run <leader>ot when closing git commit/rebase/merge buffers"
 })
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = "wezterm.fnl",
-  callback = function()
-    local output = vim.fn.system(
-      "fennel -c " ..
-      vim.fn.expand("%") ..
-      " > " ..
-      vim.fn.expand("%:r") ..
-      ".lua"
-    )
-    if vim.v.shell_error ~= 0 then
-      vim.notify("Error compiling wezterm.fnl:\n" .. output, vim.log.levels.ERROR)
-    end
-  end
-})
-
-local function insert_markdown_link()
-  local link = vim.fn.input("Link: ")
-  local text = vim.fn.input("Text: ")
-  vim.api.nvim_set_current_line("[" .. text .. "](" .. link .. ")")
-end
-
 vim.api.nvim_create_autocmd("Filetype", {
   callback = function()
-    vim.keymap.set("i", "<C-l>", insert_markdown_link, { buffer = true })
     vim.keymap.set("i", "<C-d>", function()
       local year = os.date('%Y')
       vim.api.nvim_put({ '📅 ' .. year .. '-' }, 'c', true, true)
