@@ -1,4 +1,4 @@
-# {{format-date now "Monday, January 2, 2006"}}
+# {{format-date now "%A, %B %e, %Y"}}
 
 ## Meetings
 ## Tickets
