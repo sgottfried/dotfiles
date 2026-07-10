@@ -39,34 +39,18 @@ add_group("<leader>b", "buffer", {
 
 -- Notes group
 add_group("<leader>n", "notes", {
-  { "t", function()
-    local daily_note = os.date('%Y-%m-%d')
-    local file_path = vim.fn.expand('~/notes/dailies/' .. daily_note .. '.md')
-    local template_path = vim.fn.expand('~/notes/dailies/template.md')
+  { "t",
+    function()
+      local path = vim.fn.system("cd ~/notes && zk daily"):gsub("%s+$", "")
 
-    -- Check if the daily note doesn't exist
-    if vim.fn.filereadable(file_path) == 0 then
-      -- Copy template to new daily note
-      if vim.fn.filereadable(template_path) == 1 then
-        vim.fn.system('cp ' .. vim.fn.shellescape(template_path) .. ' ' ..
-          vim.fn.shellescape(file_path))
+      if vim.v.shell_error ~= 0 then
+        vim.notify(path, vim.log.levels.ERROR)
+        return
       end
 
-      -- Prepend the date header
-      local date_header = '# ' .. os.date('%A, %B %d, %Y')
-      local content = vim.fn.readfile(file_path)
-      table.insert(content, 1, date_header)
-      table.insert(content, 2, '')
-      vim.fn.writefile(content, file_path)
-    end
-
-    vim.cmd('edit ' .. file_path)
-  end, "Open today's daily note" },
-  { "y", function()
-    local yesterday = os.date('%Y-%m-%d', os.time() - 86400)
-    local file_path = vim.fn.expand('~/notes/dailies/' .. yesterday .. '.md')
-    vim.cmd('edit ' .. file_path)
-  end, "Open yesterday's daily note" },
+      vim.cmd.edit(vim.fn.fnameescape(path))
+    end,
+    "Open today's daily note" },
   { "s", function() require("snacks").picker.grep({ cwd = "~/notes" }) end, "Search notes" },
 })
 
