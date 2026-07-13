@@ -28,6 +28,7 @@ vim.pack.add({
   'https://github.com/tpope/vim-projectionist',
   'https://github.com/windwp/nvim-autopairs',
   'https://github.com/stevearc/oil.nvim',
+  'https://github.com/glacambre/firenvim',
 
   -- AI
   'https://github.com/github/copilot.vim',
