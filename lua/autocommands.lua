@@ -55,8 +55,7 @@ vim.api.nvim_create_autocmd("Filetype", {
     end, { buffer = true })
 
     vim.keymap.set("i", "<C-s>", function()
-      local year = os.date('%Y')
-      vim.api.nvim_put({ '⏳ ' .. year .. '-' }, 'c', true, true)
+      vim.api.nvim_put({ '⏳ ' .. os.date("%Y-%m-%d") }, 'c', true, true)
     end, { buffer = true })
   end,
   pattern = "markdown"
