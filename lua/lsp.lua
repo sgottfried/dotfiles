@@ -1,20 +1,6 @@
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local function on_attach(client, bufnr)
-  local opts = { noremap = true, silent = true }
-  local function map(mode, lhs, rhs)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-  end
-
-  map('n', '<leader>a', '<Cmd>lua vim.lsp.buf.code_action()<CR>')
-  map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
-  map('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>')
-  map('n', 'ge', '<Cmd>lua vim.diagnostic.open_float()<CR>')
-  map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  map('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>')
-end
-
-local base_config = { capabilities = capabilities, on_attach = on_attach }
+local base_config = { capabilities = capabilities }
 
 -- Simple servers configuration
 local simple_servers = { 'bashls', 'cssls', 'jsonls', 'terraformls' }
@@ -43,13 +29,12 @@ vim.lsp.enable('marksman')
 local ts_config = vim.tbl_extend('force', base_config, {
   cmd = { 'typescript-language-server', '--stdio' },
   filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
-  on_attach = function(client, bufnr)
+  on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     end
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
-    on_attach(client, bufnr)
   end
 })
 vim.lsp.config.ts_ls = ts_config

@@ -16,6 +16,7 @@ vim.pack.add({
   'https://github.com/hrsh7th/cmp-nvim-lsp',
   'https://github.com/creativenull/efmls-configs-nvim',
   'https://github.com/mfussenegger/nvim-lint',
+  'https://github.com/Gelio/cmp-natdat',
 
   -- Syntax
   'https://github.com/HiPhish/rainbow-delimiters.nvim',
@@ -72,3 +73,4 @@ require('lint').linters_by_ft = {
 }
 
 require("markdown-plus").setup()
+require('cmp_natdat').setup()

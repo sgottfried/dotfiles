@@ -51,8 +51,7 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
 vim.api.nvim_create_autocmd("Filetype", {
   callback = function()
     vim.keymap.set("i", "<C-d>", function()
-      local year = os.date('%Y')
-      vim.api.nvim_put({ '📅 ' .. year .. '-' }, 'c', true, true)
+      vim.api.nvim_put({ '📅 ' .. os.date("%Y-%m-%d") }, "c", true, true)
     end, { buffer = true })
 
     vim.keymap.set("i", "<C-s>", function()
