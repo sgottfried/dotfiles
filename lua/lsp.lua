@@ -80,3 +80,5 @@ local lua_config = vim.tbl_extend('force', base_config, {
 })
 vim.lsp.config.lua_ls = lua_config
 vim.lsp.enable('lua_ls')
+
+vim.lsp.enable('sourcekit')
