@@ -59,7 +59,7 @@ add_group("<leader>t", "tasks", {
   { "i", function()
     vim.api.nvim_put({ '- [ ] ' }, 'c', true, true)
   end, "Insert New Task" },
-  { "s", function() require("snacks").picker.grep({ cwd = "~/notes", search = "- \\[([ >])\\]", sort = { "file" } }) end,
+  { "s", function() require("snacks").picker.grep({ cwd = "~/notes", search = "- \\[([ >])\\]", sort = { "file:desc" } }) end,
     "Find Unfinished Tasks" },
 })
 
