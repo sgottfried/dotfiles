@@ -40,9 +40,6 @@
 (setq ring-bell-function 'ignore)
 (electric-pair-mode)
 
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
-
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (setq inhibit-startup-screen t)
@@ -75,16 +72,15 @@
     :global-prefix "C-SPC")
 
   (sg/leader-keys
-    "SPC" '(project-find-file :which-key "find file in project")
-    "/" '(project-search  :which-key "search project")
-    ";" '(counsel-M-x :which-key "M-x")
+    "SPC" '(consult-project-buffer :which-key "find file in project")
+    "/" '(consult-git-grep  :which-key "search project")
     "W" '(:ignore t :which-key "workspace")
     "Wn" '(persp-next :which-key "next")
     "Wp" '(persp-prev :which-key "next")
     "Wr" '(persp-rename :which-key "rename")
     "Ws" '(persp-switch :which-key "switch")
     "b" '(:ignore t :which-key "buffer")
-    "bi" '(ivy-switch-buffer :which-key "switch")
+    "bi" '(consult-buffer :which-key "switch")
     "bn" '(evil-jump-forward :which-key "forward")
     "bo" '(evil-jump-backward :which-key "backward")
     "bs" '(evil-write :which-key "save")
@@ -106,14 +102,13 @@
     "ntc" '(org-gtd-capture :which-key "capture task")
     "nti" '(org-gtd-process-inbox :which-key "process inbox")
     "o" '(:ignore t :which-key "open")
-    "oa" '((lambda () (interactive) (org-agenda nil "d")) :which-key "org agenda")
+    "oa" '((lambda () (interactive) (org-agenda nil "a")) :which-key "org agenda")
     "ot" '(project-eshell t :which-key "open")
     "p" '(:ignore t :which-key "project")
     "pb" '(project-switch-to-buffer  t :which-key "buffer")
     "pp" '(project-switch-project  t :which-key "switch")
     "t" '(:ignore t :which-key "toggles")
     "tf" '(toggle-frame-fullscreen  :which-key "toggle fullscreen")
-    "tt" '(counsel-load-theme :which-key "choose theme")
     "xe" '(eval-last-sexp :which-key "eval last expression")
     "w" '(evil-window-map :which-key "window"))
 
@@ -136,40 +131,6 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key global-map (kbd "C-x g") 'magit-status)
 
-(use-package ivy
-  :defer nil
-  :diminish
-  :bind (:map ivy-minibuffer-map
-              ("TAB" . ivy-alt-done)
-              ("C-l" . ivy-alt-done)
-              ("C-j" . ivy-next-line)
-              ("C-k" . ivy-previous-line)
-              :map ivy-switch-buffer-map
-              ("C-k" . ivy-previous-line)
-              ("C-l" . ivy-done)
-              ("C-d" . ivy-switch-buffer-kill)
-              :map ivy-reverse-i-search-map
-              ("C-k" . ivy-previous-line)
-              ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
-
-(use-package ivy-rich
-  :custom
-  (evil-want-C-u-scroll t)
-  (evil-want-C-i-jump nil)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal)
-  (ivy-rich-mode))
-
 (use-package evil
   :defer nil
   :init
@@ -183,10 +144,6 @@
   :config
   (evil-collection-init))
 
-(use-package key-chord)
-(require 'key-chord)
-(key-chord-mode 1)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
 (use-package evil-commentary
   :after evil
@@ -216,20 +173,6 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq magit-ediff-dwim-show-on-hunks t)
-
-(use-package git-gutter)
-(require 'git-gutter)
-(global-git-gutter-mode +1)
-
-(use-package git-gutter-fringe)
-(require 'git-gutter-fringe)
-(with-eval-after-load 'git-gutter-fringe
-  (setq git-gutter-fr:modified-sign "≃"  ;; Sign for modified lines
-        git-gutter-fr:added-sign "+"     ;; Sign for added lines
-        git-gutter-fr:deleted-sign "-")  ;; Sign for deleted lines
-  (set-face-foreground 'git-gutter-fr:modified "yellow")
-  (set-face-foreground 'git-gutter-fr:added "green")
-  (set-face-foreground 'git-gutter-fr:deleted "red"))
 
 ;; performance tuning
 (setq magit-refresh-status-buffer nil)
@@ -263,6 +206,132 @@
 	      ("C-<tab>" . 'copilot-accept-completion-by-word))
   )
 
+(use-package vertico
+  :init
+  (vertico-mode))
+
+(use-package orderless
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+  ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil) ;; Disable defaults, use our settings
+  (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
+
+(use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init
+
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
+
+(use-package corfu
+  ;; Optional customizations
+  ;; :custom
+  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
+
+  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  :init
+
+  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
+  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
+  ;; variable `global-corfu-modes' to exclude certain modes.
+  (global-corfu-mode)
+
+  ;; Enable optional extension modes:
+  ;; (corfu-history-mode)
+  ;; (corfu-mouse-mode)
+  ;; (corfu-popupinfo-mode)
+  )
+(use-package cape
+  ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+  ;; Press C-c p ? to for help.
+  :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+  ;; Alternatively bind Cape commands individually.
+  ;; :bind (("C-c p d" . cape-dabbrev)
+  ;;        ("C-c p h" . cape-history)
+  ;;        ("C-c p f" . cape-file)
+  ;;        ...)
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  ;; (add-hook 'completion-at-point-functions #'cape-history)
+  ;; ...
+)
+
+(use-package consult)
+
+(use-package eglot
+  :ensure nil
+  :commands (eglot eglot-ensure)
+  :hook ((typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (js-ts-mode . eglot-ensure))
+  :custom
+  (eglot-autoshutdown t))
+
+
+(use-package typescript-ts-mode
+  :ensure nil
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :hook ((typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure))
+  :custom
+  (typescript-ts-mode-indent-offset 2))
+
+(setq treesit-language-source-alist
+      '((typescript
+         "https://github.com/tree-sitter/tree-sitter-typescript"
+         "master"
+         "typescript/src")
+        (tsx
+         "https://github.com/tree-sitter/tree-sitter-typescript"
+         "master"
+         "tsx/src")))
+
+(defun sg/project-local-eslint ()
+  "Return the project-local ESLint executable."
+  (when-let* ((project (project-current nil))
+              (root (project-root project))
+              (eslint
+               (expand-file-name "node_modules/.bin/eslint" root)))
+    (when (file-executable-p eslint)
+      eslint)))
+
+(use-package flycheck
+  :init
+  (global-flycheck-mode))
+
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -270,7 +339,6 @@
    ))
 (setq org-confirm-babel-evaluate nil)
 
-(require 'org-tempo)
 
 (add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("js" . "src js"))
@@ -359,59 +427,14 @@
    ))
 (setq org-confirm-babel-evaluate nil)
 
-(require 'org-tempo)
-
-(add-to-list 'org-structure-template-alist '("em" . "src emacs-lisp"))
-(add-to-list 'org-structure-template-alist '("js" . "src js"))
-
 (use-package org-roam)
 (setq org-roam-directory "~/notes/roam")
 (setq org-roam-complete-everywhere t)
 
-(use-package tree-sitter-langs)
-(require 'tree-sitter-langs)
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :config
-  (lsp-enable-which-key-integration t))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom (lsp-doc-ui-position 'bottom))
-
-(use-package lsp-ivy
-  :after lsp)
-
-(use-package company
-  :after lsp-mode
-  :hook (prog-mode . company-mode)
-  :bind (:map company-active-map
-	      ("<tab>" . company-complete-selection))
-  (:map lsp-mode-map
-	("<tab>" . company-indent-or-complete-common))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-
-(use-package flycheck
-  :init (global-flycheck-mode)
-  :config
-  (setq flycheck-check-syntax-automatically '(save mode-enable)))
-
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
-
 (use-package prettier-js
   :hook ((js-mode . prettier-js-mode)
          (web-mode . prettier-js-mode)
-         (typescript-mode . prettier-js-mode))
+         (typescript-ts-mode . prettier-js-mode))
   :config
   (add-hook 'before-save-hook 'prettier-js))
 
@@ -419,3 +442,18 @@
 
 (use-package feature-mode
   :mode ("\\.feature\\'" . feature-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("f1e8339b04aef8f145dd4782d03499d9d716fdc0361319411ac2efc603249326"
+     default))
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
