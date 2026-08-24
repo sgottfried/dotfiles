@@ -26,6 +26,7 @@
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
 font-family = Fira Code
+font-size = 16
 # window-padding-x = 2
 #
 # # Spacing around the equals sign does not matter.
@@ -48,7 +49,7 @@ font-family = Fira Code
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 fullscreen = false
-theme = light:Gruvbox Light Hard,dark:Gruvbox Dark Hard
+theme = light:Gruvbox Material Light,dark:Gruvbox Material Dark
 
 keybind = ctrl+space>h=goto_split:left
 keybind = ctrl+space>j=goto_split:down
@@ -59,3 +60,4 @@ keybind = ctrl+space>v=new_split:right
 keybind = ctrl+space>n=next_tab
 keybind = ctrl+space>p=previous_tab
 keybind = ctrl+space>z=toggle_split_zoom
+keybind = ctrl+space>r=prompt_tab_title

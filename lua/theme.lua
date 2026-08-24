@@ -1,13 +1,13 @@
 vim.cmd(" hi! TermCursor guifg=NONE guibg=#ebdbb2 gui=NONE cterm=NONE ")
 vim.cmd(" hi! TermCursorNC guifg=#ebdbb2 guibg=#3c3836 gui=NONE cterm=NONE ")
-require("gruvbox").setup({
-  contrast = "hard",
-})
-vim.cmd("colorscheme gruvbox")
+vim.g.gruvbox_material_better_performance = 1
+vim.g.gruvbox_material_enable_bold = 1
+vim.g.gruvbox_material_enable_italic = 1
+vim.cmd("colorscheme gruvbox-material")
 
 require("lualine").setup({
   options = {
-    theme = "gruvbox"
+    theme = "gruvbox-material"
   },
   sections = {
     lualine_c = {
