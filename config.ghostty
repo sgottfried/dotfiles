@@ -50,7 +50,7 @@ font-size = 16
 # resize-overlay-duration = 4s 200ms
 fullscreen = false
 macos-non-native-fullscreen = true
-theme = light:Gruvbox Material Light,dark:Gruvbox Material Dark
+theme = Gruvbox Material Dark
 
 keybind = ctrl+space>h=goto_split:left
 keybind = ctrl+space>j=goto_split:down
@@ -62,3 +62,23 @@ keybind = ctrl+space>n=next_tab
 keybind = ctrl+space>p=previous_tab
 keybind = ctrl+space>z=toggle_split_zoom
 keybind = ctrl+space>r=prompt_tab_title
+
+keybind = ctrl+space+bracket_left=activate_key_table:vim
+
+# Move through scrollback
+keybind = vim/j=scroll_page_lines:1
+keybind = vim/k=scroll_page_lines:-1
+
+# Page navigation
+keybind = vim/ctrl+d=scroll_page_down
+keybind = vim/ctrl+u=scroll_page_up
+keybind = vim/ctrl+f=scroll_page_down
+keybind = vim/ctrl+b=scroll_page_up
+
+# Beginning/end of scrollback
+keybind = vim/g>g=scroll_to_top
+keybind = vim/shift+g=scroll_to_bottom
+
+# Search
+keybind = vim/slash=start_search
+keybind = vim/n=navigate_search:next
